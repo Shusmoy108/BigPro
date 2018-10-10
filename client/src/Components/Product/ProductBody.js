@@ -155,6 +155,7 @@ class ProductBody extends Component {
     }
 
     showtask = (e) => {
+        console.log(e);
         this.setState({task: e});
         this.setState({subtask: -1});
     };
@@ -180,8 +181,7 @@ class ProductBody extends Component {
                                           showsubtask={this.showsubtask} deleteproduct={this.deleteproduct}
                                           editproduct={this.editproduct}/>)
             }
-            product =
-
+            product =<div>
                 <Grid container spacing={0}>
                     {create}
                     <Grid item sm={8} xs={6} style={{
@@ -201,15 +201,25 @@ class ProductBody extends Component {
                         style={{paddingTop:10,paddingLeft:60}}
                     /> </Grid>
                     </Hidden>
-
                     {productlist}
-
                 </Grid>
+                <Hidden only={["sm", "md", "lg", "xl"]}>
+                    <Button
+                        variant="fab"
+                        color="primary"
+                        aria-label="Add"
+                        onClick={this.opencreatebox}
+                        className={classes.button}
+                    >
+                        <AddIcon />
+                    </Button>
+                </Hidden>
+            </div>
 
 
         }
         else if (this.state.task !== -1) {
-            console.log(this.state.productlist, "task");
+            console.log(this.state.productlist[this.state.task], "task");
             product = <ProducTaskbody createproductsubtask={this.createproductsubtask}
                                       deleteproductsubtask={this.deleteproductsubtask}
                                       editproductsubtask={this.editproductsubtask} showtask={this.showtask}
@@ -222,19 +232,7 @@ class ProductBody extends Component {
         return (
             <div>
                 <Header history={this.props.history} username={this.state.username} usertype={this.state.usertype}/>
-
                     {product}
-                <Hidden only={["sm", "md", "lg", "xl"]}>
-                    <Button
-                        variant="fab"
-                        color="primary"
-                        aria-label="Add"
-                        onClick={this.opencreatebox}
-                        className={classes.button}
-                    >
-                        <AddIcon />
-                    </Button>
-                </Hidden>
             </div>
         );
     }

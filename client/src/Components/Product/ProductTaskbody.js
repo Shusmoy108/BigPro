@@ -5,15 +5,12 @@ import CreateTask from '../Task/CreateTask';
 import styles from '../Task/taskstyle';
 import classNames from 'classnames';
 import Task from '../Task/Task';
-
-import Paper from "@material-ui/core/Paper/Paper";
-import Table from "@material-ui/core/Table/Table";
-import TableHead from "@material-ui/core/TableHead/TableHead";
-import TableRow from "@material-ui/core/TableRow/TableRow";
-import TableCell from "@material-ui/core/TableCell/TableCell";
 import Icon from "@material-ui/core/Icon/Icon";
-import TableBody from "@material-ui/core/TableBody/TableBody";
 import ProductSubtaskbody from './ProductSubtaskbody'
+import Grid from "@material-ui/core/Grid/Grid";
+import Hidden from "@material-ui/core/Hidden/Hidden";
+import Button from "@material-ui/core/Button/Button";
+import AddIcon from "@material-ui/icons/Add";
 
 class TaskBody extends Component {
     constructor(props) {
@@ -28,12 +25,11 @@ class TaskBody extends Component {
         };
     }
     opencreatebox = () => {
-        let e=1;
-        this.setState(state => ({ createflag: e }));
+        this.setState({ createflag: 1 });
+        console.log(this.state.createflag);
     };
     closecreatebox = () => {
-        let e=0;
-        this.setState(state => ({ createflag: e }));
+        this.setState({ createflag: 0 });
     };
     opennextcreatebox = (x) => {
         let e=1;
@@ -74,42 +70,55 @@ class TaskBody extends Component {
 
     render() {
         const { classes } = this.props;
-        let create;
         let task;
-        if(this.state.subtask===-1){
-            if(this.state.createflag===1) {
-                create = <CreateTask createtask={this.createtask} show={this.closecreatebox} closenext={this.closenextcreatebox}/>;
+        if(this.state.subtask===-1) {
+            let create;
+            if (this.state.createflag === 1) {
+                create = <CreateTask  closenext={this.closenextcreatebox} createtask={this.createtask} show={this.closecreatebox}/>;
             }
-            let tasklist=[];
-            for(var i=0;i<this.props.tasklist.length;i++){
-                tasklist.push(<Task key={i}  opencreatebox={this.opennextcreatebox} task_name={this.props.tasklist[i].task_name} task_number={i} showsubtask={this.showsubtask} deletetask={this.deletetask} edittask={this.edittask}/>)
-                if(i===5){}
+            console.log(create,this.state.createflag);
+            let tasklist = [];
+            console.log(this.props.tasklist)
+            for (var i = 0; i < this.props.tasklist.length; i++) {
+                tasklist.push(<Task key={i} id={this.props.tasklist[i]._id} task_number={i}
+                                    showsubtask={this.showsubtask} task_name={this.props.tasklist[i].task_name}
+                                    deletetask={this.deletetask} edittask={this.edittask}/>)
             }
             task=
-            <Paper className={classes.root}>
-                {create}
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row" ><Icon
-                                className={classNames(classes.icon, 'fa fa-backward')}
-                                color="disabled"
-                                fontSize="default"
-                                onClick={this.showtask}
-                            /> </TableCell><TableCell>Steps of {this.props.product_name}  </TableCell>
-                            <TableCell> <Icon
-                                className={classNames(classes.icon, 'fa fa-plus-circle')}
-                                color="disabled"
-                                fontSize="default"
-                                onClick={this.opencreatebox}
-                            /> </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tasklist}
-                    </TableBody>
-                </Table>
-            </Paper>
+                <div>
+                <Grid container spacing={0}>
+                    {create}
+                    <Grid item sm={8} xs={6} style={{
+                        fontFamily: 'Dekko',
+                        fontSize: 20,
+                        paddingLeft: 20
+
+                    }}>
+                        Steps of {this.props.product_name}
+                    </Grid>
+                    <Hidden only={["xs"]}>
+                        <Grid item sm={4} xs={6}> <Icon
+                            className={classNames('fa fa-plus-circle')}
+                            color="disabled"
+                            fontSize="default"
+                            onClick={this.opencreatebox}
+                            style={{paddingTop:10,paddingLeft:60}}
+                        /> </Grid>
+                    </Hidden>
+                    {tasklist}
+                </Grid>
+                    <Hidden only={["sm", "md", "lg", "xl"]}>
+                        <Button
+                            variant="fab"
+                            color="primary"
+                            aria-label="Add"
+                            onClick={this.opencreatebox}
+                            className={classes.button}
+                        >
+                            <AddIcon />
+                        </Button>
+                    </Hidden>
+                </div>
         }
        else{
             console.log(this.state.productlist,"task");

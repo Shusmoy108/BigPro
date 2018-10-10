@@ -52,13 +52,13 @@ class CreateTask extends Component {
 
             />;
         return (
-            <Grid item sm={10} xs={10} style={{paddingLeft:20}}>
+            <Grid item sm={10} xs={10} style={{paddingLeft:20, paddingTop:10}}>
                 <InputLabel shrink htmlFor="productname" className={classes.bootstrapFormLabel} style={{padding:20}}>
-                    Task-Name
+                    Step-Name
                 </InputLabel>
                 <InputBase
                     id="productname"
-                    placeholder="Enter a Taskname....."
+                    placeholder="Enter a Step name....."
                     value={this.state.task_name}
                     onChange={this.settaskname}
                     classes={{
