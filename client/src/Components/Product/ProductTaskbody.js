@@ -11,7 +11,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Hidden from "@material-ui/core/Hidden/Hidden";
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from "@material-ui/icons/Add";
-
+import BackIcon from "@material-ui/icons/FastRewind"
 class TaskBody extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +20,8 @@ class TaskBody extends Component {
             tasklist:this.props.tasklist,
             subtask:-1,
             craetenextflag:0,
-            tasknumber:-1
+            tasknumber:-1,
+            nexttask:-1,
 
         };
     }
@@ -67,22 +68,28 @@ class TaskBody extends Component {
     showsubtask = (e) =>{
         this.setState({subtask:e})
     };
-
+    createnexttask=(e)=>{
+        this.setState({nexttask:e});
+    };
     render() {
         const { classes } = this.props;
         let task;
         if(this.state.subtask===-1) {
             let create;
             if (this.state.createflag === 1) {
-                create = <CreateTask  closenext={this.closenextcreatebox} createtask={this.createtask} show={this.closecreatebox}/>;
+                create = <CreateTask createnexttask={this.createnexttask} closenext={this.closenextcreatebox} createtask={this.createtask} show={this.closecreatebox}/>;
             }
             console.log(create,this.state.createflag);
             let tasklist = [];
-            console.log(this.props.tasklist)
+            console.log(this.props.tasklist);
             for (var i = 0; i < this.props.tasklist.length; i++) {
                 tasklist.push(<Task key={i} id={this.props.tasklist[i]._id} task_number={i}
+                                    createnexttask={this.createnexttask}
                                     showsubtask={this.showsubtask} task_name={this.props.tasklist[i].task_name}
                                     deletetask={this.deletetask} edittask={this.edittask}/>)
+                if(i===this.state.nexttask){
+                    tasklist.push(<CreateTask createnexttask={this.createnexttask} closenext={this.closenextcreatebox} createtask={this.createtask} show={this.closecreatebox}/>)
+                }
             }
             task=
                 <div>
@@ -94,6 +101,9 @@ class TaskBody extends Component {
                         paddingLeft: 20
 
                     }}>
+                        <Button  variant="flat" onClick={this.showtask} color={"primary"}>
+                        <BackIcon />
+                        </Button>
                         Steps of {this.props.product_name}
                     </Grid>
                     <Hidden only={["xs"]}>
@@ -121,8 +131,8 @@ class TaskBody extends Component {
                 </div>
         }
        else{
-            console.log(this.state.productlist,"task");
-            task=<ProductSubtaskbody showsubtask={this.showsubtask} createsubtask={this.createsubtask} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask} taskname={this.props.tasklist[this.state.subtask]._id} subtasklist={this.props.tasklist[this.state.subtask].subtask}/>
+            console.log(this.props.tasklist,"task");
+            task=<ProductSubtaskbody product_name={this.props.product_name} showsubtask={this.showsubtask} createsubtask={this.createsubtask} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask} taskname={this.props.tasklist[this.state.subtask]._id} task_name={this.props.tasklist[this.state.subtask].task_name} subtasklist={this.props.tasklist[this.state.subtask].subtask}/>
         }
         return (
             <div >

@@ -12,7 +12,8 @@ import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import Radio from "@material-ui/core/Radio/Radio";
 import FormControl from "@material-ui/core/FormControl/FormControl";
-
+import Grid from "@material-ui/core/Grid"
+import Typography from "@material-ui/core/Typography"
 let options=[];
 class Subtask extends Component {
     constructor(props) {
@@ -144,13 +145,17 @@ class Subtask extends Component {
         }
         else{
             subtask=
-                <TableCell component="th" scope="row">
+              <Grid item sm={4} xs={4}>
+                  <Typography style={{paddingTop:20}}>
                     {this.props.subtask_name}
-                </TableCell>;
-                subtasktype=<TableCell component="th" scope="row">
+                  </Typography>
+              </Grid>;
+                subtasktype=<Grid item sm={4} xs={4}>
+                    <Typography style={{paddingTop:20}}>
                     {this.props.subtask_type}
-                </TableCell>;
-            button=     <TableCell> <Icon
+                    </Typography>
+                </Grid>;
+            button=    <Grid item sm={4} xs={4}> <Icon
                 className={classNames(classes.icon, 'fa fa-trash')}
                 color="disabled"
                 fontSize="default"
@@ -160,18 +165,18 @@ class Subtask extends Component {
                 color="disabled"
                 fontSize="default"
                 onClick={this.seteditflag}
-            /></TableCell>;
+            /></Grid>;
         }
 
 
         return (
-            <TableRow >
+            <Grid container style={{paddingLeft:20}} >
 
                 {subtask}
                 {subtasktype}
                 {button}
 
-            </TableRow>
+            </Grid>
         );
     }
 }

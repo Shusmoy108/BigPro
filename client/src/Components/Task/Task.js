@@ -43,6 +43,9 @@ class Task extends Component {
             this.props.edittask(this.props.task_name,this.state.edit_name);
         this.setState({ edit_flag:0 });
     };
+    createnexttask=()=>{
+        this.props.createnexttask(this.props.task_number);
+    };
     showsubtask =()=>{
       this.props.showsubtask(this.props.task_number);
     };
@@ -95,6 +98,12 @@ class Task extends Component {
                 onClick={this.showsubtask}
                 style={{paddingRight:25,paddingTop:12}}
             /> <Icon
+                className={classNames('fa fa-plus-circle')}
+                color="disabled"
+                fontSize="default"
+                onClick={this.createnexttask}
+                style={{paddingRight:25,paddingTop:12}}
+            /><Icon
                 className={classNames('fa fa-trash')}
                 color="disabled"
                 fontSize="default"
