@@ -25,7 +25,6 @@ class CreateTask extends Component {
     };
     closebox = () =>{
         this.props.show();
-        this.props.closenext();
     };
     settaskname = (e) => {
         this.setState({ task_name: e.target.value });

@@ -31,15 +31,14 @@ class TaskBody extends Component {
     };
     closecreatebox = () => {
         this.setState({ createflag: 0 });
+        this.setState(state => ({ tasknumber: -1 }));
     };
     opennextcreatebox = (x) => {
-        let e=1;
-        this.setState(state => ({ craetenextflag: e }));
+        this.setState(state => ({ createflag: 0 }));
         this.setState(state => ({ tasknumber: x }));
     };
     closenextcreatebox = () => {
-        let e=0;
-        this.setState(state => ({ craetenextflag: e }));
+        this.setState(state => ({ craetenextflag: 0 }));
         this.setState(state => ({ tasknumber: -1 }));
     };
     createtask = (e) => {
@@ -84,11 +83,11 @@ class TaskBody extends Component {
             console.log(this.props.tasklist);
             for (var i = 0; i < this.props.tasklist.length; i++) {
                 tasklist.push(<Task key={i} id={this.props.tasklist[i]._id} task_number={i}
-                                    createnexttask={this.createnexttask}
+                                    createnexttask={this.opennextcreatebox}
                                     showsubtask={this.showsubtask} task_name={this.props.tasklist[i].task_name}
                                     deletetask={this.deletetask} edittask={this.edittask}/>)
-                if(i===this.state.nexttask){
-                    tasklist.push(<CreateTask createnexttask={this.createnexttask} closenext={this.closenextcreatebox} createtask={this.createtask} show={this.closecreatebox}/>)
+                if(i===this.state.tasknumber){
+                    tasklist.push(<CreateTask createnexttask={this.createnexttask} key={this.props.tasklist.length} closenext={this.closenextcreatebox} createtask={this.createtask} show={this.closecreatebox}/>)
                 }
             }
             task=

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import Icon from "@material-ui/core/Icon/Icon";
 import classNames from 'classnames';
