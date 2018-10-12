@@ -24,7 +24,8 @@ class SubtaskBody extends Component {
             showpage:"subtask",
             usertype:"",
             username:"",
-            showsubtask:-1
+            showsubtask:-1,
+            subtasknumber:-1
         };
     }
     setpage = (e) => {
@@ -36,13 +37,21 @@ class SubtaskBody extends Component {
     opencreatebox = () => {
         let e=1;
         this.setState(state => ({ createflag: e }));
+        this.setState(state => ({ subtasknumber: -1 }));
     };
     closecreatebox = () => {
         let e=0;
         this.setState(state => ({ createflag: e }));
+        this.setState(state => ({ subtasknumber: -1 }));
+    };
+    opennextcreatebox = (x) => {
+        this.setState(state => ({ createflag: 0 }));
+        this.setState(state => ({ subtasknumber: x }));
+        console.log(x);
     };
     createsubtask = (e,n,f) => {
-      this.props.createsubtask(this.state.taskname,e,n,f);
+      this.props.createsubtask(this.state.taskname,e,n,f,this.state.subtasknumber);
+        console.log(this.state.subtasknumber);
         this.setState(state => ({ subtasklist: this.props.subtasklist }));
     };
     deletesubtask = (e) => {
@@ -66,7 +75,10 @@ class SubtaskBody extends Component {
             let subtasklist=[];
 
             for(var i=0;i<this.props.subtasklist.length;i++){
-                subtasklist.push(<Subtask key={i} id={this.props.subtasklist[i]._id} subtask_name={this.props.subtasklist[i].subtask_name} subtask_type={this.props.subtasklist[i].subtask_type} subtask_option={this.props.subtasklist[i].subtask_option} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask}/>)
+                subtasklist.push(<Subtask key={i} id={this.props.subtasklist[i]._id} opennextcreatebox={this.opennextcreatebox} subtask_number={i} subtask_name={this.props.subtasklist[i].subtask_name} subtask_type={this.props.subtasklist[i].subtask_type} subtask_option={this.props.subtasklist[i].subtask_option} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask}/>)
+                if(i===this.state.subtasknumber){
+                    subtasklist.push(<CreateSubtask createsubtask={this.createsubtask} show={this.closecreatebox} key={this.props.subtasklist.length}/>);
+                }
             }
             subtask=
                 <Grid container spacing={0}>
@@ -97,13 +109,9 @@ class SubtaskBody extends Component {
                         </Grid>
                     </Hidden>
                     <Hidden only={["xs"]}>
-                        <Grid item sm={4} xs={6}> <Icon
-                            className={classNames('fa fa-plus-circle')}
-                            color="disabled"
-                            fontSize="default"
+                        <Grid item sm={4} xs={6}> <Button
                             onClick={this.opencreatebox}
-                            style={{paddingTop:10,paddingLeft:60}}
-                        /> </Grid>
+                        ><AddIcon/></Button> </Grid>
                     </Hidden>
                     {subtasklist}
                 </Grid>

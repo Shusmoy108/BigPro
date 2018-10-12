@@ -43,7 +43,7 @@ class TaskBody extends Component {
     };
     createtask = (e) => {
         console.log(e,"beforeaxios");
-        this.props.createproducttask(this.props.id,e);
+        this.props.createproducttask(this.props.id,e,this.state.tasknumber);
 
     };
     deletetask = (e) => {
@@ -55,8 +55,9 @@ class TaskBody extends Component {
     showtask=()=>{
         this.props.showtask(-1);
     };
-    createsubtask = (e,n,f,g) =>{
-        this.props.createproductsubtask(this.props.id,e,n,f,g);
+    createsubtask = (e,n,f,g,i) =>{
+        this.props.createproductsubtask(this.props.id,e,n,f,g,i)
+        console.log(i);
     };
     deletesubtask = (e,n) =>{
         this.props.deleteproductsubtask(this.props.id,e,n);
@@ -66,9 +67,6 @@ class TaskBody extends Component {
     };
     showsubtask = (e) =>{
         this.setState({subtask:e})
-    };
-    createnexttask=(e)=>{
-        this.setState({nexttask:e});
     };
     render() {
         const { classes } = this.props;
@@ -83,7 +81,7 @@ class TaskBody extends Component {
             console.log(this.props.tasklist);
             for (var i = 0; i < this.props.tasklist.length; i++) {
                 tasklist.push(<Task key={i} id={this.props.tasklist[i]._id} task_number={i}
-                                    createnexttask={this.opennextcreatebox}
+                                    opennextcreatebox={this.opennextcreatebox}
                                     showsubtask={this.showsubtask} task_name={this.props.tasklist[i].task_name}
                                     deletetask={this.deletetask} edittask={this.edittask}/>)
                 if(i===this.state.tasknumber){
@@ -106,13 +104,9 @@ class TaskBody extends Component {
                         Steps of {this.props.product_name}
                     </Grid>
                     <Hidden only={["xs"]}>
-                        <Grid item sm={4} xs={6}> <Icon
-                            className={classNames('fa fa-plus-circle')}
-                            color="disabled"
-                            fontSize="default"
+                        <Grid item sm={4} xs={6}> <Button
                             onClick={this.opencreatebox}
-                            style={{paddingTop:10,paddingLeft:60}}
-                        /> </Grid>
+                        ><AddIcon/></Button> </Grid>
                     </Hidden>
                     {tasklist}
                 </Grid>

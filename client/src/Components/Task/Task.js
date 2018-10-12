@@ -6,6 +6,13 @@ import styles from "./taskstyle";
 import PropTypes from 'prop-types';
 import InputBase from "@material-ui/core/Input/Input";
 import Grid from "@material-ui/core/Grid/Grid";
+import Listicon from "@material-ui/icons/List"
+import Editicon from "@material-ui/icons/Edit"
+import Deleteicon from "@material-ui/icons/Delete"
+import Button from "@material-ui/core/Button"
+import DoneIcon from "@material-ui/icons/Done"
+import CloseIcon from "@material-ui/icons/Close"
+import AddIcon from "@material-ui/icons/Add"
 
 class Task extends Component {
     constructor(props) {
@@ -20,20 +27,12 @@ class Task extends Component {
     opencreatebox = () => {
         this.props.opennextcreatebox(this.props.task_number);
     };
-    closecreatebox = () => {
-        //let e=0;
-        this.setState(state => ({ createflag: 0 }));
-    };
     settaskname = (e) => {
         this.setState({ edit_name: e.target.value });
     };
     seteditflag= () => {
         this.setState({ edit_name: this.props.task_name });
         this.setState({ edit_flag:1 });
-    };
-    setnextaskname= (e)=>{
-        this.setState({ task_name: e.target.value });
-        this.setState({ createflag:0 });
     };
     deletetask = () => {
         this.props.deletetask(this.props.task_name);
@@ -42,9 +41,6 @@ class Task extends Component {
         if(this.state.edit_name!==this.props.task_name)
             this.props.edittask(this.props.task_name,this.state.edit_name);
         this.setState({ edit_flag:0 });
-    };
-    createnexttask=()=>{
-        this.props.createnexttask(this.props.task_number);
     };
     showsubtask =()=>{
       this.props.showsubtask(this.props.task_number);
@@ -67,55 +63,31 @@ class Task extends Component {
                 }}
             /></Grid>;
             if(this.state.edit_name===this.props.task_name)
-                button= <Grid sm={4} xs={6}> <Icon
-                    className={classNames('fa fa-times')}
-                    color="disabled"
-                    fontSize="default"
+                button= <Grid sm={4} xs={6}> <Button
                     onClick={this.edittask}
-                    style={{paddingLeft:20, paddingTop:5}}
-                /></Grid>;
+                ><CloseIcon/></Button></Grid>;
             else
-                button= <Grid sm={4} xs={6}> <Icon
-                    className={classNames( 'fa fa-check-circle')}
-                    color="disabled"
-                    fontSize="default"
+                button= <Grid sm={4} xs={6}> <Button
                     onClick={this.edittask}
-                    style={{paddingLeft:20, paddingTop:5}}
-                /></Grid>;
+                ><DoneIcon/></Button></Grid>;
         }
         else{
             task=
-                <Grid item sm={8} xs={6} style={{
+                <Grid item sm={8} xs={3} style={{
                     fontFamily: 'Dekko',
-                    fontSize: 30,
+                    fontSize: 20,
                 }}>
                     {this.props.task_name}
                 </Grid>;
-            button=     <Grid item sm={4} xs={6}><Icon
-                className={classNames('fa fa-list-ul')}
-                color="disabled"
-                fontSize="default"
+            button=     <Grid item sm={4} xs={9}><Button
                 onClick={this.showsubtask}
-                style={{paddingRight:25,paddingTop:12}}
-            /> <Icon
-                className={classNames('fa fa-plus-circle')}
-                color="disabled"
-                fontSize="default"
-                onClick={this.createnexttask}
-                style={{paddingRight:25,paddingTop:12}}
-            /><Icon
-                className={classNames('fa fa-trash')}
-                color="disabled"
-                fontSize="default"
+            ><Listicon/></Button> <Button
+                onClick={this.opencreatebox}
+            ><AddIcon/></Button><Button
                 onClick={this.deletetask}
-                style={{paddingRight:25,paddingTop:12}}
-            /> <Icon
-                className={classNames('fa fa-pencil')}
-                color="disabled"
-                fontSize="default"
+            ><Deleteicon/></Button> <Button
                 onClick={this.seteditflag}
-                style={{paddingRight:25,paddingTop:12}}
-            /></Grid>;
+            ><Editicon/></Button></Grid>;
         }
 
 

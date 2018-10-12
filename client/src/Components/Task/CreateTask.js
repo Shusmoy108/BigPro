@@ -9,7 +9,9 @@ import styles from './taskstyle';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import Grid from "@material-ui/core/Grid/Grid";
-
+import Button from "@material-ui/core/Button"
+import DoneIcon from "@material-ui/icons/Done"
+import CloseIcon from "@material-ui/icons/Close"
 class CreateTask extends Component {
     constructor(props) {
         super(props);
@@ -33,23 +35,14 @@ class CreateTask extends Component {
         const {classes} = this.props;
         let button;
         if (this.state.task_name === "")
-            button = <Icon
-                className={classNames( 'fa fa-times')}
-                color="disabled"
-                fontSize="default"
+            button = <Button
                 onClick={this.closebox}
-                style={{paddingLeft:15, paddingTop: 5}}
-            />;
+            ><CloseIcon/></Button>;
         else
-            button = <Icon
-                className={classNames('fa fa-check-circle')}
-                color="disabled"
-                fontSize="default"
+            button = <Button
                 onClick={this.setcreateflag}
                 style={{paddingLeft:15, paddingTop: 5}}
-
-
-            />;
+            ><DoneIcon/></Button>;
         return (
             <Grid item sm={10} xs={10} style={{paddingLeft:20, paddingTop:10}}>
                 <InputLabel shrink htmlFor="productname" className={classes.bootstrapFormLabel} style={{padding:20}}>

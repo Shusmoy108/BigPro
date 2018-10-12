@@ -12,6 +12,9 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button"
+import DoneIcon from "@material-ui/icons/Done"
+import CloseIcon from "@material-ui/icons/Close"
 let options=[];
 class CreateSubtask extends Component {
     constructor(props) {
@@ -79,37 +82,13 @@ class CreateSubtask extends Component {
             />;
         }
         if(this.state.subtask_name==="")
-            button= <Icon
-                className={classNames(classes.icon, 'fa fa-times')}
-                color="disabled"
-                fontSize="default"
+            button= <Button
                 onClick={this.closebox}
-            />;
+            ><CloseIcon/></Button>;
         else
-            button= <Icon
-                className={classNames(classes.icon, 'fa fa-check-circle')}
-                color="disabled"
-                fontSize="default"
+            button= <Button
                 onClick={this.setcreateflag}
-            />;
-        if (this.state.subtask_name === "")
-            button = <Icon
-                className={classNames( 'fa fa-times')}
-                color="disabled"
-                fontSize="default"
-                onClick={this.closebox}
-                style={{paddingLeft:15, paddingTop: 5}}
-            />;
-        else
-            button = <Icon
-                className={classNames('fa fa-check-circle')}
-                color="disabled"
-                fontSize="default"
-                onClick={this.setcreateflag}
-                style={{paddingLeft:15, paddingTop: 5}}
-
-
-            />;
+            ><DoneIcon/></Button>;
         return (
             <Grid container>
             <Grid item sm={3} xs={10} style={{paddingLeft:20,paddingTop:20}}>

@@ -65,28 +65,11 @@ productRouter.post('/edit', passport.authenticate('jwt', { session: false}), fun
         }
     });
 });
-
-productRouter.post('/edit', passport.authenticate('jwt', { session: false}), function(req, res) {
-    console.log("editproducts");
-    Product.update({product_name: req.body.productname}, {$set: { product_name: req.body.editname}}, {upsert: true}, function(err){
-        if (err) {
-            return res.status(500).send({success: false, msg: 'Server Error.'});
-        }
-        else {
-            Product.find({}, function (err, products) {
-                if (err) throw err;
-                console.log(products);
-                return res.json({success: true, authorized: true, user: req.user, products: products});
-            });
-        }
-    });
-});
-
 productRouter.post('/addtask', function(req, res) {
     console.log(req.body.id,"addtask");
     Product.findByIdAndUpdate(
         req.body.id,
-        {$push: { 'task': {  task_name: req.body.taskname } } },
+        {$push: { 'task': {  $each:[{task_name: req.body.taskname}], $position:(req.body.position+1) } } },
         function (err, model) {
             if (err) {
                 console.log(err,"error");
@@ -95,7 +78,7 @@ productRouter.post('/addtask', function(req, res) {
             else {
                 Product.find({}, function (err, products) {
                     if (err) throw err;
-                    console.log(products,"products");
+                    console.log(model,"products");
                     return res.json({success: true, authorized: true, user: req.user, products: products});
                 });
             }
@@ -143,7 +126,7 @@ productRouter.post('/deletetask', function(req, res) {
 productRouter.post('/addsubtask', function(req, res) {
     console.log(req.body.id,"addsubtask");
     Product.update({"_id": req.body.id, "task._id": req.body.taskname},
-        {$push: {"task.$.subtask":{subtask_name: req.body.subtaskname, subtask_type: req.body.subtasktype, subtask_option:req.body.subtaskoption }}},{upsert: true},function (err, model) {
+        {$push: {"task.$.subtask":{$each:[{subtask_name: req.body.subtaskname, subtask_type: req.body.subtasktype, subtask_option:req.body.subtaskoption}],$position:(req.body.position+1) }}},{upsert: true},function (err, model) {
             if (err) {
                 console.log(err,"error");
                 return res.status(500).send({success: false, msg: 'databswr Error.'});

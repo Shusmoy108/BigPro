@@ -12,7 +12,14 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import Radio from "@material-ui/core/Radio/Radio";
 import FormControl from "@material-ui/core/FormControl/FormControl";
 import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
+import Listicon from "@material-ui/icons/List"
+import Editicon from "@material-ui/icons/Edit"
+import Deleteicon from "@material-ui/icons/Delete"
+import Button from "@material-ui/core/Button"
+import DoneIcon from "@material-ui/icons/Done"
+import CloseIcon from "@material-ui/icons/Close"
+import AddIcon from "@material-ui/icons/Add"
+import Hidden from '@material-ui/core/Hidden'
 let options=[];
 class Subtask extends Component {
     constructor(props) {
@@ -43,6 +50,9 @@ class Subtask extends Component {
     closebox=()=>{
         this.setState({edit_flag: 0});
     };
+    opencreatebox = () => {
+        this.props.opennextcreatebox(this.props.subtask_number);
+    };
     editsubtask = () => {
 
         if((this.state.edit_name!==this.props.subtask_name||this.state.edit_type!==this.props.subtask_type) && this.state.option === "") {
@@ -57,6 +67,9 @@ class Subtask extends Component {
             this.setState({edit_option: options });
         }
 
+    };
+    createnextsubtask=()=>{
+        this.props.createnexttask(this.props.subtask_number);
     };
     handleChange = (event) => {
         this.setState({edit_option: [] });
@@ -144,27 +157,27 @@ class Subtask extends Component {
         }
         else{
             subtask=
-              <Grid item sm={4} xs={4}>
-                  <Typography style={{paddingTop:20}}>
+              <Grid item sm={4} xs={3} style={{
+                  fontFamily: 'Dekko',
+                  fontSize: 20}}>
                     {this.props.subtask_name}
-                  </Typography>
               </Grid>;
-                subtasktype=<Grid item sm={4} xs={4}>
-                    <Typography style={{paddingTop:20}}>
+            subtasktype=<Hidden only={["xs"]}>
+                <Grid item sm={4} style={{
+                    fontFamily: 'Dekko',
+                    fontSize: 20}}>
                     {this.props.subtask_type}
-                    </Typography>
-                </Grid>;
-            button=    <Grid item sm={4} xs={4}> <Icon
-                className={classNames(classes.icon, 'fa fa-trash')}
-                color="disabled"
-                fontSize="default"
+                </Grid>
+            </Hidden>;
+            button=    <Grid item sm={4} xs={9}><Button
+                //onClick={this.opencreatebox}
+                ><Listicon/></Button> <Button
+                onClick={this.opencreatebox}
+            ><AddIcon/></Button><Button
                 onClick={this.deletesubtask}
-            /> <Icon
-                className={classNames(classes.icon, 'fa fa-pencil')}
-                color="disabled"
-                fontSize="default"
+            ><Deleteicon/></Button> <Button
                 onClick={this.seteditflag}
-            /></Grid>;
+            ><Editicon/></Button></Grid>;
         }
 
 
