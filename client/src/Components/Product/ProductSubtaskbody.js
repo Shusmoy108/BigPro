@@ -12,6 +12,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Hidden from "@material-ui/core/Hidden/Hidden";
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from "@material-ui/icons/Add";
+import Showspec from "../Subtask/Showspec";
 
 
 class SubtaskBody extends Component {
@@ -25,7 +26,8 @@ class SubtaskBody extends Component {
             usertype:"",
             username:"",
             showsubtask:-1,
-            subtasknumber:-1
+            subtasknumber:-1,
+            spec:-1
         };
     }
     setpage = (e) => {
@@ -63,6 +65,10 @@ class SubtaskBody extends Component {
     showsubtask=()=>{
       this.props.showsubtask(-1);
     };
+    showspec=(x)=>{
+        console.log(x);
+        this.setState({spec:x});
+    };
 
     render() {
         const { classes } = this.props;
@@ -75,7 +81,7 @@ class SubtaskBody extends Component {
             let subtasklist=[];
 
             for(var i=0;i<this.props.subtasklist.length;i++){
-                subtasklist.push(<Subtask key={i} id={this.props.subtasklist[i]._id} opennextcreatebox={this.opennextcreatebox} subtask_number={i} subtask_name={this.props.subtasklist[i].subtask_name} subtask_type={this.props.subtasklist[i].subtask_type} subtask_option={this.props.subtasklist[i].subtask_option} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask}/>)
+                subtasklist.push(<Subtask key={i} showspec={this.showspec} id={this.props.subtasklist[i]._id} opennextcreatebox={this.opennextcreatebox} subtask_number={i} subtask_name={this.props.subtasklist[i].subtask_name} subtask_type={this.props.subtasklist[i].subtask_type} subtask_option={this.props.subtasklist[i].subtask_option} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask}/>)
                 if(i===this.state.subtasknumber){
                     subtasklist.push(<CreateSubtask createsubtask={this.createsubtask} show={this.closecreatebox} key={this.props.subtasklist.length}/>);
                 }
@@ -116,7 +122,9 @@ class SubtaskBody extends Component {
                     {subtasklist}
                 </Grid>
         }
-        console.log(subtask);
+        if(this.state.spec!==-1){
+            subtask=<Showspec back={this.showspec} subtaskname={this.props.subtasklist[this.state.spec].subtask_name} subtasktype={this.props.subtasklist[this.state.spec].subtask_type} option={this.props.subtasklist[this.state.spec].subtask_option}/>
+        }
         return (
             <div >
                 {subtask}

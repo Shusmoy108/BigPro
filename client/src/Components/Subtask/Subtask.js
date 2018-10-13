@@ -20,6 +20,7 @@ import DoneIcon from "@material-ui/icons/Done"
 import CloseIcon from "@material-ui/icons/Close"
 import AddIcon from "@material-ui/icons/Add"
 import Hidden from '@material-ui/core/Hidden'
+import Showspec from "./Showspec";
 let options=[];
 class Subtask extends Component {
     constructor(props) {
@@ -79,13 +80,16 @@ class Subtask extends Component {
 
         //console.log(this.state.subtask_type)
     };
+    showspec=()=>{
+        this.props.showspec(this.props.subtask_number);
+    }
     render() {
         const { classes } = this.props;
         let subtask,subtasktype;
         let button;
         let option1=[];
         let inputbox,inputlabel;
-        let label1,label2,input1,radio;
+        let label1,label2,input1,radio,page;
         if(this.state.edit_flag===1){
             label1=<FormLabel className={classes.bootstrapFormLabel}>Specification Name<br/></FormLabel>
             input1=   <InputBase
@@ -160,7 +164,7 @@ class Subtask extends Component {
             subtask=
               <Grid item sm={4} xs={3} style={{
                   fontFamily: 'Dekko',
-                  fontSize: 20}}>
+                  fontSize: 15}}>
                     {this.props.subtask_name}
               </Grid>;
             subtasktype=<Hidden only={["xs"]}>
@@ -171,7 +175,7 @@ class Subtask extends Component {
                 </Grid>
             </Hidden>;
             button=    <Grid item sm={4} xs={9}><Button
-                //onClick={this.opencreatebox}
+                onClick={this.showspec}
                 ><Listicon/></Button> <Button
                 onClick={this.opencreatebox}
             ><AddIcon/></Button><Button
@@ -180,14 +184,22 @@ class Subtask extends Component {
                 onClick={this.seteditflag}
             ><Editicon/></Button></Grid>;
         }
-
-
-        return (
-            <Grid container style={{paddingLeft:20}} >
+        if(this.state.spec===-1){
+            page= <Grid container style={{paddingLeft:20}} >
 
                 {subtask}
                 {subtasktype}
                 {button}
+
+            </Grid>
+        }
+        else{
+            page=<Showspec subtaskname={this.props.subtask_name} subtasktype={this.props.subtask_type} option={this.props.subtask_option}/>
+        }
+        return (
+            <Grid container style={{paddingLeft:20}} >
+
+                {page}
 
             </Grid>
         );

@@ -94,7 +94,7 @@ class TaskBody extends Component {
                     {create}
                     <Grid item sm={8} xs={6} style={{
                         fontFamily: 'Dekko',
-                        fontSize: 20,
+                        fontSize: 15,
                         paddingLeft: 20
 
                     }}>

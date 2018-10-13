@@ -107,6 +107,7 @@ class ProductBody extends Component {
         Axios.createproductsubtask(e, n, f, g, h,i, function (err, data) {
             if (err) that.setState({msgLogin: err});
             else {
+                console.log(data.products);
                 that.setState({productlist: data.products});
                 console.log(data.products);
                 console.log("product");
