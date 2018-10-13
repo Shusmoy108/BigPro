@@ -22,7 +22,8 @@ class Subtask extends Component {
             edit_type: this.props.subtask_type,
             edit_option:this.props.subtask_option,
             option:"",
-            edit_flag:0
+            edit_flag:0,
+            spec:-1
         };
     }
     setoption = (e) => {
