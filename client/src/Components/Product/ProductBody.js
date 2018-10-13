@@ -10,8 +10,6 @@ import AddIcon from "@material-ui/icons/Add";
 import Hidden from "@material-ui/core/Hidden"
 import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
-import Icon from "@material-ui/core/Icon/Icon";
-
 import Header from "../Header/Header";
 import ProducTaskbody from './ProductTaskbody';
 
@@ -73,10 +71,10 @@ class ProductBody extends Component {
             }
         })
     };
-    createproducttask = (e, n) => {
+    createproducttask = (e, n,f) => {
         let that = this;
         console.log(e + "beforeaxios");
-        Axios.createproducttask(e, n, function (err, data) {
+        Axios.createproducttask(e, n,f, function (err, data) {
             if (err) that.setState({msgLogin: err});
             else {
                 that.setState({productlist: data.products});
@@ -103,10 +101,10 @@ class ProductBody extends Component {
             }
         })
     };
-    createproductsubtask = (e, n, f, g, h) => {
+    createproductsubtask = (e, n, f, g, h,i) => {
         let that = this;
-        console.log(e, n, f, g, h, "beforeaxios");
-        Axios.createproductsubtask(e, n, f, g, h, function (err, data) {
+        console.log(e, n, f, g, h,i, "beforeaxios");
+        Axios.createproductsubtask(e, n, f, g, h,i, function (err, data) {
             if (err) that.setState({msgLogin: err});
             else {
                 that.setState({productlist: data.products});
@@ -193,13 +191,9 @@ class ProductBody extends Component {
                         Product-List
                     </Grid>
                     <Hidden only={["xs"]}>
-                    <Grid item sm={4} xs={6}> <Icon
-                        className={classNames('fa fa-plus-circle')}
-                        color="disabled"
-                        fontSize="default"
+                    <Grid item sm={4} xs={6}> <Button
                         onClick={this.opencreatebox}
-                        style={{paddingTop:10,paddingLeft:60}}
-                    /> </Grid>
+                    ><AddIcon/></Button> </Grid>
                     </Hidden>
                     {productlist}
                 </Grid>

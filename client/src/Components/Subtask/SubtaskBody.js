@@ -136,7 +136,7 @@ class SubtaskBody extends Component {
                             style={{paddingTop:10,paddingLeft:60}}
                         /> </Grid>
                     </Hidden>
-                    {/*{subtasklist}*/}
+                    {subtasklist}
                 </Grid>
         }
 

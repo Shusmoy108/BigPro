@@ -1,13 +1,17 @@
 
 import React, { Component } from 'react';
-import Icon from "@material-ui/core/Icon/Icon";
-import classNames from 'classnames';
+
 import {withStyles} from "@material-ui/core";
 import styles from "./productstyle";
 import PropTypes from 'prop-types';
 import Grid from "@material-ui/core/Grid"
 import InputBase from "@material-ui/core/Input/Input";
-
+import Listicon from "@material-ui/icons/List"
+import Editicon from "@material-ui/icons/Edit"
+import Deleteicon from "@material-ui/icons/Delete"
+import Button from "@material-ui/core/Button"
+import DoneIcon from "@material-ui/icons/Done"
+import CloseIcon from "@material-ui/icons/Close"
 class Product extends Component {
     constructor(props) {
         super(props);
@@ -42,7 +46,7 @@ class Product extends Component {
         let button;
 
         if(this.state.edit_flag===1){
-            product= <Grid sm={8} xs={6} >   <InputBase
+            product= <Grid item sm={8} xs={6} >   <InputBase
                 id="productname"
                 placeholder="Enter a productname....."
                 value={this.state.edit_name}
@@ -54,51 +58,33 @@ class Product extends Component {
                 }}
             /></Grid>;
             if(this.state.edit_name===this.props.product_name)
-                button= <Grid sm={4} xs={6}> <Icon
-                    className={classNames('fa fa-times')}
-                    color="disabled"
-                    fontSize="default"
+                button= <Grid item sm={4} xs={6}> <Button
                     onClick={this.editproduct}
                     style={{paddingLeft:20, paddingTop:5}}
-                /></Grid>;
+                ><CloseIcon/></Button></Grid>;
             else
-                button= <Grid sm={4} xs={6}> <Icon
-                    className={classNames( 'fa fa-check-circle')}
-                    color="disabled"
-                    fontSize="default"
+                button= <Grid sm={4} xs={6}> <Button
                     onClick={this.editproduct}
-                    style={{paddingLeft:20, paddingTop:5}}
-                /></Grid>;
+                ><DoneIcon/></Button></Grid>;
         }
         else{
             product=
-                <Grid item sm={8} xs={6} style={{
+                <Grid item sm={8} xs={4} style={{
                     fontFamily: 'Dekko',
                     fontSize: 30,
+                    paddingTop:0
                 }}>
                     {this.props.product_name}
                 </Grid>;
-            button=     <Grid item sm={4} xs={6}><Icon
-                className={classNames('fa fa-list-ul')}
-                color="disabled"
-                fontSize="default"
+            button=     <Grid item sm={4} xs={7}><Button
                 onClick={this.showtask}
-                style={{paddingRight:25,paddingTop:12}}
-            /> <Icon
-                className={classNames('fa fa-trash')}
-                color="disabled"
-                fontSize="default"
+            ><Listicon/></Button> <Button
                 onClick={this.deleteproduct}
-                style={{paddingRight:25,paddingTop:12}}
-            /> <Icon
-                className={classNames('fa fa-pencil')}
-                color="disabled"
-                fontSize="default"
+            ><Deleteicon/></Button> <Button
                 onClick={this.seteditflag}
-                style={{paddingRight:25,paddingTop:12}}
-            /></Grid>;
+            ><Editicon/></Button></Grid>;
         }
-
+        console.log(button);
 
         return (
             <Grid container style={{paddingLeft:20,paddingBottom:10}} >

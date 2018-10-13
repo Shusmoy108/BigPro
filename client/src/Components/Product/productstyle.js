@@ -22,6 +22,11 @@ const styles = theme => ({
         bottom: theme.spacing.unit * 2,
         right: theme.spacing.unit * 2
     },
+    button1: {
+        position: "fixed",
+        bottom:  theme.spacing.unit * 2,
+        right: 20
+    },
     bootstrapInput: {
         borderRadius: 4,
         backgroundColor: theme.palette.common.white,

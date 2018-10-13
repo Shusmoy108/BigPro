@@ -5,15 +5,13 @@ import CreateSubtask from '../Subtask/CreateSubtask';
 import styles from '../Subtask/subtaskstyle';
 import classNames from 'classnames';
 import Subtask from '../Subtask/Subtask';
+import BackIcon from "@material-ui/icons/FastRewind"
 
-
-import Paper from "@material-ui/core/Paper/Paper";
-import Table from "@material-ui/core/Table/Table";
-import TableHead from "@material-ui/core/TableHead/TableHead";
-import TableRow from "@material-ui/core/TableRow/TableRow";
-import TableCell from "@material-ui/core/TableCell/TableCell";
 import Icon from "@material-ui/core/Icon/Icon";
-import TableBody from "@material-ui/core/TableBody/TableBody";
+import Grid from "@material-ui/core/Grid/Grid";
+import Hidden from "@material-ui/core/Hidden/Hidden";
+import Button from "@material-ui/core/Button/Button";
+import AddIcon from "@material-ui/icons/Add";
 
 
 class SubtaskBody extends Component {
@@ -25,7 +23,9 @@ class SubtaskBody extends Component {
             taskname:this.props.taskname,
             showpage:"subtask",
             usertype:"",
-            username:""
+            username:"",
+            showsubtask:-1,
+            subtasknumber:-1
         };
     }
     setpage = (e) => {
@@ -37,13 +37,21 @@ class SubtaskBody extends Component {
     opencreatebox = () => {
         let e=1;
         this.setState(state => ({ createflag: e }));
+        this.setState(state => ({ subtasknumber: -1 }));
     };
     closecreatebox = () => {
         let e=0;
         this.setState(state => ({ createflag: e }));
+        this.setState(state => ({ subtasknumber: -1 }));
+    };
+    opennextcreatebox = (x) => {
+        this.setState(state => ({ createflag: 0 }));
+        this.setState(state => ({ subtasknumber: x }));
+        console.log(x);
     };
     createsubtask = (e,n,f) => {
-      this.props.createsubtask(this.state.taskname,e,n,f);
+      this.props.createsubtask(this.state.taskname,e,n,f,this.state.subtasknumber);
+        console.log(this.state.subtasknumber);
         this.setState(state => ({ subtasklist: this.props.subtasklist }));
     };
     deletesubtask = (e) => {
@@ -58,43 +66,71 @@ class SubtaskBody extends Component {
 
     render() {
         const { classes } = this.props;
-        let create;
-        if(this.state.createflag===1) {
-            create = <CreateSubtask createsubtask={this.createsubtask} show={this.closecreatebox}/>;
+        let subtask;
+        if(this.state.showsubtask===-1) {
+            let create;
+            if(this.state.createflag===1) {
+                create = <CreateSubtask createsubtask={this.createsubtask} show={this.closecreatebox}/>;
+            }
+            let subtasklist=[];
+
+            for(var i=0;i<this.props.subtasklist.length;i++){
+                subtasklist.push(<Subtask key={i} id={this.props.subtasklist[i]._id} opennextcreatebox={this.opennextcreatebox} subtask_number={i} subtask_name={this.props.subtasklist[i].subtask_name} subtask_type={this.props.subtasklist[i].subtask_type} subtask_option={this.props.subtasklist[i].subtask_option} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask}/>)
+                if(i===this.state.subtasknumber){
+                    subtasklist.push(<CreateSubtask createsubtask={this.createsubtask} show={this.closecreatebox} key={this.props.subtasklist.length}/>);
+                }
+            }
+            subtask=
+                <Grid container spacing={0}>
+                    {create}
+                    <Hidden only={["xs"]}>
+                        <Grid item sm={8} xs={6} style={{
+                            fontFamily: 'Dekko',
+                            fontSize: 30,
+                            paddingLeft: 20
+
+                        }}>  <Button  variant="flat" onClick={this.showsubtask} color={"primary"}>
+                            <BackIcon />
+                        </Button>
+                            {this.props.product_name}>>{this.props.task_name}
+                        </Grid>
+                    </Hidden>
+
+                    <Hidden only={["sm","md","lg","xl"]}>
+                        <Grid item sm={8} xs={10} style={{
+                            fontFamily: 'Dekko',
+                            fontSize: 20,
+                            paddingLeft: 20
+
+                        }}>  <Button  variant="flat" onClick={this.showsubtask} color={"primary"}>
+                            <BackIcon />
+                        </Button>
+                            {this.props.product_name}>>{this.props.task_name}
+                        </Grid>
+                    </Hidden>
+                    <Hidden only={["xs"]}>
+                        <Grid item sm={4} xs={6}> <Button
+                            onClick={this.opencreatebox}
+                        ><AddIcon/></Button> </Grid>
+                    </Hidden>
+                    {subtasklist}
+                </Grid>
         }
-        let subtasklist=[];
-        for(var i=0;i<this.props.subtasklist.length;i++){
-            subtasklist.push(<Subtask key={i} id={this.props.subtasklist[i]._id} subtask_name={this.props.subtasklist[i].subtask_name} subtask_type={this.props.subtasklist[i].subtask_type} subtask_option={this.props.subtasklist[i].subtask_option} deletesubtask={this.deletesubtask} editsubtask={this.editsubtask}/>)
-        }
-        console.log(this.state.subtasklist);
-        console.log("subtask");
+        console.log(subtask);
         return (
             <div >
-                <Paper className={classes.root}>
-                    {create}
-                    <Table className={classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell component="th" scope="row" ><Icon
-                                    className={classNames(classes.icon, 'fa fa-backward')}
-                                    color="disabled"
-                                    fontSize="default"
-                                    onClick={this.showsubtask}
-                                />  Subtask List</TableCell>
-                                <TableCell>Subtask Type</TableCell>
-                                <TableCell> <Icon
-                                    className={classNames(classes.icon, 'fa fa-plus-circle')}
-                                    color="disabled"
-                                    fontSize="default"
-                                    onClick={this.opencreatebox}
-                                /> </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {subtasklist}
-                        </TableBody>
-                    </Table>
-                </Paper>
+                {subtask}
+                <Hidden only={["sm", "md", "lg", "xl"]}>
+                    <Button
+                        variant="fab"
+                        color="primary"
+                        aria-label="Add"
+                        onClick={this.opencreatebox}
+                        className={classes.button}
+                    >
+                        <AddIcon />
+                    </Button>
+                </Hidden>
             </div>
         );
     }
