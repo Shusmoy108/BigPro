@@ -362,13 +362,13 @@ class Axios {
             callback('unauthorized local', null);
         }
     }
-    createproductsubtask(id,taskname,subtaskname,subtasktype,subtaskoption,position, callback){
+    createproductsubtask(id,taskid,subtaskname,subtasktype,subtaskoption,position,taskname, callback){
 	    console.log(position);
         if(localStorage.getItem('jwtToken')) {
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
             if(id && taskname){
-                axios.post(url + '/product/addsubtask', {id : id,taskname:taskname, subtaskname:subtaskname,subtasktype:subtasktype,subtaskoption:subtaskoption,position:position})
+                axios.post(url + '/product/addsubtask', {id : id,taskname:taskid,taskid:taskname, subtaskname:subtaskname,subtasktype:subtasktype,subtaskoption:subtaskoption,position:position})
                     .then(res => {
                         if(res.data && res.data.success){
                             // console.log(res);

@@ -52,7 +52,7 @@ class SubtaskBody extends Component {
         console.log(x);
     };
     createsubtask = (e,n,f) => {
-      this.props.createsubtask(this.state.taskname,e,n,f,this.state.subtasknumber);
+      this.props.createsubtask(this.state.taskname,e,n,f,this.state.subtasknumber,this.props.task_name);
         console.log(this.state.subtasknumber);
         this.setState(state => ({ subtasklist: this.props.subtasklist }));
     };
@@ -87,7 +87,7 @@ class SubtaskBody extends Component {
                 }
             }
             subtask=
-                <Grid container spacing={0}>
+                <Grid container  direction="row" align="center">
                     {create}
                     <Hidden only={["xs"]}>
                         <Grid item sm={8} xs={6} style={{
@@ -103,7 +103,7 @@ class SubtaskBody extends Component {
                     </Hidden>
 
                     <Hidden only={["sm","md","lg","xl"]}>
-                        <Grid item sm={8} xs={10} style={{
+                        <Grid item sm={6} xs={10} style={{
                             fontFamily: 'Dekko',
                             fontSize: 20,
                             paddingLeft: 20
@@ -115,8 +115,9 @@ class SubtaskBody extends Component {
                         </Grid>
                     </Hidden>
                     <Hidden only={["xs"]}>
-                        <Grid item sm={4} xs={6}> <Button
+                        <Grid item sm={2} xs={6}> <Button
                             onClick={this.opencreatebox}
+                            style={{paddingLeft:280}}
                         ><AddIcon/></Button> </Grid>
                     </Hidden>
                     {subtasklist}

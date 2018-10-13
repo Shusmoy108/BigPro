@@ -162,19 +162,19 @@ class Subtask extends Component {
         }
         else{
             subtask=
-              <Grid item sm={4} xs={3} style={{
+              <Grid item sm={6} xs={3} style={{
                   fontFamily: 'Dekko',
                   fontSize: 15}}>
                     {this.props.subtask_name}
               </Grid>;
             subtasktype=<Hidden only={["xs"]}>
-                <Grid item sm={4} style={{
+                <Grid item sm={3} style={{
                     fontFamily: 'Dekko',
                     fontSize: 20}}>
                     {this.props.subtask_type}
                 </Grid>
             </Hidden>;
-            button=    <Grid item sm={4} xs={9}><Button
+            button=    <Grid item sm={2} xs={9}><Button
                 onClick={this.showspec}
                 ><Listicon/></Button> <Button
                 onClick={this.opencreatebox}
@@ -197,7 +197,7 @@ class Subtask extends Component {
             page=<Showspec subtaskname={this.props.subtask_name} subtasktype={this.props.subtask_type} option={this.props.subtask_option}/>
         }
         return (
-            <Grid container style={{paddingLeft:20}} >
+            <Grid container style={{paddingLeft:5}} >
 
                 {page}
 

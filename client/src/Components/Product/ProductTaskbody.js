@@ -55,8 +55,8 @@ class TaskBody extends Component {
     showtask=()=>{
         this.props.showtask(-1);
     };
-    createsubtask = (e,n,f,g,i) =>{
-        this.props.createproductsubtask(this.props.id,e,n,f,g,i)
+    createsubtask = (e,n,f,g,i,j) =>{
+        this.props.createproductsubtask(this.props.id,e,n,f,g,i,j)
         console.log(i);
     };
     deletesubtask = (e,n) =>{
@@ -90,12 +90,11 @@ class TaskBody extends Component {
             }
             task=
                 <div>
-                <Grid container spacing={0}>
+                <Grid container  direction="row" align="center">
                     {create}
-                    <Grid item sm={8} xs={6} style={{
+                    <Grid item sm={5} xs={6} style={{
                         fontFamily: 'Dekko',
                         fontSize: 15,
-                        paddingLeft: 20
 
                     }}>
                         <Button  variant="flat" onClick={this.showtask} color={"primary"}>
@@ -104,7 +103,7 @@ class TaskBody extends Component {
                         Steps of {this.props.product_name}
                     </Grid>
                     <Hidden only={["xs"]}>
-                        <Grid item sm={4} xs={6}> <Button
+                        <Grid item sm={2} xs={6} style={{paddingLeft:0}}> <Button
                             onClick={this.opencreatebox}
                         ><AddIcon/></Button> </Grid>
                     </Hidden>

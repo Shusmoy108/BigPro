@@ -12,20 +12,32 @@ class Showspec extends Component {
     };
     render(){
         return(
-            <div style={{paddingLeft:20}}>
+            <Grid container  direction="row" align="center">
+                <Grid item sm={12} xs={12}>
                 <Button onClick={this.back}>
                     <BackIcon/>
-                </Button><br/>
-                <Typography variant="title" gutterBottom>
+                </Button>
+                </Grid>
+
+                <Grid item sm={12} xs={12}>
+                <Typography variant="title" gutterBottom style={{ fontFamily: 'Dekko',
+                    fontSize: 30}}>
                     Specification-Name: {this.props.subtaskname}
-                </Typography><br/>
-                <Typography variant="title" gutterBottom>
+                </Typography>
+                </Grid>
+                <Grid item sm={12} xs={12}>
+                <Typography variant="title" gutterBottom style={{ fontFamily: 'Dekko',
+                    fontSize: 30}}>
                     Specification-Type: {this.props.subtasktype}
-                </Typography><br/>
-                <Typography variant="title" gutterBottom>
+                </Typography>
+                </Grid>
+                <Grid item sm={12} xs={12}>
+                <Typography variant="title" gutterBottom style={{ fontFamily: 'Dekko',
+                    fontSize: 30}}>
                     Specification-Option: {this.props.options}
                 </Typography>
-            </div>
+                </Grid>
+            </Grid>
         );
     }
 }

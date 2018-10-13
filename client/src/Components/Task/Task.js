@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Icon from "@material-ui/core/Icon/Icon";
-import classNames from 'classnames';
 import {withStyles} from "@material-ui/core";
 import styles from "./taskstyle";
 import PropTypes from 'prop-types';
@@ -73,13 +71,13 @@ class Task extends Component {
         }
         else{
             task=
-                <Grid item sm={8} xs={3} style={{
+                <Grid item sm={6} xs={3} style={{
                     fontFamily: 'Dekko',
                     fontSize: 20,
                 }}>
                     {this.props.task_name}
                 </Grid>;
-            button=     <Grid item sm={4} xs={9}><Button
+            button=     <Grid item sm={2} xs={9}><Button
                 onClick={this.showsubtask}
             ><Listicon/></Button> <Button
                 onClick={this.opencreatebox}

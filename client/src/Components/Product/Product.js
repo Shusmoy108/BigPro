@@ -46,7 +46,7 @@ class Product extends Component {
         let button;
 
         if(this.state.edit_flag===1){
-            product= <Grid item sm={8} xs={6} >   <InputBase
+            product= <Grid item sm={8} xs={6} style={{  textAlign: "center"}}>   <InputBase
                 id="productname"
                 placeholder="Enter a productname....."
                 value={this.state.edit_name}
@@ -69,14 +69,14 @@ class Product extends Component {
         }
         else{
             product=
-                <Grid item sm={8} xs={4} style={{
+                <Grid item sm={6} xs={4} style={{
                     fontFamily: 'Dekko',
                     fontSize: 30,
-                    paddingTop:0
+                    paddingTop:0,
                 }}>
                     {this.props.product_name}
                 </Grid>;
-            button=     <Grid item sm={4} xs={7}><Button
+            button=     <Grid item sm={2} xs={7}><Button
                 onClick={this.showtask}
             ><Listicon/></Button> <Button
                 onClick={this.deleteproduct}

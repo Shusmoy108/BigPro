@@ -101,10 +101,10 @@ class ProductBody extends Component {
             }
         })
     };
-    createproductsubtask = (e, n, f, g, h,i) => {
+    createproductsubtask = (e, n, f, g, h,i,j) => {
         let that = this;
-        console.log(e, n, f, g, h,i, "beforeaxios");
-        Axios.createproductsubtask(e, n, f, g, h,i, function (err, data) {
+        console.log(e, n, f, g, h,i,j, "beforeaxios");
+        Axios.createproductsubtask(e, n, f, g, h,i,j, function (err, data) {
             if (err) that.setState({msgLogin: err});
             else {
                 console.log(data.products);
@@ -181,9 +181,9 @@ class ProductBody extends Component {
                                           editproduct={this.editproduct}/>)
             }
             product =<div>
-                <Grid container spacing={0}>
+                <Grid container direction="row" align="center" >
                     {create}
-                    <Grid item sm={8} xs={6} style={{
+                    <Grid item sm={6} xs={6} style={{
                         fontFamily: 'Dekko',
                         fontSize: 30,
                         paddingLeft: 20
@@ -192,7 +192,7 @@ class ProductBody extends Component {
                         Product-List
                     </Grid>
                     <Hidden only={["xs"]}>
-                    <Grid item sm={4} xs={6}> <Button
+                    <Grid item sm={2} xs={6}> <Button
                         onClick={this.opencreatebox}
                     ><AddIcon/></Button> </Grid>
                     </Hidden>
