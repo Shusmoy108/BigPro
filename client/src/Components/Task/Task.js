@@ -49,7 +49,7 @@ class Task extends Component {
         let button;
 
         if(this.state.edit_flag===1){
-            task= <Grid sm={8} xs={6} >   <InputBase
+            task= <Grid item sm={8} xs={6} >   <InputBase
                 id="productname"
                 placeholder="Enter a Taskname....."
                 value={this.state.edit_name}
@@ -70,18 +70,26 @@ class Task extends Component {
                 ><DoneIcon/></Button></Grid>;
         }
         else{
+            let add;
+            if(this.props.add===1)
+            {
+                add= <Button
+                onClick={this.opencreatebox}
+            ><AddIcon/></Button>
+            }
             task=
-                <Grid item sm={6} xs={3} style={{
+                <Grid item sm={4} xs={2} style={{
                     fontFamily: 'Dekko',
                     fontSize: 20,
+                    //marginLeft:"10%"
                 }}>
                     {this.props.task_name}
                 </Grid>;
-            button=     <Grid item sm={2} xs={9}><Button
+            button=     <Grid item sm={4} xs={10}
+            // style={{marginLeft:"2%"}}
+             ><Button
                 onClick={this.showsubtask}
-            ><Listicon/></Button> <Button
-                onClick={this.opencreatebox}
-            ><AddIcon/></Button><Button
+            ><Listicon/></Button>{add}<Button
                 onClick={this.deletetask}
             ><Deleteicon/></Button> <Button
                 onClick={this.seteditflag}
@@ -90,7 +98,7 @@ class Task extends Component {
 
 
         return (
-            <Grid container style={{paddingLeft:20,paddingBottom:10}} >
+            <Grid container direction="row" align="center"  >
                 {task}
                 {button}
             </Grid>

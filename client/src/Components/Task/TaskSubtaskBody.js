@@ -30,12 +30,6 @@ class SubtaskBody extends Component {
             spec:-1
         };
     }
-    setpage = (e) => {
-        this.setState(state => ({ showpage: e }));
-        if(this.state.showpage!=="subtask")
-            this.props.history.push('/');
-
-    };
     opencreatebox = () => {
         let e=1;
         this.setState(state => ({ createflag: e }));
@@ -52,16 +46,18 @@ class SubtaskBody extends Component {
         console.log(x);
     };
     createsubtask = (e,n,f) => {
-      this.props.createsubtask(this.state.taskname,e,n,f,this.state.subtasknumber,this.props.task_name);
+      this.props.createsubtask(this.props.taskname,e,n,f,this.state.subtasknumber);
+      this.setState(state => ({ subtasknumber: -1 }));
         console.log(this.state.subtasknumber);
         this.setState(state => ({ subtasklist: this.props.subtasklist }));
     };
     deletesubtask = (e) => {
-        this.props.deletesubtask(this.state.taskname,e);
+        this.props.deletesubtask(this.props.taskname,e);
     };
     editsubtask = (e,n,f,g,) => {
-        this.props.editsubtask(this.state.taskname,e,n,f,g);
+        this.props.editsubtask(this.props.taskname,e,n,f,g);
     };
+
     showsubtask=()=>{
       this.props.showsubtask(-1);
     };
@@ -90,7 +86,7 @@ class SubtaskBody extends Component {
                 <Grid container  direction="row" align="center">
                     {create}
                 
-                        <Grid item sm={4} xs={6} style={{
+                        <Grid item sm={4} xs={10} style={{
                             fontFamily: 'Dekko',
                             fontSize: 15,
                             //marginLeft:"5%"
@@ -98,7 +94,7 @@ class SubtaskBody extends Component {
                         }}>  <Button  variant="flat" onClick={this.showsubtask} color={"primary"}>
                             <BackIcon />
                         </Button>
-                            {this.props.product_name}>>{this.props.task_name}
+                            Specifications of {this.props.taskname}
                         </Grid>
                     <Hidden only={["xs"]}>
                         <Grid item sm={2} xs={6}> <Button

@@ -115,6 +115,7 @@ class SubtaskBody extends Component {
         subtasklist.push(
           <Subtask
             key={i}
+            add={0}
             subtask_number={i}
             id={this.state.subtasklist[i]._id}
             showspec={this.showspec}
@@ -127,7 +128,7 @@ class SubtaskBody extends Component {
         );
       }
       subtask = (
-        <Grid container spacing={0}>
+        <Grid container direction="row" align="center">
           {create}
           <Hidden only={["xs"]}>
             <Grid
@@ -159,15 +160,9 @@ class SubtaskBody extends Component {
             </Grid>
           </Hidden>
           <Hidden only={["xs"]}>
-            <Grid item sm={4} xs={6}>
-              {" "}
-              <Icon
-                className={classNames("fa fa-plus-circle")}
-                color="disabled"
-                fontSize="default"
-                onClick={this.opencreatebox}
-                style={{ paddingTop: 10, paddingLeft: 60 }}
-              />{" "}
+            <Grid item sm={4} xs={6}> <Button  onClick={this.opencreatebox}>
+             <AddIcon/>
+             </Button>
             </Grid>
           </Hidden>
           {subtasklist}

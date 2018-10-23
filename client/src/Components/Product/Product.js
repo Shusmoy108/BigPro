@@ -69,14 +69,14 @@ class Product extends Component {
         }
         else{
             product=
-                <Grid item sm={6} xs={4} style={{
+                <Grid item sm={4} xs={4} style={{
                     fontFamily: 'Dekko',
                     fontSize: 30,
-                    paddingTop:0,
+                    //marginLeft:"30%"
                 }}>
                     {this.props.product_name}
                 </Grid>;
-            button=     <Grid item sm={2} xs={7}><Button
+            button=     <Grid item sm={4} xs={8}><Button
                 onClick={this.showtask}
             ><Listicon/></Button> <Button
                 onClick={this.deleteproduct}
@@ -87,7 +87,7 @@ class Product extends Component {
         console.log(button);
 
         return (
-            <Grid container style={{paddingLeft:20,paddingBottom:10}} >
+            <Grid container  >
             {product}
                 {button}
             </Grid>

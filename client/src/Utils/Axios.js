@@ -243,7 +243,47 @@ class Axios {
         if(localStorage.getItem('jwtToken')) {
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
             if(id && taskname){
-                axios.post(url + '/product/addtask', {id : id,taskname:taskname,position:position})
+                axios.post(url + '/product/addnewtask', {id : id,taskname:taskname,position:position})
+                    .then(res => {
+                        if(res.data && res.data.success){
+                            // console.log(res);
+                            callback(null, res.data);
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error.response);
+                        if(error.response && error.response.data){
+                            if(!error.response.data.authorized){
+                                localStorage.removeItem('jwtToken');
+                                localStorage.removeItem('name');
+                                localStorage.removeItem('username');
+                                callback(error.response.data.msg, null);
+                            }
+                            else{
+                                callback(error.response.data.msg, null);
+                            }
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    });
+            }
+            else {
+                callback("Fill Up all details", null);
+            }
+        }
+        else {
+            callback('unauthorized local', null);
+        }
+    }
+    createproductoldtask(id,task,position, callback){
+        if(localStorage.getItem('jwtToken')) {
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+            if(id && task){
+                axios.post(url + '/product/addoldtask', {id : id,task:task,position:position})
                     .then(res => {
                         if(res.data && res.data.success){
                             // console.log(res);
@@ -487,11 +527,11 @@ class Axios {
             callback('unauthorized local', null);
         }
     }
-    createtask(taskname, callback){
+    createtask(taskname,position, callback){
         if(localStorage.getItem('jwtToken')) {
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
             if(taskname){
-                axios.post(url + '/task/create', {taskname : taskname})
+                axios.post(url + '/task/create', {taskname : taskname,position:position})
                     .then(res => {
                         if(res.data && res.data.success){
                             // console.log(res);
@@ -615,7 +655,7 @@ class Axios {
         if(localStorage.getItem('jwtToken')) {
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
-            axios.post(url + '/task/show')
+            axios.get(url + '/task/show')
                 .then(res => {
                     if(res.data && res.data.success){
                         console.log(res.data,"axios");
@@ -642,6 +682,129 @@ class Axios {
                         callback("Unknown error", null);
                     }
                 });
+        }
+        else {
+            callback('unauthorized local', null);
+        }
+    }
+    createtasksubtask(taskname,subtaskname,subtasktype,subtaskoption,position, callback){
+        if(localStorage.getItem('jwtToken')) {
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+            if(taskname){
+                axios.post(url + '/task/addsubtask', {taskname : taskname,subtaskname:subtaskname,subtasktype:subtasktype,subtaskoption:subtaskoption,position:position})
+                    .then(res => {
+                        if(res.data && res.data.success){
+                            // console.log(res);
+                            callback(null, res.data);
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error.response);
+                        if(error.response && error.response.data){
+                            if(!error.response.data.authorized){
+                                localStorage.removeItem('jwtToken');
+                                localStorage.removeItem('name');
+                                localStorage.removeItem('username');
+                                callback(error.response.data.msg, null);
+                            }
+                            else{
+                                callback(error.response.data.msg, null);
+                            }
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    });
+            }
+            else {
+                callback("Fill Up all details", null);
+            }
+        }
+        else {
+            callback('unauthorized local', null);
+        }
+    }
+    edittasksubtask(taskname,subtaskname,editname,edittype,editoption, callback){
+        if(localStorage.getItem('jwtToken')) {
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+
+            if(subtaskname && taskname){
+                axios.post(url + '/task/editsubtask', {taskname:taskname,subtaskname:subtaskname,edittype:edittype,editoption:editoption, editname:editname})
+                    .then(res => {
+                        if(res.data && res.data.success){
+                            // console.log(res);
+                            callback(null, res.data);
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error.response);
+                        if(error.response && error.response.data){
+                            if(!error.response.data.authorized){
+                                localStorage.removeItem('jwtToken');
+                                localStorage.removeItem('name');
+                                localStorage.removeItem('username');
+                                callback(error.response.data.msg, null);
+                            }
+                            else{
+                                callback(error.response.data.msg, null);
+                            }
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    });
+            }
+            else {
+                callback("Fill Up all details", null);
+            }
+        }
+        else {
+            callback('unauthorized local', null);
+        }
+    }
+    deletetasksubtask(taskname,subtaskname, callback){
+        if(localStorage.getItem('jwtToken')) {
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+
+            //console.log(productname+"inaxios");
+            if(subtaskname && taskname){
+                axios.post(url + '/task/deletesubtask', {taskname:taskname,subtaskname:subtaskname})
+                    .then(res => {
+                        if(res.data && res.data.success){
+                            // console.log(res);
+                            callback(null, res.data);
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error.response);
+                        if(error.response && error.response.data){
+                            if(!error.response.data.authorized){
+                                localStorage.removeItem('jwtToken');
+                                localStorage.removeItem('name');
+                                localStorage.removeItem('username');
+                                callback(error.response.data.msg, null);
+                            }
+                            else{
+                                callback(error.response.data.msg, null);
+                            }
+                        }
+                        else {
+                            callback("Unknown error", null);
+                        }
+                    });
+            }
+            else {
+                callback("Fill Up all details", null);
+            }
         }
         else {
             callback('unauthorized local', null);

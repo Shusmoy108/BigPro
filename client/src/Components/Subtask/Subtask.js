@@ -219,11 +219,12 @@ class Subtask extends Component {
       subtask = (
         <Grid
           item
-          sm={6}
-          xs={3}
+          sm={4}
+          xs={2}
           style={{
             fontFamily: "Dekko",
-            fontSize: 15
+            fontSize: 15,
+            //marginLeft:"5%"
           }}
         >
           {this.props.subtask_name}
@@ -236,24 +237,28 @@ class Subtask extends Component {
             sm={3}
             style={{
               fontFamily: "Dekko",
-              fontSize: 20
+              fontSize: 15
             }}
           >
             {this.props.subtask_type}
           </Grid>
         </Hidden>
       );
-      button = (
-        <Grid item sm={2} xs={9}>
-          <Button onClick={this.showspec}>
-            <Listicon />
-          </Button>{" "}
-          <Button onClick={this.opencreatebox}>
+      let add;
+      if(this.props.add===1){
+add=<Button onClick={this.opencreatebox}>
             <AddIcon />
           </Button>
+      }
+      button = (
+        <Grid item sm={4} xs={10}>
+          <Button onClick={this.showspec}>
+            <Listicon />
+          </Button>
+          {add}
           <Button onClick={this.deletesubtask}>
             <Deleteicon />
-          </Button>{" "}
+          </Button>
           <Button onClick={this.seteditflag}>
             <Editicon />
           </Button>
@@ -262,7 +267,7 @@ class Subtask extends Component {
     }
     if (this.state.spec === -1) {
       page = (
-        <Grid container style={{ paddingLeft: 20 }}>
+        <Grid container>
           {subtask}
           {subtasktype}
           {button}
@@ -278,7 +283,7 @@ class Subtask extends Component {
       );
     }
     return (
-      <Grid container style={{ paddingLeft: 5 }}>
+      <Grid container direction="row" align="center">
         {page}
       </Grid>
     );

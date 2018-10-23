@@ -96,7 +96,7 @@ productRouter.post(
     );
   }
 );
-productRouter.post("/addtask", function(req, res) {
+productRouter.post("/addnewtask", function(req, res) {
   console.log(req.body.id, "addtask");
   Task.findOne({ task_name: req.body.taskname }, function(err, task) {
     if (err) {
@@ -140,6 +140,39 @@ productRouter.post("/addtask", function(req, res) {
     }
   );
 });
+
+productRouter.post("/addoldtask", function(req, res) {
+
+  Product.findByIdAndUpdate(
+        req.body.id,
+    {
+      $push: {
+        task: {
+          $each: [{ task_name: req.body.task.task_name, subtask:req.body.task.subtask }],
+          $position: req.body.position + 1
+        }
+      }
+    },
+    function(err, model) {
+      if (err) {
+        console.log(err, "error");
+        return res.status(500).send({ success: false, msg: "databswr Error." });
+      } else {
+        Product.find({}, function(err, products) {
+          if (err) throw err;
+          console.log(model, "products");
+          return res.json({
+            success: true,
+            authorized: true,
+            user: req.user,
+            products: products
+          });
+        });
+      }
+    }
+  );
+});
+
 
 productRouter.post("/edittask", function(req, res) {
   console.log(req.body.id, "edittask");

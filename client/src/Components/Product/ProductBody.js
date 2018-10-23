@@ -23,7 +23,8 @@ class ProductBody extends Component {
             usertype: "",
             username: "",
             task: -1,
-            subtask: -1
+            subtask: -1,
+            alltask: []
         };
     }
 
@@ -81,6 +82,16 @@ class ProductBody extends Component {
             }
         })
     };
+    createproductoldtask = (e, n,f) => {
+        let that = this;
+        console.log(e + "beforeaxios");
+        Axios.createproductoldtask(e, n,f, function (err, data) {
+            if (err) that.setState({msgLogin: err});
+            else {
+                that.setState({productlist: data.products});
+            }
+        })
+    };
     editproducttask = (e, n, f) => {
         let that = this;
         console.log(e + "beforeaxios");
@@ -112,7 +123,8 @@ class ProductBody extends Component {
                 console.log(data.products);
                 console.log("product");
             }
-        })
+        });
+       
     };
     deleteproductsubtask = (e, n, f) => {
         let that = this;
@@ -181,18 +193,20 @@ class ProductBody extends Component {
                                           editproduct={this.editproduct}/>)
             }
             product =<div>
-                <Grid container direction="row" align="center" >
+                <Grid container  direction="row" align="center" >
                     {create}
-                    <Grid item sm={6} xs={6} style={{
+                    <Grid item sm={4} xs={6} style={{
                         fontFamily: 'Dekko',
                         fontSize: 30,
-                        paddingLeft: 20
-
+                        // marginLeft:"30%"
                     }}>
                         Product-List
                     </Grid>
+                   
                     <Hidden only={["xs"]}>
-                    <Grid item sm={2} xs={6}> <Button
+                    <Grid item sm={2} xs={6}
+                     //style={{marginLeft:"5.5%"}}
+                     > <Button
                         onClick={this.opencreatebox}
                     ><AddIcon/></Button> </Grid>
                     </Hidden>
@@ -209,14 +223,17 @@ class ProductBody extends Component {
                         <AddIcon />
                     </Button>
                 </Hidden>
+               
             </div>
 
 
         }
         else if (this.state.task !== -1) {
             console.log(this.state.productlist[this.state.task], "task");
-            product = <ProducTaskbody createproductsubtask={this.createproductsubtask}
-                                      deleteproductsubtask={this.deleteproductsubtask}
+            product = <ProducTaskbody
+            createproductoldtask={this.createproductoldtask}
+             createproductsubtask={this.createproductsubtask}
+                                   deleteproductsubtask={this.deleteproductsubtask}
                                       editproductsubtask={this.editproductsubtask} showtask={this.showtask}
                                       tasklist={this.state.productlist[this.state.task].task}
                                       id={this.state.productlist[this.state.task]._id}
