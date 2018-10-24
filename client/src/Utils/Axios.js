@@ -408,7 +408,7 @@ class Axios {
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
             if(id && taskname){
-                axios.post(url + '/product/addsubtask', {id : id,taskname:taskid,taskid:taskname, subtaskname:subtaskname,subtasktype:subtasktype,subtaskoption:subtaskoption,position:position})
+                axios.post(url + '/product/addnewsubtask', {id : id,taskname:taskid,taskid:taskname, subtaskname:subtaskname,subtasktype:subtasktype,subtaskoption:subtaskoption,position:position})
                     .then(res => {
                         if(res.data && res.data.success){
                             // console.log(res);

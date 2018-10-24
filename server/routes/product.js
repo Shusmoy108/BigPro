@@ -224,8 +224,8 @@ productRouter.post("/deletetask", function(req, res) {
   );
 });
 
-productRouter.post("/addsubtask", function(req, res) {
-  console.log(req.body.id, "addsubtask");
+productRouter.post("/addnewsubtask", function(req, res) {
+ // console.log(req.body.id, "addsubtask");
   Subtask.findOne({ subtask_name: req.body.subtaskname }, function(
     err,
     subtask

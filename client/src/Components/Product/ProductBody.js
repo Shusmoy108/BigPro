@@ -24,16 +24,10 @@ class ProductBody extends Component {
             username: "",
             task: -1,
             subtask: -1,
-            alltask: []
         };
     }
 
-    setpage = (e) => {
-        this.setState(state => ({showpage: e}));
-        if (this.state.showpage !== "product")
-            this.props.history.push('/');
-
-    };
+   
     opencreatebox = () => {
         let e = 1;
         this.setState(state => ({createflag: e}));

@@ -30,7 +30,7 @@ class SimpleSelect extends React.Component {
         console.log(this.props.values);
         for(let i=0;i<this.props.values.length;i++)
         {
-            values.push(<MenuItem key={i} value={this.props.values[i].task_name}>{this.props.values[i].task_name}</MenuItem>)
+            values.push(<MenuItem key={i} value={this.props.values[i]}>{this.props.values[i]}</MenuItem>)
         }
         return(
       
