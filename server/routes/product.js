@@ -142,13 +142,17 @@ productRouter.post("/addnewtask", function(req, res) {
 });
 
 productRouter.post("/addoldtask", function(req, res) {
-
   Product.findByIdAndUpdate(
-        req.body.id,
+    req.body.id,
     {
       $push: {
         task: {
-          $each: [{ task_name: req.body.task.task_name, subtask:req.body.task.subtask }],
+          $each: [
+            {
+              task_name: req.body.task.task_name,
+              subtask: req.body.task.subtask
+            }
+          ],
           $position: req.body.position + 1
         }
       }
@@ -172,7 +176,6 @@ productRouter.post("/addoldtask", function(req, res) {
     }
   );
 });
-
 
 productRouter.post("/edittask", function(req, res) {
   console.log(req.body.id, "edittask");
@@ -225,7 +228,7 @@ productRouter.post("/deletetask", function(req, res) {
 });
 
 productRouter.post("/addnewsubtask", function(req, res) {
- // console.log(req.body.id, "addsubtask");
+  // console.log(req.body.id, "addsubtask");
   Subtask.findOne({ subtask_name: req.body.subtaskname }, function(
     err,
     subtask
@@ -299,7 +302,44 @@ productRouter.post("/addnewsubtask", function(req, res) {
     }
   );
 });
-
+productRouter.post("/addoldsubtask", function(req, res) {
+  console.log(req.body.id, "addoldsubtask");
+  Product.update(
+    { _id: req.body.id, "task._id": req.body.taskname },
+    {
+      $push: {
+        "task.$.subtask": {
+          $each: [
+            {
+              subtask_name: req.body.subtask.subtask_name,
+              subtask_type: req.body.subtask.subtask_type,
+              subtask_option: req.body.subtask.subtask_option
+            }
+          ],
+          $position: req.body.position + 1
+        }
+      }
+    },
+    { upsert: true },
+    function(err, model) {
+      if (err) {
+        console.log(err, "error");
+        return res.status(500).send({ success: false, msg: "databswr Error." });
+      } else {
+        Product.find({}, function(err, products) {
+          if (err) throw err;
+          console.log(products, "products");
+          return res.json({
+            success: true,
+            authorized: true,
+            user: req.user,
+            products: products
+          });
+        });
+      }
+    }
+  );
+});
 productRouter.post("/deletesubtask", function(req, res) {
   console.log(req.body.id, "deletesubtask");
   Product.update(

@@ -66,7 +66,7 @@ taskRouter.post('/edit', passport.authenticate('jwt', { session: false}), functi
 });
 
 
-taskRouter.post('/addsubtask', passport.authenticate('jwt', { session: false}), function(req, res) {
+taskRouter.post('/addnewsubtask', passport.authenticate('jwt', { session: false}), function(req, res) {
     console.log(req.body.id, "addsubtask");
     Subtask.findOne({ subtask_name: req.body.subtaskname }, function(
       err,
@@ -95,6 +95,37 @@ taskRouter.post('/addsubtask', passport.authenticate('jwt', { session: false}), 
             subtask_name: req.body.subtaskname,
             subtask_type: req.body.subtasktype,
             subtask_option: req.body.subtaskoption
+              }],
+              $position: req.body.position + 1
+          }
+        }
+      },
+      { new: true },
+      function(err, task) {
+        if (err) {
+          console.log(err, "error");
+        }
+        else{
+            Task.find({}, function (err, tasks) {
+                if (err) throw err;
+                console.log(tasks);
+                return res.json({success: true, authorized: true, user: req.user, tasks: tasks});
+            });
+        }
+      }
+    );
+});
+taskRouter.post('/addoldsubtask', passport.authenticate('jwt', { session: false}), function(req, res) {
+    console.log(req.body.id, "addsubtask");
+    Task.findOneAndUpdate(
+      { task_name: req.body.taskname },
+      {
+        $push: {
+          subtask: {
+              $each:[{
+            subtask_name: req.body.subtask.subtask_name,
+            subtask_type: req.body.subtask.subtask_type,
+            subtask_option: req.body.subtask.subtask_option
               }],
               $position: req.body.position + 1
           }
