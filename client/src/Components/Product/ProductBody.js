@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CreateProduct from "./CreateProduct";
 import styles from "./productstyle";
-import classNames from "classnames";
 import Product from "./Product";
 import Axios from "Utils/Axios";
 import AddIcon from "@material-ui/icons/Add";
@@ -37,7 +36,6 @@ class ProductBody extends Component {
   };
   createproduct = e => {
     let that = this;
-    console.log(e + "beforeaxios");
     Axios.createproduct(e, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -47,7 +45,6 @@ class ProductBody extends Component {
   };
   deleteproduct = e => {
     let that = this;
-    //console.log(e+"beforeaxios");
     Axios.deleteproduct(e, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -57,7 +54,6 @@ class ProductBody extends Component {
   };
   editproduct = (e, n) => {
     let that = this;
-    //console.log(e+"beforeaxios");
     Axios.editproduct(e, n, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -67,7 +63,6 @@ class ProductBody extends Component {
   };
   createproducttask = (e, n, f) => {
     let that = this;
-    console.log(e + "beforeaxios");
     Axios.createproducttask(e, n, f, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -77,7 +72,6 @@ class ProductBody extends Component {
   };
   createproductoldtask = (e, n, f) => {
     let that = this;
-    console.log(e + "beforeaxios");
     Axios.createproductoldtask(e, n, f, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -87,7 +81,6 @@ class ProductBody extends Component {
   };
   editproducttask = (e, n, f) => {
     let that = this;
-    console.log(e + "beforeaxios");
     Axios.editproducttask(e, n, f, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -97,7 +90,6 @@ class ProductBody extends Component {
   };
   deleteproducttask = (e, n) => {
     let that = this;
-    //console.log(e+"beforeaxios");
     Axios.deleteproducttask(e, n, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -107,45 +99,33 @@ class ProductBody extends Component {
   };
   createproductoldsubtask = (e, n, f, g, h) => {
     let that = this;
-    console.log("old");
     Axios.createproductoldsubtask(e, n, f, g, h, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
-        console.log(data.products);
         that.setState({ productlist: data.products });
-        console.log(data.products);
-        console.log("product");
       }
     });
   };
   createproductsubtask = (e, n, f, g, h, i, j) => {
     let that = this;
-    console.log(e, n, f, g, h, i, j, "beforeaxios");
     Axios.createproductsubtask(e, n, f, g, h, i, j, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
-        console.log(data.products);
         that.setState({ productlist: data.products });
-        console.log(data.products);
-        console.log("product");
       }
     });
   };
   deleteproductsubtask = (e, n, f) => {
     let that = this;
-    console.log(e, n, f, "beforeaxios");
     Axios.deleteproductsubtask(e, n, f, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
         that.setState({ productlist: data.products });
-        console.log(data.products);
-        console.log("product");
       }
     });
   };
   editproductsubtask = (e, n, f, g, h, i) => {
     let that = this;
-    console.log(e + "beforeaxios");
     Axios.editproductsubtask(e, n, f, g, h, i, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -158,22 +138,18 @@ class ProductBody extends Component {
     let that = this;
     Axios.showproduct(function(err, data) {
       if (err) {
-        console.log(err, "err");
         that.props.history.push("/");
       } else {
-        console.log(data);
         that.setState({
           productlist: data.products,
           usertype: data.user.usertype,
           username: data.user.username
         });
-        console.log(that.state.productlist, "lossss");
       }
     });
   }
 
   showtask = e => {
-    console.log(e);
     this.setState({ task: e });
     this.setState({ subtask: -1 });
   };
@@ -185,9 +161,7 @@ class ProductBody extends Component {
   render() {
     const { classes } = this.props;
     let product;
-    console.log(this.state.task);
     if (this.state.task === -1 && this.state.subtask === -1) {
-      console.log(this.state.productlist);
       let create;
       if (this.state.createflag === 1) {
         create = (
@@ -258,7 +232,6 @@ class ProductBody extends Component {
         </div>
       );
     } else if (this.state.task !== -1) {
-      console.log(this.state.productlist[this.state.task], "task");
       product = (
         <ProducTaskbody
           createproductoldtask={this.createproductoldtask}

@@ -6,8 +6,6 @@ import InputBase from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import styles from './productstyle';
-import Icon from '@material-ui/core/Icon';
-import classNames from 'classnames';
 import Button from "@material-ui/core/Button"
 import DoneIcon from "@material-ui/icons/Done"
 import CloseIcon from "@material-ui/icons/Close"
@@ -21,15 +19,12 @@ class CreateProduct extends Component {
     }
 
     setcreateflag = () => {
-        console.log("here" + this.state.product_name);
         if (this.state.product_name)
             this.props.createproduct(this.state.product_name);
         this.props.show();
     };
 
     setproductname = (e) => {
-        console.log("here" +
-            e.target.value);
         this.setState({product_name: e.target.value});
     };
 

@@ -6,8 +6,6 @@ import InputBase from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import styles from './taskstyle';
-import Icon from '@material-ui/core/Icon';
-import classNames from 'classnames';
 import Grid from "@material-ui/core/Grid/Grid";
 import Button from "@material-ui/core/Button"
 import DoneIcon from "@material-ui/icons/Done"
@@ -20,7 +18,6 @@ class CreateTask extends Component {
         };
     }
     setcreateflag = () => {
-        console.log("here"+this.state.task_name);
         if(this.state.task_name)
             this.props.createtask(this.state.task_name);
         this.props.show();

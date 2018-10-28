@@ -5,8 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/TextField';
 
 import styles from './subtaskstyle';
-import Icon from '@material-ui/core/Icon';
-import classNames from 'classnames';
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -28,7 +26,6 @@ class CreateSubtask extends Component {
     }
 
     setcreateflag = () => {
-        console.log("here"+this.state.subtask_name);
         if(this.state.subtask_name && this.state.option === "") {
             this.props.createsubtask(this.state.subtask_name, this.state.subtask_type, this.state.subtask_option);
             this.props.show();
@@ -48,14 +45,11 @@ class CreateSubtask extends Component {
         this.setState({subtask_option: [] });
         options=[];
         this.setState({subtask_type: event.target.value });
-        console.log(this.state.subtask_type)
     };
     setsubtaskname = (e) => {
-        console.log(e.target.value);
         this.setState({ subtask_name: e.target.value });
     };
     setoption = (e) => {
-        console.log("option chnaging",e.target.value);
         this.setState({ option: e.target.value });
     };
     render() {

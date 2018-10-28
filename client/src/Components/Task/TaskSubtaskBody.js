@@ -3,12 +3,10 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CreateSubtask from "../Subtask/CreateSubtask";
 import styles from "../Subtask/subtaskstyle";
-import classNames from "classnames";
 import Subtask from "../Subtask/Subtask";
 import BackIcon from "@material-ui/icons/FastRewind";
 import Axios from "Utils/Axios";
 import DropDown from "../Dropdown/Dropdown";
-import Icon from "@material-ui/core/Icon/Icon";
 import Grid from "@material-ui/core/Grid/Grid";
 import Hidden from "@material-ui/core/Hidden/Hidden";
 import Button from "@material-ui/core/Button/Button";
@@ -37,10 +35,8 @@ class SubtaskBody extends Component {
     let that = this;
     Axios.showsubtask(function(err, data) {
       if (err) {
-        console.log(err, "err");
         that.props.history.push("/");
       } else {
-        console.log(data);
         that.setState({
           allsubtask: data.subtasks,
           subtaskname: data.subtasks[0].subtask_name
@@ -50,8 +46,6 @@ class SubtaskBody extends Component {
           subtasknames.push(data.subtasks[i].subtask_name);
         }
         that.setState({ subtasknames: subtasknames });
-
-        //console.log(that.state.subtasklist, "lossss");
       }
     });
   }
@@ -71,8 +65,6 @@ class SubtaskBody extends Component {
   };
   opennextcreatebox = x => {
     this.setState(state => ({ createflag: 1 }));
-    //this.setState(state => ({ subtasknumber: x }));
-    console.log(x);
   };
   createsubtask = (e, n, f) => {
     this.props.createsubtask(
@@ -83,7 +75,6 @@ class SubtaskBody extends Component {
       this.state.subtasknumber
     );
     this.setState(state => ({ subtasknumber: -1 }));
-    console.log(this.state.subtasknumber);
     let subtask = {
       subtask_name: e,
       subtask_type: n,
@@ -120,7 +111,6 @@ class SubtaskBody extends Component {
     this.props.showsubtask(-1);
   };
   showspec = x => {
-    console.log(x);
     this.setState({ spec: x });
   };
   handlesubtaskname = subtaskname => {

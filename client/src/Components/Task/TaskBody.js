@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CreateTask from "./CreateTask";
 import styles from "./taskstyle";
-import classNames from "classnames";
 import Task from "./Task";
 import Axios from "Utils/Axios";
 import Header from "../Header/Header";
@@ -30,7 +29,6 @@ class TaskBody extends Component {
 
   opencreatebox = () => {
     this.setState({ createflag: 1 });
-    console.log(this.state.createflag);
   };
   closecreatebox = () => {
     this.setState({ createflag: 0 });
@@ -39,7 +37,6 @@ class TaskBody extends Component {
   opennextcreatebox = x => {
     this.setState(state => ({ createflag: 0 }));
     this.setState(state => ({ tasknumber: x }));
-    console.log(x);
   };
   closenextcreatebox = () => {
     this.setState(state => ({ craetenextflag: 0 }));
@@ -48,7 +45,6 @@ class TaskBody extends Component {
 
   createtask = e => {
     let that = this;
-    console.log(e, "beforeaxios");
     Axios.createtask(e, this.state.tasknumber, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -59,7 +55,6 @@ class TaskBody extends Component {
   closenext() {}
   deletetask = e => {
     let that = this;
-    //console.log(e+"beforeaxios");
     Axios.deletetask(e, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -69,7 +64,6 @@ class TaskBody extends Component {
   };
   edittask = (e, n) => {
     let that = this;
-    //console.log(e+"beforeaxios");
     Axios.edittask(e, n, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -81,23 +75,17 @@ class TaskBody extends Component {
     this.setState({ subtask: e });
   };
   createsubtask = (e, n, f, g, i) => {
-    //this.props.createproductsubtask(e,n,f,g,i,j)
     let that = this;
-    console.log(e, n, g, f, i);
-    //console.log(e+"beforeaxios");
     Axios.createtasksubtask(e, n, f, g, i, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
         that.setState({ tasklist: data.tasks });
       }
     });
-    console.log(i);
   };
   createoldsubtask = (e, n, f) => {
-    //this.props.createproductsubtask(e,n,f,g,i,j)
     let that = this;
 
-    //console.log(e+"beforeaxios");
     Axios.createtaskoldsubtask(e, n, f, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -113,7 +101,6 @@ class TaskBody extends Component {
         that.setState({ tasklist: data.tasks });
       }
     });
-    //this.props.deleteproductsubtask(this.props.id,e,n);
   };
   editsubtask = (e, n, f, g, i) => {
     let that = this;
@@ -123,22 +110,18 @@ class TaskBody extends Component {
         that.setState({ tasklist: data.tasks });
       }
     });
-    //this.props.editproductsubtask(this.props.id,e,n,f,g,i);
   };
   componentDidMount() {
     let that = this;
     Axios.showtask(function(err, data) {
       if (err) {
-        console.log(err, "err");
         that.props.history.push("/");
       } else {
-        console.log(data);
         that.setState({
           tasklist: data.tasks,
           usertype: data.user.usertype,
           username: data.user.username
         });
-        console.log(that.state.tasklist, "lossss");
       }
     });
   }

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CreateTask from "../Task/CreateTask";
 import styles from "../Task/taskstyle";
-import classNames from "classnames";
 import Task from "../Task/Task";
 import Axios from "Utils/Axios";
 import ProductSubtaskbody from "./ProductSubtaskbody";
@@ -31,9 +30,7 @@ class TaskBody extends Component {
     let that = this;
     Axios.showtask(function(err, data) {
       if (err) {
-        console.log(err);
       } else {
-        console.log(data.tasks, "producttsk");
         that.setState({
           alltask: data.tasks,
           taskname: data.tasks[0].task_name
@@ -48,7 +45,6 @@ class TaskBody extends Component {
   }
   opencreatebox = () => {
     this.setState({ createflag: 1 });
-    //console.log(this.state.createflag);
   };
   openalltask = e => {
     this.setState({ createflag: -1 });
@@ -67,7 +63,6 @@ class TaskBody extends Component {
     this.setState(state => ({ tasknumber: -1 }));
   };
   createtask = e => {
-    console.log(e, "beforeaxios");
     this.props.createproducttask(this.props.id, e, this.state.tasknumber);
     let alltask = this.state.alltask;
     let task = {
@@ -99,7 +94,6 @@ class TaskBody extends Component {
   };
   createsubtask = (e, n, f, g, i, j) => {
     this.props.createproductsubtask(this.props.id, e, n, f, g, i, j);
-    console.log(i);
   };
   createoldsubtask = (e, n, f, g) => {
     this.props.createproductoldsubtask(this.props.id, e, n, f, g);
@@ -144,9 +138,7 @@ class TaskBody extends Component {
           />
         );
       }
-      console.log(create, this.state.createflag);
       let tasklist = [];
-      console.log(this.props.tasklist);
       for (var i = 0; i < this.props.tasklist.length; i++) {
         tasklist.push(
           <Task
@@ -236,7 +228,6 @@ class TaskBody extends Component {
         </div>
       );
     } else {
-      console.log(this.props.tasklist, "task");
       task = (
         <ProductSubtaskbody
           product_name={this.props.product_name}

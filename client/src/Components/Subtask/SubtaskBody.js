@@ -3,13 +3,11 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CreateSubtask from "./CreateSubtask";
 import styles from "./subtaskstyle";
-import classNames from "classnames";
 import Subtask from "./Subtask";
 import Axios from "Utils/Axios";
 
 import AddIcon from "@material-ui/icons/Add";
 
-import Icon from "@material-ui/core/Icon/Icon";
 import Header from "../Header/Header";
 
 import Grid from "@material-ui/core/Grid/Grid";
@@ -45,7 +43,6 @@ class SubtaskBody extends Component {
   };
   createsubtask = (e, n, f) => {
     let that = this;
-    console.log(e, "beforeaxios");
     Axios.createsubtask(e, n, f, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -55,7 +52,6 @@ class SubtaskBody extends Component {
   };
   deletesubtask = e => {
     let that = this;
-    //console.log(e+"beforeaxios");
     Axios.deletesubtask(e, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -65,8 +61,6 @@ class SubtaskBody extends Component {
   };
   editsubtask = (e, n, f, g) => {
     let that = this;
-    //console.log(e+"beforeaxios");
-    console.log(n, f, g);
     Axios.editsubtask(e, n, f, g, function(err, data) {
       if (err) that.setState({ msgLogin: err });
       else {
@@ -79,21 +73,17 @@ class SubtaskBody extends Component {
     let that = this;
     Axios.showsubtask(function(err, data) {
       if (err) {
-        console.log(err, "err");
         that.props.history.push("/");
       } else {
-        console.log(data);
         that.setState({
           subtasklist: data.subtasks,
           usertype: data.user.usertype,
           username: data.user.username
         });
-        console.log(that.state.subtasklist, "lossss");
       }
     });
   }
   showspec = x => {
-    console.log(x);
     this.setState({ spec: x });
   };
 
@@ -160,9 +150,11 @@ class SubtaskBody extends Component {
             </Grid>
           </Hidden>
           <Hidden only={["xs"]}>
-            <Grid item sm={4} xs={6}> <Button  onClick={this.opencreatebox}>
-             <AddIcon/>
-             </Button>
+            <Grid item sm={4} xs={6}>
+              {" "}
+              <Button onClick={this.opencreatebox}>
+                <AddIcon />
+              </Button>
             </Grid>
           </Hidden>
           {subtasklist}

@@ -29,7 +29,6 @@ class Product extends Component {
         this.setState({ open: false });
     };
     setproductname = e => {
-        console.log("here" + e.target.value);
         this.setState({ edit_name: e.target.value });
     };
     seteditflag = () => {
@@ -122,7 +121,6 @@ class Product extends Component {
                 </Grid>
             );
         }
-        console.log(button);
 
         return (
             <Grid container>
