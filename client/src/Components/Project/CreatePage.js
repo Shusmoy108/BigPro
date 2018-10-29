@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-
-import InputBase from "@material-ui/core/Input";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -11,7 +11,6 @@ import Header from "../Header/Header";
 import styles from "../Product/productstyle";
 
 import Axios from "Utils/Axios";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import DoneIcon from "@material-ui/icons/Done";
 import CloseIcon from "@material-ui/icons/Close";
@@ -31,9 +30,21 @@ class CreatePage extends Component {
       username: "",
       productnames: [],
       createflag: 0,
+      errors: {},
       product: {
         task: []
       },
+      taskError: [
+        {
+          task_name: "",
+          subtask: [
+            {
+              subtask_name: "",
+              subtask_error: ""
+            }
+          ]
+        }
+      ],
       task: [
         {
           task_name: "",
@@ -60,17 +71,28 @@ class CreatePage extends Component {
           product_name: data.products[0].product_name
         });
         let tasks = [];
+        let taskError = [];
         data.products[0].task.map((taski, i) => {
           let task = {
             task_name: taski.task_name,
             subtask: []
           };
+          let taskerr = {
+            task_name: taski.task_name,
+            subtask: []
+          };
           taski.subtask.map((subtaskj, j) => {
+            let subtask_err = {
+              subtask_name: subtaskj.subtask_name,
+              subtask_error: ""
+            };
+            taskerr.subtask.push(subtask_err);
             if (subtaskj.subtask_type === "Dropdown") {
               let subtask = {
                 subtask_name: subtaskj.subtask_name,
                 subtask_value: ""
               };
+
               subtask.subtask_value = subtaskj.subtask_option[0];
               task.subtask.push(subtask);
             } else if (subtaskj.subtask_type === "Checkbox") {
@@ -92,9 +114,12 @@ class CreatePage extends Component {
             }
           });
           tasks.push(task);
+          taskError.push(taskerr);
         });
-        that.setState({ task: tasks }, () => {
-          that.setState({ product: data.products[0] });
+        that.setState({ taskError: taskError }, () => {
+          that.setState({ task: tasks }, () => {
+            that.setState({ product: data.products[0] });
+          });
         });
 
         let productnames = [];
@@ -112,12 +137,23 @@ class CreatePage extends Component {
       product => product.product_name === product_name.target.value
     );
     let tasks = [];
+    let taskError = [];
+
     product.task.map((taski, i) => {
       let task = {
         task_name: taski.task_name,
         subtask: []
       };
+      let taskerr = {
+        task_name: taski.task_name,
+        subtask: []
+      };
       taski.subtask.map((subtaskj, j) => {
+        let subtask_err = {
+          subtask_name: subtaskj.subtask_name,
+          subtask_error: ""
+        };
+        taskerr.subtask.push(subtask_err);
         if (subtaskj.subtask_type === "Dropdown") {
           let subtask = {
             subtask_name: subtaskj.subtask_name,
@@ -144,10 +180,11 @@ class CreatePage extends Component {
         }
       });
       tasks.push(task);
+      taskError.push(taskerr);
     });
     if (tasks.length === product.task.length) {
-      this.setState({ product: { task: [] } }, () => {
-        this.setState({ task: tasks }, () => {
+      this.setState({ product: { task: [] }, taskError: [] }, () => {
+        this.setState({ task: tasks, taskError: taskError }, () => {
           this.setState({ product: product });
         });
       });
@@ -221,21 +258,26 @@ class CreatePage extends Component {
           }}
         >
           <div>
-            <div style={{ padding: "5% 0" }}>
-              <InputLabel
-                shrink
-                htmlFor="productname"
-                className={classes.bootstrapFormLabel}
-                style={{ paddingRight: "5%" }}
+            <div>
+              <FormControl style={{ fullWidth: "true", width: "100%" }}>
+                <InputLabel
+                  htmlFor="adornment-amount"
+                  style={{ marginRight: 10 }}
+                >
+                  Project Id
+                </InputLabel>
+                <Input
+                  id="standard-required"
+                  value={this.state.project_id}
+                  onChange={this.handleChange("project_id")}
+                />
+              </FormControl>
+              <FormHelperText
+                id="component-error-text"
+                style={{ color: "red" }}
               >
-                Project ID{" "}
-              </InputLabel>
-              <InputBase
-                id="productname"
-                placeholder="Enter a Project ID....."
-                value={this.state.project_id}
-                onChange={this.handleChange("project_id")}
-              />
+                {this.state.errors.project_id}
+              </FormHelperText>
             </div>
             <div style={{ padding: "5% 0" }}>
               <InputLabel
@@ -253,68 +295,80 @@ class CreatePage extends Component {
                 {values}
               </Select>
             </div>
-            <div style={{ padding: "5% 0" }}>
-              <InputLabel
-                shrink
-                htmlFor="productname"
-                className={classes.bootstrapFormLabel}
-                style={{ paddingRight: "0" }}
+            <div>
+              <FormControl style={{ fullWidth: "true", width: "100%" }}>
+                <InputLabel
+                  htmlFor="adornment-amount"
+                  style={{ marginRight: 10 }}
+                >
+                  Client Name
+                </InputLabel>
+                <Input
+                  id="standard-required"
+                  value={this.state.client_name}
+                  onChange={this.handleChange("client_name")}
+                />
+              </FormControl>
+              <FormHelperText
+                id="component-error-text"
+                style={{ color: "red" }}
               >
-                Client Name:{" "}
-              </InputLabel>
-              <InputBase
-                id="productname"
-                placeholder="Enter a Client Name....."
-                value={this.state.client_name}
-                onChange={this.handleChange("client_name")}
-              />
+                {this.state.errors.client_name}
+              </FormHelperText>
             </div>
-            <div style={{ padding: "5% 0" }}>
-              <InputLabel
-                shrink
-                htmlFor="productname"
-                className={classes.bootstrapFormLabel}
-                style={{ paddingRight: "5%" }}
+            <div>
+              <FormControl style={{ fullWidth: "true", width: "100%" }}>
+                <InputLabel
+                  htmlFor="adornment-amount"
+                  style={{ marginRight: 10 }}
+                >
+                  Quantity
+                </InputLabel>
+                <Input
+                  id="standard-required"
+                  value={this.state.quantity}
+                  onChange={this.handleChange("quantity")}
+                />
+              </FormControl>
+              <FormHelperText
+                id="component-error-text"
+                style={{ color: "red" }}
               >
-                Quantity :
-              </InputLabel>
-              <InputBase
-                id="productname"
-                placeholder="Enter a Quantity....."
-                value={this.state.quantity}
-                onChange={this.handleChange("quantity")}
-              />
+                {this.state.errors.quantity}
+              </FormHelperText>
             </div>
-            <div style={{ padding: "5% 0" }}>
-              <InputLabel
-                shrink
-                htmlFor="productname"
-                className={classes.bootstrapFormLabel}
+            <div>
+              <FormControl style={{ fullWidth: "true", width: "100%" }}>
+                <InputLabel
+                  htmlFor="adornment-amount"
+                  style={{ marginRight: 10 }}
+                >
+                  Deadline
+                </InputLabel>
+                <Input
+                  type="datetime-local"
+                  id="standard-required"
+                  value={this.state.deadline}
+                  onChange={this.handleChange("deadline")}
+                />
+              </FormControl>
+              <FormHelperText
+                id="component-error-text"
+                style={{ color: "red" }}
               >
-                Deadline:{" "}
-              </InputLabel>
-              <TextField
-                type="datetime-local"
-                value={this.state.deadline}
-                onChange={this.handleChange("deadline")}
-              />
+                {this.state.errors.deadline}
+              </FormHelperText>
             </div>
+
+            <CreateProject
+              product={this.state.product}
+              handleSpecChange={this.handdleSpecChange}
+              handleCheckChange={this.handleCheckChange}
+              task={this.state.task}
+              taskError={this.state.taskError}
+            />
+            {button}
           </div>
-        </div>
-        <CreateProject
-          product={this.state.product}
-          handleSpecChange={this.handdleSpecChange}
-          handleCheckChange={this.handleCheckChange}
-          task={this.state.task}
-        />
-        <div
-          style={{
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "center"
-          }}
-        >
-          {button}
         </div>
       </div>
     );

@@ -9,7 +9,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import styles from "../Product/productstyle";
-
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
 class CreateProject extends Component {
   constructor(props) {
@@ -58,37 +59,74 @@ class CreateProject extends Component {
           if (subtaskj.subtask_type === "Textfield") {
             tasks.push(
               <div>
-                {subtaskname}
-
-                <InputBase
-                  id="productname"
-                  //placeholder="Enter a Project ID....."
-                  value={this.props.task[i].subtask[j].subtask_value}
-                  onChange={this.props.handleSpecChange(i, j)}
-                />
+                <FormControl style={{ fullWidth: "true", width: "100%" }}>
+                  <InputLabel
+                    htmlFor="adornment-amount"
+                    style={{ marginRight: 10 }}
+                  >
+                    {subtaskj.subtask_name}
+                  </InputLabel>
+                  <Input
+                    id="standard-required"
+                    value={this.props.task[i].subtask[j].subtask_value}
+                    onChange={this.props.handleSpecChange(i, j)}
+                  />
+                </FormControl>
+                <FormHelperText
+                  id="component-error-text"
+                  style={{ color: "red" }}
+                >
+                  {this.props.taskError[i].subtask[j].subtask_err}
+                </FormHelperText>
               </div>
             );
           } else if (subtaskj.subtask_type === "Number") {
             tasks.push(
               <div>
-                {subtaskname}
-                <InputBase
-                  id="productname"
-                  //placeholder="Enter a Project ID....."
-                  value={this.props.task[i].subtask[j].subtask_value}
-                  onChange={this.props.handleSpecChange(i, j)}
-                />
+                <FormControl style={{ fullWidth: "true", width: "100%" }}>
+                  <InputLabel
+                    htmlFor="adornment-amount"
+                    style={{ marginRight: 10 }}
+                  >
+                    {subtaskj.subtask_name}
+                  </InputLabel>
+                  <Input
+                    id="standard-required"
+                    value={this.props.task[i].subtask[j].subtask_value}
+                    onChange={this.props.handleSpecChange(i, j)}
+                  />
+                </FormControl>
+                <FormHelperText
+                  id="component-error-text"
+                  style={{ color: "red" }}
+                >
+                  {this.props.taskError[i].subtask[j].subtask_err}
+                </FormHelperText>
               </div>
             );
           } else if (subtaskj.subtask_type === "Date") {
             tasks.push(
               <div>
-                {subtaskname}
-                <TextField
-                  type="datetime-local"
-                  value={this.props.task[i].subtask[j].subtask_value}
-                  onChange={this.props.handleSpecChange(i, j)}
-                />
+                <FormControl style={{ fullWidth: "true", width: "100%" }}>
+                  <InputLabel
+                    htmlFor="adornment-amount"
+                    style={{ marginRight: 10 }}
+                  >
+                    {subtaskj.subtask_name}
+                  </InputLabel>
+                  <Input
+                    type="datetime-local"
+                    id="standard-required"
+                    value={this.props.task[i].subtask[j].subtask_value}
+                    onChange={this.props.handleSpecChange(i, j)}
+                  />
+                </FormControl>
+                <FormHelperText
+                  id="component-error-text"
+                  style={{ color: "red" }}
+                >
+                  {this.props.taskError[i].subtask[j].subtask_err}
+                </FormHelperText>
               </div>
             );
           } else if (subtaskj.subtask_type === "Dropdown") {
