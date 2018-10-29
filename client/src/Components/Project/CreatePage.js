@@ -66,16 +66,30 @@ class CreatePage extends Component {
             subtask: []
           };
           taski.subtask.map((subtaskj, j) => {
-            let subtask = {
-              subtask_name: subtaskj.subtask_name,
-              subtask_type: subtaskj.subtask_type,
-              subtask_value: ""
-            };
-
             if (subtaskj.subtask_type === "Dropdown") {
+              let subtask = {
+                subtask_name: subtaskj.subtask_name,
+                subtask_value: ""
+              };
               subtask.subtask_value = subtaskj.subtask_option[0];
+              task.subtask.push(subtask);
+            } else if (subtaskj.subtask_type === "Checkbox") {
+              let subtask = {
+                subtask_name: subtaskj.subtask_name,
+                subtask_value: [],
+                subtask_check: []
+              };
+              subtaskj.subtask_option.map((e, c) => {
+                subtask.subtask_check[c] = false;
+              });
+              task.subtask.push(subtask);
+            } else {
+              let subtask = {
+                subtask_name: subtaskj.subtask_name,
+                subtask_value: ""
+              };
+              task.subtask.push(subtask);
             }
-            task.subtask.push(subtask);
           });
           tasks.push(task);
         });
@@ -104,14 +118,30 @@ class CreatePage extends Component {
         subtask: []
       };
       taski.subtask.map((subtaskj, j) => {
-        let subtask = {
-          subtask_name: subtaskj.subtask_name,
-          subtask_value: ""
-        };
         if (subtaskj.subtask_type === "Dropdown") {
+          let subtask = {
+            subtask_name: subtaskj.subtask_name,
+            subtask_value: ""
+          };
           subtask.subtask_value = subtaskj.subtask_option[0];
+          task.subtask.push(subtask);
+        } else if (subtaskj.subtask_type === "Checkbox") {
+          let subtask = {
+            subtask_name: subtaskj.subtask_name,
+            subtask_value: [],
+            subtask_check: []
+          };
+          subtaskj.subtask_option.map((e, c) => {
+            subtask.subtask_check[c] = false;
+          });
+          task.subtask.push(subtask);
+        } else {
+          let subtask = {
+            subtask_name: subtaskj.subtask_name,
+            subtask_value: ""
+          };
+          task.subtask.push(subtask);
         }
-        task.subtask.push(subtask);
       });
       tasks.push(task);
     });
@@ -130,6 +160,18 @@ class CreatePage extends Component {
   handdleSpecChange = (i, j) => e => {
     let task = this.state.task;
     task[i].subtask[j].subtask_value = e.target.value;
+    this.setState({ task: task });
+  };
+  handleCheckChange = (i, j, k, e) => {
+    let task = this.state.task;
+    task[i].subtask[j].subtask_check[k] = !task[i].subtask[j].subtask_check[k];
+    if (task[i].subtask[j].subtask_check[k]) {
+      task[i].subtask[j].subtask_value.push(e);
+    } else {
+      var index = task[i].subtask[j].subtask_value.indexOf(e);
+      if (index !== -1) task[i].subtask[j].subtask_value.splice(index, 1);
+    }
+    console.log(task[i].subtask[j].subtask_value);
     this.setState({ task: task });
   };
   createproject = () => {};
@@ -262,6 +304,7 @@ class CreatePage extends Component {
         <CreateProject
           product={this.state.product}
           handleSpecChange={this.handdleSpecChange}
+          handleCheckChange={this.handleCheckChange}
           task={this.state.task}
         />
         <div

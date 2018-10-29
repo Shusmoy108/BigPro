@@ -7,7 +7,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input/Input";
-
+import Checkbox from "@material-ui/core/Checkbox";
 import styles from "../Product/productstyle";
 
 import TextField from "@material-ui/core/TextField";
@@ -113,6 +113,25 @@ class CreateProject extends Component {
               </div>
             );
           } else if (subtaskj.subtask_type === "Checkbox") {
+            let value = [];
+            subtaskj.subtask_option.map((f, k) => {
+              value.push(
+                <div>
+                  <Checkbox
+                    checked={this.props.task[i].subtask[j].subtask_check[k]}
+                    onChange={() => this.props.handleCheckChange(i, j, k, f)}
+                    color="primary"
+                  />
+                  {f}
+                </div>
+              );
+            });
+            tasks.push(
+              <div>
+                {subtaskname}
+                {value}
+              </div>
+            );
           }
         });
       });
