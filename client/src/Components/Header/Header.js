@@ -100,7 +100,7 @@ class MenuAppBar extends React.Component {
     return (
       <div>
         <AppBar position="static">
-          <Hidden only={"xs"}>
+          <Hidden only={["xs", "sm"]}>
             <Toolbar>
               <div style={{ flex: 1 }}>
                 {button}
@@ -129,7 +129,7 @@ class MenuAppBar extends React.Component {
                     padding: 9
                   }}
                   value="pendingproject"
-                  onClick={e => this.setpage(e, "pendingproject")}
+                  onClick={() => this.props.history.push("/project/pending")}
                 >
                   Pending Project
                 </Button>
@@ -167,8 +167,14 @@ class MenuAppBar extends React.Component {
               </Button>
             </Toolbar>
           </Hidden>
-          <Hidden only={["sm", "md", "lg", "xl"]}>
-            <Toolbar>
+          <Hidden only={["md", "lg", "xl"]}>
+            <Toolbar
+              style={{
+                display: "flex",
+                alignContent: "center",
+                justifyContent: "center"
+              }}
+            >
               <Button
                 aria-owns={project ? "simple-menu" : null}
                 aria-haspopup="true"
