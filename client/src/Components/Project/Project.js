@@ -95,9 +95,10 @@ class Project extends Component {
           </div>
         </div>
         <Button
-          onClick={() => {
-            window.print();
-          }}
+        //   onClick={() => {
+        //     window.print();
+        //   }}
+        onClick={this.printDocument}
         >
           <PrintIcon />
         </Button>

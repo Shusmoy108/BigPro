@@ -5,6 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { getProjects } from "../../Utils/projectAxios";
 import Header from "../Header/Header";
 import Project from "./Project";
+import Grid from "@material-ui/core/Grid";
+import ProjectCard from "./ProjectCard";
 
 class ShowProject extends Component {
     constructor(props) {
@@ -36,9 +38,18 @@ class ShowProject extends Component {
                     username={this.state.username}
                     usertype={this.state.usertype}
                 />
-                {this.state.projects.length && (
-                    <Project project={this.state.projects[1]} />
-                )}
+                <div style={{ margin: "2% 3%" }}>
+                    <Grid container>
+                        {this.state.projects.length &&
+                            this.state.projects.map((project, i) => {
+                                return (
+                                    <Grid item sm={4} xs={6}>
+                                        <ProjectCard project={project} />
+                                    </Grid>
+                                );
+                            })}
+                    </Grid>
+                </div>
             </div>
         );
     }
