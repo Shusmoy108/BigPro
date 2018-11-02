@@ -85,7 +85,7 @@ class CreateSubtask extends Component {
             ><DoneIcon/></Button>;
         return (
             <Grid container>
-            <Grid item sm={3} xs={10} style={{paddingLeft:20,paddingTop:20}}>
+            <Grid item sm={3} xs={10} style={{marginLeft:20,marginTop:20}}>
                 <Typography  variant="title" gutterBottom>
                     Specification-Name
                 </Typography>
@@ -100,7 +100,7 @@ class CreateSubtask extends Component {
                     }}
                 />
             </Grid>
-            <Grid item sm={4} xs={10} style={{paddingLeft:20,paddingTop:20}}>
+            <Grid item sm={4} xs={10} style={{marginLeft:10,marginTop:20}}>
                 <Typography  variant="title" gutterBottom>Specification Type</Typography>
                 <RadioGroup
                     aria-label="Spectype"
@@ -120,12 +120,12 @@ class CreateSubtask extends Component {
                     <FormControlLabel value="Checkbox" control={<Radio />} label="Checkbox" />
                 </RadioGroup>
             </Grid>
-                <Grid item sm={4} xs={10} style={{paddingLeft:20,paddingTop:20}}>
+                <Grid item sm={3} xs={10} style={{marginLeft:10,marginTop:20}}>
                     {inputlabel}
                     {option1}
                     {inputbox}
                 </Grid>
-                <Grid item sm={1} xs={10} style={{paddingLeft:20,paddingTop:20}}>
+                <Grid item sm={1} xs={10} >
                     {button}
                 </Grid>
 

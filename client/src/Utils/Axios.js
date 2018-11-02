@@ -209,7 +209,6 @@ class Axios {
         .post(url + "/product/show")
         .then(res => {
           if (res.data && res.data.success) {
-            console.log(res.data, "axios");
             callback(null, res.data);
           } else {
             callback("Unknown error", null);
