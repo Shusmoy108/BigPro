@@ -49,6 +49,7 @@ ProjectSchema.statics.insertProject = (data, cb) => {
           total_task: data.task.length,
           task: data.task
         });
+
         newProject
           .save()
           .then(projecti => {
@@ -82,4 +83,76 @@ ProjectSchema.statics.getAllProjects = (project_status, cb) => {
   });
 };
 
+ProjectSchema.statics.deleteProject = function(id, cb) {
+  this.findOneAndRemove({ project_id: id })
+    .then(project => {
+      if (!project) {
+        return cb(404, { msg: "Data Not Found" }, null);
+      }
+      return cb(200, null, project);
+    })
+    .catch(err => {
+      errors.msg = "Internal server error";
+      return cb(500, errors, null);
+    });
+};
+ProjectSchema.statics.findProject = function(id, cb) {
+  this.findOne({ project_id: id }, function(err, project) {
+    if (err) {
+      return cb(500, { msg: "Internel Server error" }, null);
+    } else {
+      return cb(200, null, project);
+    }
+  });
+};
+
+ProjectSchema.statics.updateProjectStatus = (id, status, cb) => {
+  var query = { project_id: id };
+  var options = { new: true };
+  var update = {
+    project_status: status
+  };
+
+  Project.findOneAndUpdate(query, update, options, function(
+    err,
+    updatedproject
+  ) {
+    if (err) {
+      return cb(500, { msg: "Internel Server error" }, null);
+    } else {
+      //console.log("deleted");
+      return cb(200, null, updatedproject);
+    }
+  });
+};
+ProjectSchema.statics.updateProjectProgress = (
+  id,
+  current_position,
+  next_position,
+  task,
+  inc,
+  cb
+) => {
+  let i = parseInt(inc);
+
+  var query = { project_id: id };
+  var options = { new: true };
+  var update = {
+    current_position: current_position,
+    next_position: next_position,
+    task: task,
+    $inc: { completed_task: i }
+  };
+
+  Project.findOneAndUpdate(query, update, options, function(
+    err,
+    updatedproject
+  ) {
+    if (err) {
+      return cb(500, { msg: "Internel Server error" }, null);
+    } else {
+      return cb(200, null, updatedproject);
+    }
+  });
+};
 module.exports = Project = mongoose.model("Project", ProjectSchema);

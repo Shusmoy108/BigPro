@@ -6,18 +6,18 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input/Input";
+import Grid from "@material-ui/core/Grid";
 import Header from "../Header/Header";
 import styles from "../Product/productstyle";
 import moment from "moment";
 import Axios from "Utils/Axios";
 import Button from "@material-ui/core/Button";
-import DoneIcon from "@material-ui/icons/Done";
+import DoneIcon from "@material-ui/icons/DoneAll";
 import CreateProject from "./CreateProject";
 import { projectInput } from "../../Validator/projectValidator";
 import { insertProject } from "../../Utils/projectAxios";
-
+import TaskInputCard from "./TaskInputCard";
 class CreatePage extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +26,7 @@ class CreatePage extends Component {
             client_name: "",
             quantity: "0",
             deadline: Date.now(),
+            task_name: "",
             project_id: "",
             productlist: [],
             usertype: "",
@@ -37,30 +38,11 @@ class CreatePage extends Component {
             product: {
                 task: []
             },
-            taskError: [
-                {
-                    task_name: "",
-                    subtask: [
-                        {
-                            subtask_name: "",
-                            subtask_err: ""
-                        }
-                    ]
-                }
-            ],
-            task: [
-                {
-                    task_name: "",
-                    subtask: [
-                        {
-                            subtask_name: "",
-                            subtask_type: "",
-                            subtask_value: ""
-                        }
-                    ]
-                }
-            ],
-            error: {}
+            taskid: 0,
+            taskError: [],
+            task: [],
+            error: {},
+            next: false
         };
     }
     componentDidMount() {
@@ -127,7 +109,11 @@ class CreatePage extends Component {
                 });
                 that.setState({ taskError: taskError }, () => {
                     that.setState({ task: tasks }, () => {
-                        that.setState({ product: data.products[0] });
+                        that.setState({ product: data.products[0] }, () => {
+                            that.setState({
+                                task_name: that.state.product.task[0].task_name
+                            });
+                        });
                     });
                 });
 
@@ -139,9 +125,32 @@ class CreatePage extends Component {
             }
         });
     }
+    handletaskname = task_name => {
+        let i = this.state.product.task.findIndex(
+            task => task.task_name === task_name.target.value
+        );
+        this.setState(
+            {
+                task_name: this.state.product.task[i].task_name,
+                taskid: i
+            },
+            () => {
+                let taskid = this.state.taskid;
+                if (this.state.product.task.length > taskid + 1) {
+                    this.setState({
+                        next: false
+                    });
+                } else {
+                    this.setState({
+                        next: true
+                    });
+                }
+            }
+        );
+    };
 
     handleproductname = product_name => {
-        this.setState({ product_name: product_name.target.value });
+        this.setState({ product_name: product_name.target.value, task: [] });
         let product = this.state.productlist.find(
             product => product.product_name === product_name.target.value
         );
@@ -198,7 +207,11 @@ class CreatePage extends Component {
         if (tasks.length === product.task.length) {
             this.setState({ product: { task: [] }, taskError: [] }, () => {
                 this.setState({ task: tasks, taskError: taskError }, () => {
-                    this.setState({ product: product });
+                    this.setState({ product: product }, () => {
+                        this.setState({
+                            task_name: this.state.product.task[0].task_name
+                        });
+                    });
                 });
             });
         }
@@ -259,7 +272,23 @@ class CreatePage extends Component {
             this.setState({ taskError: errors.taskError, errors: {} });
         }
     };
-
+    handleNext = () => {
+        let taskid = this.state.taskid;
+        taskid++;
+        if (this.state.product.task.length > taskid + 1) {
+            this.setState({
+                task_name: this.state.product.task[taskid].task_name,
+                taskid: taskid,
+                next: false
+            });
+        } else {
+            this.setState({
+                task_name: this.state.product.task[taskid].task_name,
+                taskid: taskid,
+                next: true
+            });
+        }
+    };
     render() {
         const { classes } = this.props;
         let button;
@@ -270,7 +299,7 @@ class CreatePage extends Component {
             </Button>
         );
         let values = [];
-
+        let tasknames = [];
         for (let i = 0; i < this.state.productnames.length; i++) {
             values.push(
                 <MenuItem key={i} value={this.state.productnames[i]}>
@@ -278,7 +307,13 @@ class CreatePage extends Component {
                 </MenuItem>
             );
         }
-        //console.log(this.state.task);
+        for (let j = 0; j < this.state.product.task.length; j++) {
+            tasknames.push(
+                <MenuItem key={j} value={this.state.product.task[j].task_name}>
+                    {this.state.product.task[j].task_name}
+                </MenuItem>
+            );
+        }
         return (
             <div>
                 <Header
@@ -399,7 +434,6 @@ class CreatePage extends Component {
                                     type="datetime-local"
                                     value={this.state.deadline}
                                     onChange={this.handleChange("deadline")}
-                                    InputLabelProps={{ shrink: true }}
                                 />
                             </FormControl>
                             <FormHelperText
@@ -409,14 +443,38 @@ class CreatePage extends Component {
                                 {this.state.errors.deadline}
                             </FormHelperText>
                         </div>
-
-                        <CreateProject
-                            product={this.state.product}
-                            handleSpecChange={this.handdleSpecChange}
-                            handleCheckChange={this.handleCheckChange}
-                            task={this.state.task}
-                            taskError={this.state.taskError}
-                        />
+                        <div style={{ padding: "5% 0" }}>
+                            <InputLabel
+                                shrink
+                                htmlFor="productname"
+                                style={{ paddingRight: "5%" }}
+                            >
+                                Step Name :
+                            </InputLabel>
+                            <Select
+                                value={this.state.task_name}
+                                onChange={this.handletaskname}
+                                input={<Input name="age" id="age-helper" />}
+                            >
+                                {tasknames}
+                            </Select>
+                        </div>
+                        {this.state.product.task.length && (
+                            <TaskInputCard
+                                task={
+                                    this.state.product.task[this.state.taskid]
+                                }
+                                taskError={
+                                    this.state.taskError[this.state.taskid]
+                                }
+                                taskinput={this.state.task[this.state.taskid]}
+                                i={this.state.taskid}
+                                handleSpecChange={this.handdleSpecChange}
+                                handleCheckChange={this.handleCheckChange}
+                                next={this.state.next}
+                                handleNext={this.handleNext}
+                            />
+                        )}
                         {button}
                     </div>
                 </div>
