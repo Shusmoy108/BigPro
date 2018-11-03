@@ -38,18 +38,21 @@ class ShowProject extends Component {
                     username={this.state.username}
                     usertype={this.state.usertype}
                 />
-                <div style={{ margin: "2% 3%" }}>
+                {this.state.projects.length && (
+                    <Project project={this.state.projects[0]} />
+                )}
+                {/* <div style={{ margin: "2% 1%" }}>
                     <Grid container>
                         {this.state.projects.length &&
                             this.state.projects.map((project, i) => {
                                 return (
-                                    <Grid item sm={4} xs={6}>
+                                    <Grid item sm={3} xs={6}>
                                         <ProjectCard project={project} />
                                     </Grid>
                                 );
                             })}
                     </Grid>
-                </div>
+                </div> */}
             </div>
         );
     }
