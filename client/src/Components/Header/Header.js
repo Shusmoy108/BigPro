@@ -33,6 +33,14 @@ class MenuAppBar extends React.Component {
   handleProject = event => {
     this.setState({ project: event.currentTarget });
   };
+  handleMenuChange = e => {
+    this.props.history.push("/" + e);
+    this.setState({ anchorEl: null });
+  };
+  handleProjectChange = e => {
+    this.props.history.push("/project/" + e);
+    this.setState({ project: null });
+  };
   render() {
     const { anchorEl, project } = this.state;
     const { classes } = this.props;
@@ -68,13 +76,13 @@ class MenuAppBar extends React.Component {
           }}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={() => this.props.history.push("/product")}>
+          <MenuItem onClick={() => this.handleMenuChange("product")}>
             Products
           </MenuItem>
-          <MenuItem onClick={() => this.props.history.push("/step")}>
+          <MenuItem onClick={() => this.handleMenuChange("step")}>
             Steps
           </MenuItem>
-          <MenuItem onClick={() => this.props.history.push("/specification")}>
+          <MenuItem onClick={() => this.handleMenuChange("specification")}>
             Specifications
           </MenuItem>
         </Popover>
@@ -91,7 +99,7 @@ class MenuAppBar extends React.Component {
                 <Button
                   color="inherit"
                   className={classes.elementStyle}
-                  onClick={() => this.props.history.push("/project/ongoing")}
+                  onClick={() => this.handleProjectChange("ongoing")}
                 >
                   Running Project
                 </Button>
@@ -99,14 +107,14 @@ class MenuAppBar extends React.Component {
                   color="inherit"
                   className={classes.elementStyle}
                   value="pendingproject"
-                  onClick={() => this.props.history.push("/project/pending")}
+                  onClick={() => this.handleProjectChange("pending")}
                 >
                   Pending Project
                 </Button>
                 <Button
                   color="inherit"
                   className={classes.elementStyle}
-                  onClick={() => this.props.history.push("/project/history")}
+                  onClick={() => this.handleProjectChange("history")}
                 >
                   Project History
                 </Button>
@@ -144,19 +152,13 @@ class MenuAppBar extends React.Component {
                 }}
                 onClose={this.handleClose}
               >
-                <MenuItem
-                  onClick={() => this.props.history.push("/project/ongoing")}
-                >
+                <MenuItem onClick={() => this.handleProjectChange("ongoing")}>
                   Running Project
                 </MenuItem>
-                <MenuItem
-                  onClick={() => this.props.history.push("/project/pending")}
-                >
+                <MenuItem onClick={() => this.handleProjectChange("pending")}>
                   Pending Project
                 </MenuItem>
-                <MenuItem
-                  onClick={() => this.props.history.push("/project/history")}
-                >
+                <MenuItem onClick={() => this.handleProjectChange("history")}>
                   Project History
                 </MenuItem>
               </Menu>
