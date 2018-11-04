@@ -188,18 +188,9 @@ class ProductBody extends Component {
       }
       product = (
         <div>
-          <Grid container direction="row" align="center">
+          <Grid container className={classes.gridStyle}>
             {create}
-            <Grid
-              item
-              sm={4}
-              xs={6}
-              style={{
-                fontFamily: "Dekko",
-                fontSize: 30
-                // marginLeft:"30%"
-              }}
-            >
+            <Grid item sm={4} xs={6} className={classes.productHeading}>
               Product-List
             </Grid>
 
