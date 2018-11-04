@@ -19,19 +19,6 @@ class MenuAppBar extends React.Component {
     anchorEl: null,
     project: null
   };
-
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-  handleProject = event => {
-    this.setState({ project: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-    this.setState({ project: null });
-  };
-
   handleLogout = () => {
     let that = this;
     Axios.logout(function() {
@@ -40,26 +27,17 @@ class MenuAppBar extends React.Component {
     });
     this.setState({ anchorEl: null });
   };
-
-  setpage = (e, n) => {
-    console.log(n + "setpage");
-    this.props.setpage(n);
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
   };
-
+  handleProject = event => {
+    this.setState({ project: event.currentTarget });
+  };
   render() {
     const { anchorEl, project } = this.state;
+    const { classes } = this.props;
     let button = (
-      <Button
-        color="inherit"
-        style={{
-          color: "#FFF",
-          fontFamily: "Dekko",
-          fontSize: 36,
-          textTransform: "none",
-          paddingRight: 50,
-          paddingLeft: 50
-        }}
-      >
+      <Button color="inherit" className={classes.elementStyle}>
         ProTrack
       </Button>
     );
@@ -112,27 +90,14 @@ class MenuAppBar extends React.Component {
 
                 <Button
                   color="inherit"
-                  onClick={() => this.props.history.push("/createproject")}
-                  style={{
-                    color: "#FFF",
-                    fontFamily: "Dekko",
-                    fontSize: 20,
-                    textTransform: "none",
-                    padding: 9
-                  }}
-                  //onClick={() => this.props.history.push("/project/ongoing")}
+                  className={classes.elementStyle}
+                  onClick={() => this.props.history.push("/project/ongoing")}
                 >
                   Running Project
                 </Button>
                 <Button
                   color="inherit"
-                  style={{
-                    color: "#FFF",
-                    fontFamily: "Dekko",
-                    fontSize: 20,
-                    textTransform: "none",
-                    padding: 9
-                  }}
+                  className={classes.elementStyle}
                   value="pendingproject"
                   onClick={() => this.props.history.push("/project/pending")}
                 >
@@ -140,13 +105,7 @@ class MenuAppBar extends React.Component {
                 </Button>
                 <Button
                   color="inherit"
-                  style={{
-                    color: "#FFF",
-                    fontFamily: "Dekko",
-                    fontSize: 20,
-                    textTransform: "none",
-                    padding: 9
-                  }}
+                  className={classes.elementStyle}
                   onClick={() => this.props.history.push("/project/history")}
                 >
                   Project History
@@ -159,26 +118,14 @@ class MenuAppBar extends React.Component {
               <Button
                 onClick={this.handleLogout}
                 color="inherit"
-                style={{
-                  color: "#FFF",
-                  fontFamily: "Dekko",
-                  fontSize: 20,
-                  textTransform: "none",
-                  padding: 4
-                }}
+                className={classes.elementStyle}
               >
                 {this.props.username}
               </Button>
             </Toolbar>
           </Hidden>
           <Hidden only={["md", "lg", "xl"]}>
-            <Toolbar
-              style={{
-                display: "flex",
-                alignContent: "center",
-                justifyContent: "center"
-              }}
-            >
+            <Toolbar className={classes.hiddenToolbar}>
               <Button
                 aria-owns={project ? "simple-menu" : null}
                 aria-haspopup="true"
