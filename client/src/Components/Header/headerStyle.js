@@ -3,41 +3,18 @@ const boxShadow = {
     "0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)"
 };
 
-const styles = theme =>  ({
-  root: {
-    flexGrow: 1,
-  },
-  flex: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  ash: {
+const styles = theme => ({
+  elementStyle: {
     color: "#FFF",
-    boxShadow: boxShadow
+    fontFamily: "Helvetica Neue",
+    fontSize: 20,
+    textTransform: "none",
+    padding: 9
   },
-  bar: {
-    backgroundColor: '#3d81a9',
-    color: '#FFF',
-    padding: "0 0%",
-    [theme.breakpoints.down("sm")]: {
-      padding: "0 8px",
-    }
-  },
-    project: {
-        backgroundColor: '#3d81a9',
-        color: '#FFF',
-        padding: "0 0%",
-        [theme.breakpoints.down("sm")]: {
-            padding: "0 8px",
-        }
-    },
-  btn: {
-    [theme.breakpoints.down("sm")]: {
-      padding: 8, minWidth: 36
-    }
+  hiddenToolbar: {
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center"
   }
 });
 

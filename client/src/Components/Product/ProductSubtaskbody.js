@@ -188,12 +188,12 @@ class SubtaskBody extends Component {
         }
       }
       subtask = (
-        <Grid container direction="row" align="center">
+        <Grid container className={classes.gridStyle}>
           {create}
 
           <Grid
             item
-            sm={4}
+            sm={10}
             xs={6}
             style={{
               fontFamily: "Dekko",

@@ -16,7 +16,17 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit
   },
+  productHeading: {
+    fontFamily: "Helvetica Neue",
+    fontSize: 25
+  },
+  gridStyle: {
+    justifyContent: "center",
+    alignContent: "center"
+  },
   bootstrapRoot: {
+    padding: 20,
+    fontFamily: "Helvetica Neue",
     "label + &": {
       marginTop: theme.spacing.unit * 3,
       padding: "100"
