@@ -483,7 +483,9 @@ class ShowProject extends Component {
         let addbutton;
         if (this.state.page === "pending") {
             addbutton = (
-                <Button>
+                <Button
+                    onClick={() => this.props.history.push("/createproject")}
+                >
                     <AddIcon />
                 </Button>
             );
@@ -551,22 +553,23 @@ class ShowProject extends Component {
                     </div>
 
                     <Grid container>
-                        {this.state.projects.length &&
-                            this.state.projects.map((project, i) => {
-                                return (
-                                    <Grid item sm={3} xs={6}>
-                                        <div style={{ margin: "1.5% 1.5%" }}>
-                                            <ProjectCard
-                                                project={project}
-                                                delete={this.openDelete}
-                                                updateStatus={this.openStatus}
-                                                showProject={this.showProject}
-                                            />
-                                        </div>
-                                    </Grid>
-                                );
-                            })}
+                        {this.state.projects.map((project, i) => {
+                            return (
+                                <Grid item sm={3} xs={6}>
+                                    <div style={{ margin: "1.5% 1.5%" }}>
+                                        <ProjectCard
+                                            project={project}
+                                            delete={this.openDelete}
+                                            updateStatus={this.openStatus}
+                                            showProject={this.showProject}
+                                        />
+                                    </div>
+                                </Grid>
+                            );
+                        })}
                     </Grid>
+
+                    {!this.state.projects.length && <div> No Projects</div>}
                 </div>
             </div>
         );
