@@ -14,244 +14,278 @@ import Showspec from "../Subtask/Showspec";
 import DropDown from "../Dropdown/Dropdown";
 
 class SubtaskBody extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      createflag: 0,
-      subtasklist: this.props.subtasklist,
-      taskname: this.props.taskname,
-      subtaskname: "",
-      showpage: "subtask",
-      usertype: "",
-      username: "",
-      showsubtask: -1,
-      subtasknumber: -1,
-      spec: -1,
-      allsubtask: [],
-      subtasknames: []
-    };
-  }
-  componentDidMount() {
-    let that = this;
-    Axios.showsubtask(function(err, data) {
-      if (err) {
-        that.props.history.push("/");
-      } else {
-        that.setState({
-          allsubtask: data.subtasks,
-          subtaskname: data.subtasks[0].subtask_name
+    constructor(props) {
+        super(props);
+        this.state = {
+            createflag: 0,
+            subtasklist: this.props.subtasklist,
+            taskname: this.props.taskname,
+            subtaskname: "",
+            showpage: "subtask",
+            usertype: "",
+            username: "",
+            showsubtask: -1,
+            subtasknumber: -1,
+            spec: -1,
+            allsubtask: [],
+            subtasknames: []
+        };
+    }
+    componentDidMount() {
+        let that = this;
+        Axios.showsubtask(function(err, data) {
+            if (err) {
+                that.props.history.push("/");
+            } else {
+                that.setState({
+                    allsubtask: data.subtasks,
+                    subtaskname: data.subtasks[0].subtask_name
+                });
+                let subtasknames = [];
+                for (let i = 0; i < data.subtasks.length; i++) {
+                    subtasknames.push(data.subtasks[i].subtask_name);
+                }
+                that.setState({ subtasknames: subtasknames });
+            }
         });
-        let subtasknames = [];
-        for (let i = 0; i < data.subtasks.length; i++) {
-          subtasknames.push(data.subtasks[i].subtask_name);
-        }
-        that.setState({ subtasknames: subtasknames });
-      }
-    });
-  }
-  openallsubtask = e => {
-    this.setState({ createflag: -1 });
-    this.setState(state => ({ subtasknumber: e }));
-  };
-
-  opencreatebox = () => {
-    let e = 1;
-    this.setState(state => ({ createflag: 1 }));
-    //this.setState(state => ({ subtasknumber: -1 }));
-  };
-  closecreatebox = () => {
-    let e = 0;
-    this.setState(state => ({ createflag: e }));
-    this.setState(state => ({ subtasknumber: -1 }));
-  };
-  opennextcreatebox = () => {
-    this.setState(state => ({ createflag: 1 }));
-  };
-  createsubtask = (e, n, f) => {
-    this.props.createsubtask(
-      this.state.taskname,
-      e,
-      n,
-      f,
-      this.state.subtasknumber,
-      this.props.task_name
-    );
-    let subtask = {
-      subtask_name: e,
-      subtask_type: n,
-      subtask_option: f
+    }
+    openallsubtask = e => {
+        this.setState({ createflag: -1 });
+        this.setState(state => ({ subtasknumber: e }));
     };
-    let allsubtask = this.state.allsubtask;
-    allsubtask.push(subtask);
-    let subtasknames = this.state.subtasknames;
-    subtasknames.push(e);
 
-    this.setState({ allsubtask: allsubtask, subtasknames: subtasknames });
+    opencreatebox = () => {
+        let e = 1;
+        this.setState(state => ({ createflag: 1 }));
+        //this.setState(state => ({ subtasknumber: -1 }));
+    };
+    closecreatebox = () => {
+        let e = 0;
+        this.setState(state => ({ createflag: e }));
+        this.setState(state => ({ subtasknumber: -1 }));
+    };
+    opennextcreatebox = () => {
+        this.setState(state => ({ createflag: 1 }));
+    };
+    createsubtask = (e, n, f) => {
+        this.props.createsubtask(
+            this.state.taskname,
+            e,
+            n,
+            f,
+            this.state.subtasknumber,
+            this.props.task_name
+        );
+        let subtask = {
+            subtask_name: e,
+            subtask_type: n,
+            subtask_option: f
+        };
+        let allsubtask = this.state.allsubtask;
+        allsubtask.push(subtask);
+        let subtasknames = this.state.subtasknames;
+        subtasknames.push(e);
 
-    this.setState(state => ({ subtasklist: this.props.subtasklist }));
-  };
-  createoldsubtask = () => {
-    let subtask = this.state.allsubtask.find(
-      subtask => subtask.subtask_name === this.state.subtaskname
-    );
-    this.props.createoldsubtask(
-      this.state.taskname,
-      subtask,
-      this.state.subtasknumber,
-      this.props.task_name
-    );
-    this.setState({ createflag: 0 });
-    this.setState(state => ({ subtasknumber: -1 }));
-  };
-  deletesubtask = e => {
-    this.props.deletesubtask(this.state.taskname, e);
-  };
-  editsubtask = (e, n, f, g) => {
-    this.props.editsubtask(this.state.taskname, e, n, f, g);
-  };
-  showsubtask = () => {
-    this.props.showsubtask(-1);
-  };
-  showspec = x => {
-    this.setState({ spec: x });
-  };
-  handlesubtaskname = subtaskname => {
-    this.setState({ subtaskname: subtaskname });
-  };
-  render() {
-    const { classes } = this.props;
-    let subtask;
-    if (this.state.showsubtask === -1) {
-      let create;
-      if (this.state.createflag === 1 && this.state.subtasknumber == -1) {
-        create = (
-          <CreateSubtask
-            createsubtask={this.createsubtask}
-            show={this.closecreatebox}
-          />
-        );
-      }
-      if (this.state.createflag === -1 && this.state.subtasknumber == -1) {
-        create = (
-          <DropDown
-            createtask={this.createoldsubtask}
-            close={this.closecreatebox}
-            newcreate={this.opencreatebox}
-            value={this.state.subtaskname}
-            inputfield={"Specification-Name"}
-            values={this.state.subtasknames}
-            handleChange={this.handlesubtaskname}
-          />
-        );
-      }
-      let subtasklist = [];
+        this.setState({ allsubtask: allsubtask, subtasknames: subtasknames });
 
-      for (var i = 0; i < this.props.subtasklist.length; i++) {
-        subtasklist.push(
-          <Subtask
-            key={i}
-            add={1}
-            showspec={this.showspec}
-            id={this.props.subtasklist[i]._id}
-            opennextcreatebox={this.opennextcreatebox}
-            openallsubtask={this.openallsubtask}
-            subtask_number={i}
-            subtask_name={this.props.subtasklist[i].subtask_name}
-            subtask_type={this.props.subtasklist[i].subtask_type}
-            subtask_option={this.props.subtasklist[i].subtask_option}
-            deletesubtask={this.deletesubtask}
-            editsubtask={this.editsubtask}
-          />
+        this.setState(state => ({ subtasklist: this.props.subtasklist }));
+    };
+    createoldsubtask = () => {
+        let subtask = this.state.allsubtask.find(
+            subtask => subtask.subtask_name === this.state.subtaskname
         );
-        if (i === this.state.subtasknumber && this.state.createflag === 1) {
-          subtasklist.push(
-            <CreateSubtask
-              createsubtask={this.createsubtask}
-              show={this.closecreatebox}
-              key={this.props.subtasklist.length}
-            />
-          );
+        this.props.createoldsubtask(
+            this.state.taskname,
+            subtask,
+            this.state.subtasknumber,
+            this.props.task_name
+        );
+        this.setState({ createflag: 0 });
+        this.setState(state => ({ subtasknumber: -1 }));
+    };
+    deletesubtask = e => {
+        this.props.deletesubtask(this.state.taskname, e);
+    };
+    editsubtask = (e, n, f, g) => {
+        this.props.editsubtask(this.state.taskname, e, n, f, g);
+    };
+    showsubtask = () => {
+        this.props.showsubtask(-1);
+    };
+    showspec = x => {
+        this.setState({ spec: x });
+    };
+    handlesubtaskname = subtaskname => {
+        this.setState({ subtaskname: subtaskname });
+    };
+    render() {
+        const { classes } = this.props;
+        let subtask;
+        if (this.state.showsubtask === -1) {
+            let create;
+            if (this.state.createflag === 1 && this.state.subtasknumber == -1) {
+                create = (
+                    <CreateSubtask
+                        createsubtask={this.createsubtask}
+                        show={this.closecreatebox}
+                    />
+                );
+            }
+            if (
+                this.state.createflag === -1 &&
+                this.state.subtasknumber == -1
+            ) {
+                create = (
+                    <DropDown
+                        createtask={this.createoldsubtask}
+                        close={this.closecreatebox}
+                        newcreate={this.opencreatebox}
+                        value={this.state.subtaskname}
+                        inputfield={"Specification-Name"}
+                        values={this.state.subtasknames}
+                        handleChange={this.handlesubtaskname}
+                    />
+                );
+            }
+            let subtasklist = [];
+
+            for (var i = 0; i < this.props.subtasklist.length; i++) {
+                subtasklist.push(
+                    <Subtask
+                        key={i}
+                        add={1}
+                        showspec={this.showspec}
+                        id={this.props.subtasklist[i]._id}
+                        opennextcreatebox={this.opennextcreatebox}
+                        openallsubtask={this.openallsubtask}
+                        subtask_number={i}
+                        subtask_name={this.props.subtasklist[i].subtask_name}
+                        subtask_type={this.props.subtasklist[i].subtask_type}
+                        subtask_option={
+                            this.props.subtasklist[i].subtask_option
+                        }
+                        deletesubtask={this.deletesubtask}
+                        editsubtask={this.editsubtask}
+                    />
+                );
+                if (
+                    i === this.state.subtasknumber &&
+                    this.state.createflag === 1
+                ) {
+                    subtasklist.push(
+                        <CreateSubtask
+                            createsubtask={this.createsubtask}
+                            show={this.closecreatebox}
+                            key={this.props.subtasklist.length}
+                        />
+                    );
+                }
+                if (
+                    i === this.state.subtasknumber &&
+                    this.state.createflag === -1
+                ) {
+                    subtasklist.push(
+                        <DropDown
+                            createtask={this.createoldsubtask}
+                            close={this.closecreatebox}
+                            newcreate={this.opennextcreatebox}
+                            value={this.state.subtaskname}
+                            inputfield={"Specification-Name"}
+                            values={this.state.subtasknames}
+                            handleChange={this.handlesubtaskname}
+                            key={this.props.subtasklist.length + 1}
+                        />
+                    );
+                }
+            }
+            subtask = (
+                <Grid container className={classes.gridStyle}>
+                    {create}
+
+                    <Grid
+                        item
+                        sm={5}
+                        xs={6}
+                        style={{
+                            fontFamily: "Helvetica Neue",
+                            fontSize: "30px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                            //marginLeft:"5%"
+                        }}
+                    >
+                        {" "}
+                        <Button
+                            variant="flat"
+                            onClick={this.showsubtask}
+                            color={"primary"}
+                        >
+                            <BackIcon />
+                        </Button>
+                        {this.props.product_name}
+                        >>
+                        {this.props.task_name}
+                    </Grid>
+                    <Hidden only={["xs"]}>
+                        <Grid
+                            item
+                            sm={7}
+                            xs={6}
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                                //marginLeft:"5%"
+                            }}
+                        >
+                            {" "}
+                            <Button onClick={() => this.openallsubtask(-1)}>
+                                <AddIcon />
+                            </Button>{" "}
+                        </Grid>
+                    </Hidden>
+                    {subtasklist}
+                </Grid>
+            );
         }
-        if (i === this.state.subtasknumber && this.state.createflag === -1) {
-          subtasklist.push(
-            <DropDown
-              createtask={this.createoldsubtask}
-              close={this.closecreatebox}
-              newcreate={this.opennextcreatebox}
-              value={this.state.subtaskname}
-              inputfield={"Specification-Name"}
-              values={this.state.subtasknames}
-              handleChange={this.handlesubtaskname}
-              key={this.props.subtasklist.length + 1}
-            />
-          );
+        if (this.state.spec !== -1) {
+            subtask = (
+                <Showspec
+                    back={this.showspec}
+                    subtaskname={
+                        this.props.subtasklist[this.state.spec].subtask_name
+                    }
+                    subtasktype={
+                        this.props.subtasklist[this.state.spec].subtask_type
+                    }
+                    option={
+                        this.props.subtasklist[this.state.spec].subtask_option
+                    }
+                />
+            );
         }
-      }
-      subtask = (
-        <Grid container className={classes.gridStyle}>
-          {create}
-
-          <Grid
-            item
-            sm={10}
-            xs={6}
-            style={{
-              fontFamily: "Dekko",
-              fontSize: 15
-              //marginLeft:"5%"
-            }}
-          >
-            {" "}
-            <Button variant="flat" onClick={this.showsubtask} color={"primary"}>
-              <BackIcon />
-            </Button>
-            {this.props.product_name}
-            >>
-            {this.props.task_name}
-          </Grid>
-          <Hidden only={["xs"]}>
-            <Grid item sm={2} xs={6}>
-              {" "}
-              <Button onClick={() => this.openallsubtask(-1)}>
-                <AddIcon />
-              </Button>{" "}
-            </Grid>
-          </Hidden>
-          {subtasklist}
-        </Grid>
-      );
+        return (
+            <div>
+                {subtask}
+                <Hidden only={["sm", "md", "lg", "xl"]}>
+                    <Button
+                        variant="fab"
+                        color="primary"
+                        aria-label="Add"
+                        onClick={() => this.openallsubtask(-1)}
+                        className={classes.button}
+                    >
+                        <AddIcon />
+                    </Button>
+                </Hidden>
+            </div>
+        );
     }
-    if (this.state.spec !== -1) {
-      subtask = (
-        <Showspec
-          back={this.showspec}
-          subtaskname={this.props.subtasklist[this.state.spec].subtask_name}
-          subtasktype={this.props.subtasklist[this.state.spec].subtask_type}
-          option={this.props.subtasklist[this.state.spec].subtask_option}
-        />
-      );
-    }
-    return (
-      <div>
-        {subtask}
-        <Hidden only={["sm", "md", "lg", "xl"]}>
-          <Button
-            variant="fab"
-            color="primary"
-            aria-label="Add"
-            onClick={() => this.openallsubtask(-1)}
-            className={classes.button}
-          >
-            <AddIcon />
-          </Button>
-        </Hidden>
-      </div>
-    );
-  }
 }
 
 SubtaskBody.propTypes = {
-  classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(SubtaskBody);

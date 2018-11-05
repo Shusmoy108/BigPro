@@ -256,7 +256,7 @@ class CreatePage extends Component {
     let { errors, isValid } = projectInput(data);
     if (!isValid) {
       console.log("err");
-      this.setState({ taskError: errors.taskError, errors: errors });
+      this.setState({ taskError: errors.taskError, errors: errors,glbErr:'Some Error is happened.Check All Fields and Steps' });
     } else {
       console.log("beforeax");
       insertProject(data, (err, project) => {

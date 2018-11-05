@@ -104,16 +104,7 @@ class Task extends Component {
                 );
             }
             task = (
-                <Grid
-                    item
-                    sm={4}
-                    xs={2}
-                    style={{
-                        fontFamily: "Dekko",
-                        fontSize: 20
-                        //marginLeft:"10%"
-                    }}
-                >
+                <Grid item sm={4} xs={2} className={classes.fontStyle}>
                     {this.props.task_name}
                 </Grid>
             );

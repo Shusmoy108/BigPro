@@ -54,7 +54,7 @@ class LoginPage extends React.Component {
     return (
       <div className={classes.container}>
         <Typography variant="display2" style={{color: '#3d81a9', fontFamily: 'Dekko', fontWeight: 'bold'}} gutterBottom>
-          MeetGo
+          Pro Track
         </Typography>
         <FormControl className={classes.margin}>
           <InputLabel htmlFor="input-with-icon-adornment">Username</InputLabel>
