@@ -21,7 +21,7 @@ class MenuAppBar extends React.Component {
     };
     handleLogout = () => {
         let that = this;
-        Axios.logout(function() {
+        Axios.logout(function () {
             //that.setState({logged: 'login', name: '', username: ''})
             that.props.history.push("/");
         });
@@ -48,7 +48,7 @@ class MenuAppBar extends React.Component {
         const { anchorEl, project } = this.state;
         const { classes } = this.props;
         let button = (
-            <Button color="inherit" className={classes.elementStyle}>
+            <Button color="inherit" className={classes.elementStyle} onClick={() => { this.props.history.push("/"); }}>
                 ProTrack
             </Button>
         );

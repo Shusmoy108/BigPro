@@ -33,7 +33,7 @@ class SubtaskBody extends Component {
     }
     componentDidMount() {
         let that = this;
-        Axios.showsubtask(function(err, data) {
+        Axios.showsubtask(function (err, data) {
             if (err) {
                 that.props.history.push("/");
             } else {
@@ -121,8 +121,9 @@ class SubtaskBody extends Component {
     render() {
         const { classes } = this.props;
         let subtask;
+        let create;
         if (this.state.showsubtask === -1) {
-            let create;
+
             if (this.state.createflag === 1 && this.state.subtasknumber == -1) {
                 create = (
                     <CreateSubtask
@@ -199,54 +200,34 @@ class SubtaskBody extends Component {
                 }
             }
             subtask = (
-                <Grid container className={classes.gridStyle}>
-                    {create}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-                    <Grid
-                        item
-                        sm={5}
-                        xs={6}
-                        style={{
-                            fontFamily: "Helvetica Neue",
-                            fontSize: "30px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
-                            //marginLeft:"5%"
-                        }}
-                    >
-                        {" "}
-                        <Button
-                            variant="flat"
-                            onClick={this.showsubtask}
-                            color={"primary"}
-                        >
-                            <BackIcon />
-                        </Button>
-                        {this.props.product_name}
-                        >>
-                        {this.props.task_name}
-                    </Grid>
-                    <Hidden only={["xs"]}>
-                        <Grid
-                            item
-                            sm={7}
-                            xs={6}
-                            style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center"
-                                //marginLeft:"5%"
-                            }}
-                        >
+                    <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ flex: 3, textAlign: "center" }} className={classes.productHeading}>
                             {" "}
-                            <Button onClick={() => this.openallsubtask(-1)}>
-                                <AddIcon />
-                            </Button>{" "}
-                        </Grid>
-                    </Hidden>
+                            <Button
+                                variant="flat"
+                                onClick={this.showsubtask}
+                                color={"primary"}
+                            >
+                                <BackIcon />
+                            </Button>
+                            {this.props.product_name}
+                            >>
+                        {this.props.task_name}
+                        </div>
+                        <Hidden only={["xs"]}>
+                            <div style={{ flex: 1 }}>
+                                {" "}
+                                <Button onClick={() => this.openallsubtask(-1)}>
+                                    <AddIcon />
+                                </Button>{" "}
+                            </div>
+                        </Hidden>
+
+                    </div>
                     {subtasklist}
-                </Grid>
+                </div>
             );
         }
         if (this.state.spec !== -1) {
@@ -267,6 +248,7 @@ class SubtaskBody extends Component {
         }
         return (
             <div>
+                {create}
                 {subtask}
                 <Hidden only={["sm", "md", "lg", "xl"]}>
                     <Button

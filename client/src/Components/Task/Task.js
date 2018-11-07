@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
 import styles from "./taskstyle";
 import PropTypes from "prop-types";
-import InputBase from "@material-ui/core/Input/Input";
+import InputBase from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid/Grid";
 import Listicon from "@material-ui/icons/List";
 import Editicon from "@material-ui/icons/Edit";
@@ -38,7 +38,7 @@ class Task extends Component {
         this.setState({ open: false });
     };
     edittask = () => {
-        if (this.state.edit_name !== this.props.task_name)
+        if (this.state.edit_name !== this.props.task_name && this.state.edit_name !== "")
             this.props.edittask(this.props.task_name, this.state.edit_name);
         this.setState({ edit_flag: 0 });
     };
@@ -58,37 +58,35 @@ class Task extends Component {
 
         if (this.state.edit_flag === 1) {
             task = (
-                <Grid item sm={8} xs={6}>
-                    {" "}
+                <div style={{ flex: 1, textAlign: "center" }}
+                >
                     <InputBase
-                        id="productname"
+                        label="Step-name"
                         placeholder="Enter a Taskname....."
                         value={this.state.edit_name}
                         onChange={this.settaskname}
-                        classes={{
-                            root: classes.bootstrapRoot,
-                            input: classes.bootstrapInput
-                        }}
+
                     />
-                </Grid>
+                </div>
             );
-            if (this.state.edit_name === this.props.task_name)
+            if (this.state.edit_name === this.props.task_name || this.state.edit_name === "")
                 button = (
-                    <Grid sm={4} xs={6}>
+                    <div style={{ flex: 3 }}>
                         {" "}
                         <Button onClick={this.edittask}>
                             <CloseIcon />
                         </Button>
-                    </Grid>
+                    </div>
                 );
             else
                 button = (
-                    <Grid sm={4} xs={6}>
+                    <div style={{ flex: 3 }}>
                         {" "}
+                        
                         <Button onClick={this.edittask}>
                             <DoneIcon />
                         </Button>
-                    </Grid>
+                    </div>
                 );
         } else {
             let add;
@@ -104,17 +102,15 @@ class Task extends Component {
                 );
             }
             task = (
-                <Grid item sm={4} xs={2} className={classes.fontStyle}>
+                <div style={{ flex: 1, textAlign: "center" }}>
                     {this.props.task_name}
-                </Grid>
+                </div>
             );
             button = (
-                <Grid
-                    item
-                    sm={4}
-                    xs={10}
-                    // style={{marginLeft:"2%"}}
+                <div
+                    style={{ flex: 3 }}
                 >
+
                     <Button onClick={this.showsubtask}>
                         <Listicon />
                     </Button>
@@ -125,12 +121,12 @@ class Task extends Component {
                     <Button onClick={this.seteditflag}>
                         <Editicon />
                     </Button>
-                </Grid>
+                </div>
             );
         }
 
         return (
-            <Grid container direction="row" align="center">
+            <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }}>
                 <Modal
                     name={this.props.task_name}
                     handleYes={this.deletetask}
@@ -139,7 +135,7 @@ class Task extends Component {
                 />
                 {task}
                 {button}
-            </Grid>
+            </div>
         );
     }
 }

@@ -14,45 +14,50 @@ class SimpleSelect extends React.Component {
         age: '',
         name: 'hai',
         labelWidth: 0,
-      };
-      handleChange = event => {
+    };
+    handleChange = event => {
         this.props.handleChange(event.target.value);
         this.setState({ [event.target.name]: event.target.value });
-      };
-      handleNew=()=>{
-          this.props.newcreate();
-          console.log('new')
-      }
-    render(){
-        let values=[];
+    };
+    handleNew = () => {
+        this.props.newcreate();
+        console.log('new')
+    }
+    render() {
+        let values = [];
         console.log(this.props.values);
-        for(let i=0;i<this.props.values.length;i++)
-        {
+        for (let i = 0; i < this.props.values.length; i++) {
             values.push(<MenuItem key={i} value={this.props.values[i]}>{this.props.values[i]}</MenuItem>)
         }
-        return(
-      
-            <Grid item sm={10} xs={10} style={{paddingLeft:20,paddingTop:20}}>
-            <InputLabel shrink htmlFor="productname"  style={{padding:20}}>
+        return (
+
+            <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ flex: 1, textAlign: 'center' }}>
+
+                    <InputLabel shrink htmlFor="productname" style={{ fontSize: 15, marginRight: 10 }}>
                         {this.props.inputfield}
-                </InputLabel>
-            <Select
-            value={this.props.value}
-            onChange={this.handleChange}
-            input={<Input name="age" id="age-helper" />}
-          >
-          {values}
-          </Select>
-          <Button
-                onClick={this.props.createtask}
-            ><DoneIcon/></Button>
-            <Button
-                onClick={this.handleNew}
-            ><AddIcon/></Button>
-         <Button
-                onClick={this.props.close}
-            ><CloseIcon/></Button>
-          </Grid>
+                    </InputLabel>
+                    <Select
+                        value={this.props.value}
+                        onChange={this.handleChange}
+                        input={<Input name="age" id="age-helper" />}
+                    >
+                        {values}
+                    </Select>
+                </div>
+                <div style={{ flex: 3 }}>
+
+                    <Button
+                        onClick={this.props.createtask}
+                    ><DoneIcon /></Button>
+                    <Button
+                        onClick={this.handleNew}
+                    ><AddIcon /></Button>
+                    <Button
+                        onClick={this.props.close}
+                    ><CloseIcon /></Button>
+                </div>
+            </div>
         );
     }
 }

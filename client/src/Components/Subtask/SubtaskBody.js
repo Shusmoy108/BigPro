@@ -43,7 +43,7 @@ class SubtaskBody extends Component {
     };
     createsubtask = (e, n, f) => {
         let that = this;
-        Axios.createsubtask(e, n, f, function(err, data) {
+        Axios.createsubtask(e, n, f, function (err, data) {
             if (err) that.setState({ msgLogin: err });
             else {
                 that.setState({ subtasklist: data.subtasks });
@@ -52,7 +52,7 @@ class SubtaskBody extends Component {
     };
     deletesubtask = e => {
         let that = this;
-        Axios.deletesubtask(e, function(err, data) {
+        Axios.deletesubtask(e, function (err, data) {
             if (err) that.setState({ msgLogin: err });
             else {
                 that.setState({ subtasklist: data.subtasks });
@@ -61,7 +61,7 @@ class SubtaskBody extends Component {
     };
     editsubtask = (e, n, f, g) => {
         let that = this;
-        Axios.editsubtask(e, n, f, g, function(err, data) {
+        Axios.editsubtask(e, n, f, g, function (err, data) {
             if (err) that.setState({ msgLogin: err });
             else {
                 that.setState({ subtasklist: data.subtasks });
@@ -71,7 +71,7 @@ class SubtaskBody extends Component {
 
     componentDidMount() {
         let that = this;
-        Axios.showsubtask(function(err, data) {
+        Axios.showsubtask(function (err, data) {
             if (err) {
                 that.props.history.push("/");
             } else {
@@ -125,10 +125,10 @@ class SubtaskBody extends Component {
                     <Hidden only={["xs"]}>
                         <Grid
                             item
-                            sm={8}
+                            sm={7}
                             xs={6}
                             style={{
-                                fontFamily: "Dekko",
+                                fontFamily: "Helvetica Neue",
                                 fontSize: 30,
                                 paddingLeft: 20
                             }}

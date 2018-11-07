@@ -53,7 +53,7 @@ class ShowProject extends Component {
         this.setState({ sortValue: e.target.value }, () => {
             let projects = that.state.projects;
             if (that.state.sortValue === "Client Name") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.client_name > b.client_name
                             ? -1
@@ -70,7 +70,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Project ID") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.project_id > b.project_id
                             ? -1
@@ -87,7 +87,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Product Name") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.product_name > b.product_name
                             ? -1
@@ -104,7 +104,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Quantity") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.quantity > b.quantity
                             ? -1
@@ -121,7 +121,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Current Step") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.current_position > b.current_position
                             ? -1
@@ -138,7 +138,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Next Step") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.next_position > b.next_position
                             ? -1
@@ -155,7 +155,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Next Step") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.next_position > b.next_position
                             ? -1
@@ -173,7 +173,7 @@ class ShowProject extends Component {
                 that.setState({ projects: projects });
             }
             if (that.state.sortValue === "Progress") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     let x = a.completed_task / a.total_task;
                     let y = b.completed_task / b.total_task;
                     if (that.state.sortType === "Ascending") {
@@ -186,7 +186,7 @@ class ShowProject extends Component {
                 that.setState({ projects: projects });
             }
             if (that.state.sortValue === "Deadline") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     let x = new Date(a.deadline);
                     let y = new Date(b.deadline);
                     if (that.state.sortType === "Ascending") {
@@ -205,7 +205,7 @@ class ShowProject extends Component {
         this.setState({ sortType: e.target.value }, () => {
             let projects = that.state.projects;
             if (that.state.sortValue === "Client Name") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.client_name > b.client_name
                             ? -1
@@ -222,7 +222,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Project ID") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.project_id > b.project_id
                             ? -1
@@ -239,7 +239,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Product Name") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.product_name > b.product_name
                             ? -1
@@ -256,7 +256,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Quantity") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.quantity > b.quantity
                             ? -1
@@ -273,7 +273,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Current Step") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.current_position > b.current_position
                             ? -1
@@ -290,7 +290,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Next Step") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.next_position > b.next_position
                             ? -1
@@ -307,7 +307,7 @@ class ShowProject extends Component {
                 });
                 that.setState({ projects: projects });
             } else if (that.state.sortValue === "Next Step") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     if (that.state.sortType === "Ascending") {
                         return a.next_position > b.next_position
                             ? -1
@@ -325,7 +325,7 @@ class ShowProject extends Component {
                 that.setState({ projects: projects });
             }
             if (that.state.sortValue === "Progress") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     let x = a.completed_task / a.total_task;
                     let y = b.completed_task / b.total_task;
                     if (that.state.sortType === "Ascending") {
@@ -338,7 +338,7 @@ class ShowProject extends Component {
                 that.setState({ projects: projects });
             }
             if (that.state.sortValue === "Deadline") {
-                projects.sort(function(a, b) {
+                projects.sort(function (a, b) {
                     let x = new Date(a.deadline);
                     let y = new Date(b.deadline);
                     if (that.state.sortType === "Ascending") {
@@ -519,9 +519,12 @@ class ShowProject extends Component {
                     handleNo={this.closeStatus}
                     open={this.state.statusOpen}
                 />
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div
                         style={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
                             fontFamily: "Helvetica Neue",
                             fontSize: "30px",
                             margin: "2% 3%"
@@ -569,22 +572,22 @@ class ShowProject extends Component {
                         {addbutton}
                     </div>
 
-                    <Grid container>
+                    <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: "center" }}>
                         {this.state.projects.map((project, i) => {
                             return (
-                                <Grid item sm={4} xs={12} md={3}>
-                                    <div style={{ margin: "1.5% 1.5%" }}>
-                                        <ProjectCard
-                                            project={project}
-                                            delete={this.openDelete}
-                                            updateStatus={this.openStatus}
-                                            showProject={this.showProject}
-                                        />
-                                    </div>
-                                </Grid>
+
+                                <div style={{ margin: 10 }}>
+                                    <ProjectCard
+                                        project={project}
+                                        delete={this.openDelete}
+                                        updateStatus={this.openStatus}
+                                        showProject={this.showProject}
+                                    />
+                                </div>
+
                             );
                         })}
-                    </Grid>
+                    </div>
 
                     {!this.state.projects.length && (
                         <div

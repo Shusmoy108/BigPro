@@ -28,7 +28,7 @@ class TaskBody extends Component {
     }
     componentDidMount() {
         let that = this;
-        Axios.showtask(function(err, data) {
+        Axios.showtask(function (err, data) {
             if (err) {
             } else {
                 that.setState({
@@ -121,8 +121,9 @@ class TaskBody extends Component {
     render() {
         const { classes } = this.props;
         let task;
+        let create;
         if (this.state.subtask === -1) {
-            let create;
+
             if (this.state.createflag === 1 && this.state.tasknumber === -1) {
                 create = (
                     <CreateTask
@@ -195,16 +196,13 @@ class TaskBody extends Component {
                 }
             }
             task = (
-                <div>
-                    <Grid container direction="row" align="center">
-                        {create}
-                        <Grid
-                            item
-                            sm={4}
-                            xs={6}
-                            className={classes.productHeading}
-                            style={{ fontSize: "25px" }}
-                        >
+
+
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+
+                    <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ flex: 1, textAlign: "center" }} className={classes.productHeading}>
+
                             <Button
                                 variant="flat"
                                 onClick={this.showtask}
@@ -213,34 +211,26 @@ class TaskBody extends Component {
                                 <BackIcon />
                             </Button>
                             Steps of {this.props.product_name}
-                        </Grid>
-                        <Hidden only={["xs"]}>
-                            <Grid
-                                item
-                                sm={2}
-                                xs={6}
-                                //style={{marginLeft:"8.5%"}}
-                            >
-                                {" "}
-                                <Button onClick={() => this.openalltask(-1)}>
-                                    <AddIcon />
-                                </Button>{" "}
-                            </Grid>
-                        </Hidden>
-                        {tasklist}
-                    </Grid>
-                    <Hidden only={["sm", "md", "lg", "xl"]}>
-                        <Button
-                            variant="fab"
-                            color="primary"
-                            aria-label="Add"
-                            onClick={() => this.props.openalltask(-1)}
-                            className={classes.button}
-                        >
-                            <AddIcon />
-                        </Button>
-                    </Hidden>
-                </div>
+                        </div>
+                        <div style={{ flex: 3, justifyContent: 'center' }}>
+
+                            <Hidden only={["xs"]}>
+                                <div
+
+                                >
+                                    <Button disabled />
+                                    {" "}
+                                    <Button onClick={() => this.openalltask(-1)}>
+                                        <AddIcon />
+                                    </Button>{" "}
+                                </div>
+                            </Hidden>
+                        </div>
+                    </div>
+                    {tasklist}
+                </ div>
+
+
             );
         } else {
             task = (
@@ -261,7 +251,21 @@ class TaskBody extends Component {
                 />
             );
         }
-        return <div>{task}</div>;
+        return <div>
+            {create}
+            {task}
+            <Hidden only={["sm", "md", "lg", "xl"]}>
+                <Button
+                    variant="fab"
+                    color="primary"
+                    aria-label="Add"
+                    onClick={() => this.props.openalltask(-1)}
+                    className={classes.button}
+                >
+                    <AddIcon />
+                </Button>
+            </Hidden>
+        </div>;
     }
 }
 

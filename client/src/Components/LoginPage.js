@@ -18,85 +18,85 @@ import styles from "./loginPageStyle";
 
 
 class LoginPage extends React.Component {
-  state = {
-    username: '',
-    password: '',
-    msgLogin: '',
-  }
+    state = {
+        username: '',
+        password: '',
+        msgLogin: '',
+    }
 
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-  }
+    handleChange = prop => event => {
+        this.setState({ [prop]: event.target.value });
+    }
 
-  handleMouseDownPassword = event => {
-    event.preventDefault();
-  }
+    handleMouseDownPassword = event => {
+        event.preventDefault();
+    }
 
-  handleClickShowPassword = () => {
-    this.setState(state => ({ showPassword: !state.showPassword }));
-  }
+    handleClickShowPassword = () => {
+        this.setState(state => ({ showPassword: !state.showPassword }));
+    }
 
-  login = (e) => {
-    let that=this;
-    Axios.login(this.state.username, this.state.password, function(err, data){
-      if(err) that.setState({msgLogin : err});
-      else {
-        that.props.loggedIn(data);
-      }
-    })
-  }
-
-
-
-  render() {
-    const { classes } = this.props;
-    
-    return (
-      <div className={classes.container}>
-        <Typography variant="display2" style={{color: '#3d81a9', fontFamily: 'Dekko', fontWeight: 'bold'}} gutterBottom>
-          Pro Track
-        </Typography>
-        <FormControl className={classes.margin}>
-          <InputLabel htmlFor="input-with-icon-adornment">Username</InputLabel>
-          <Input
-            id="input-with-icon-adornment"
-            onChange={this.handleChange('username')}
-            endAdornment={
-              <InputAdornment position="end">
-                <Email />
-              </InputAdornment>
+    login = (e) => {
+        let that = this;
+        Axios.login(this.state.username, this.state.password, function (err, data) {
+            if (err) that.setState({ msgLogin: err });
+            else {
+                that.props.loggedIn(data);
             }
-          />
-        </FormControl>
-        <FormControl className={classNames(classes.margin)}>
-          <InputLabel htmlFor="adornment-password">Password</InputLabel>
-          <Input
-            id="adornment-password"
-            type={this.state.showPassword ? 'text' : 'password'}
-            value={this.state.password}
-            onChange={this.handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="Toggle password visibility"
-                  onClick={this.handleClickShowPassword}
-                  onMouseDown={this.handleMouseDownPassword}
-                >
-                  {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <Typography variant="title" style={{color: '#FF6E40', fontFamily: 'Helvetica'}} gutterBottom>
-          {this.state.msgLogin}
+        })
+    }
+
+
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <div className={classes.container}>
+                <Typography variant="display2" style={{ color: '#3d81a9', fontFamily: "Helvetica Neue", fontWeight: 'bold' }} gutterBottom>
+                    Pro Track
         </Typography>
-        <Button variant="contained" className={classNames(classes.content)} onClick={this.login} color="primary">
-          LOGIN
+                <FormControl className={classes.margin}>
+                    <InputLabel htmlFor="input-with-icon-adornment">Username</InputLabel>
+                    <Input
+                        id="input-with-icon-adornment"
+                        onChange={this.handleChange('username')}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <Email />
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+                <FormControl className={classNames(classes.margin)}>
+                    <InputLabel htmlFor="adornment-password">Password</InputLabel>
+                    <Input
+                        id="adornment-password"
+                        type={this.state.showPassword ? 'text' : 'password'}
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="Toggle password visibility"
+                                    onClick={this.handleClickShowPassword}
+                                    onMouseDown={this.handleMouseDownPassword}
+                                >
+                                    {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+                <Typography variant="title" style={{ color: '#FF6E40', fontFamily: 'Helvetica' }} gutterBottom>
+                    {this.state.msgLogin}
+                </Typography>
+                <Button variant="contained" className={classNames(classes.content)} onClick={this.login} color="primary">
+                    LOGIN
         </Button>
-      </div>
-    );
-  }
+            </div >
+        );
+    }
 }
 
 

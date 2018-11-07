@@ -18,7 +18,7 @@ const styles = theme => ({
     },
     productHeading: {
         fontFamily: "Helvetica Neue",
-        fontSize: "25px"
+        fontSize: "20px"
     },
     gridStyle: {
         justifyContent: "center",

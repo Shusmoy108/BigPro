@@ -224,15 +224,15 @@ class Subtask extends Component {
             );
         } else {
             subtask = (
-                <Grid item sm={4} xs={2} className={classes.fontStyle}>
+                <div style={{ flex: 1, textAlign: "center" }}>
                     {this.props.subtask_name}
-                </Grid>
+                </div>
             );
             subtasktype = (
                 <Hidden only={["xs"]}>
-                    <Grid item sm={3} className={classes.fontStyle}>
+                    <div style={{ flex: 1, textAlign: "center" }}>
                         {this.props.subtask_type}
-                    </Grid>
+                    </div>
                 </Hidden>
             );
             let add;
@@ -248,7 +248,7 @@ class Subtask extends Component {
                 );
             }
             button = (
-                <Grid item sm={4} xs={10}>
+                <div style={{ flex: 2 }}>
                     <Button onClick={this.showspec}>
                         <Listicon />
                     </Button>
@@ -259,12 +259,12 @@ class Subtask extends Component {
                     <Button onClick={this.seteditflag}>
                         <Editicon />
                     </Button>
-                </Grid>
+                </div>
             );
         }
         if (this.state.spec === -1) {
             page = (
-                <Grid container>
+                <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }} >
                     <Modal
                         name={this.props.subtask_name}
                         handleYes={this.deletesubtask}
@@ -274,7 +274,7 @@ class Subtask extends Component {
                     {subtask}
                     {subtasktype}
                     {button}
-                </Grid>
+                </div>
             );
         } else {
             page = (
@@ -286,9 +286,9 @@ class Subtask extends Component {
             );
         }
         return (
-            <Grid container direction="row" align="center">
+            <div>
                 {page}
-            </Grid>
+            </div>
         );
     }
 }
