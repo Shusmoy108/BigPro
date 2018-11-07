@@ -68,7 +68,6 @@ class Showspec extends Component {
                 </Typography>
               );
             })}
-            }
           </Typography>
         </Grid>
       </Grid>
