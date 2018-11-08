@@ -35,22 +35,24 @@ class Layout extends Component {
         Axios.getProfile(function (err, data) {
             if (err) {
                 console.log(err);
+                console.log("helloerr");
                 that.setState({ logged: 'login', name: '', username: '' });
             }
             else {
-                that.setState({ usertype: data.usertype, username: data.username }, () => {
+                console.log("hello", data);
+                that.setState({ usertype: data.usertype, username: data.username, name: data.name }, () => {
                     that.setState({ logged: 'loggedin' })
                 });
             }
-        })
+        });
     }
 
     render() {
         let template = <Loader />;
-
+        console.log("hello");
         if (this.state.logged === 'loggedin') {
             template = <Userpage {...this.props}
-                usertype={this.state.usertype} username={this.state.username} />
+                usertype={this.state.usertype} username={this.state.username} name={this.state.name} />
         }
         else if (this.state.logged === 'login') {
             template = <LoginPage loggedIn={this.loggedIn} />

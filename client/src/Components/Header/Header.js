@@ -24,9 +24,14 @@ class MenuAppBar extends React.Component {
         Axios.logout(function () {
             //that.setState({logged: 'login', name: '', username: ''})
             that.props.history.push("/");
+
+
         });
-        this.setState({ anchorEl: null });
+        //this.setState({ anchorEl: null });
     };
+    handleProfile = () => {
+        this.props.history.push("/");
+    }
     handleClose = () => {
         this.setState({ anchorEl: null, project: null });
     };
@@ -135,11 +140,18 @@ class MenuAppBar extends React.Component {
                             </div>
 
                             <Button
-                                onClick={this.handleLogout}
+                                onClick={this.handleProfile}
                                 color="inherit"
                                 className={classes.elementStyle}
                             >
                                 {this.props.username}
+                            </Button>
+                            <Button
+                                onClick={this.handleLogout}
+                                color="inherit"
+                                className={classes.elementStyle}
+                            >
+                                LogOut
                             </Button>
                         </Toolbar>
                     </Hidden>
