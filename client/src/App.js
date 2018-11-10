@@ -8,11 +8,12 @@ import SubtaskBody from "./Components/Subtask/SubtaskBody";
 import CreatePage from "./Components/Project/CreatePage";
 import ShowProject from "./Components/Project/ShowProject";
 import Project from "./Components/Project/Project";
-
+import UserPage from "./Components/User/Userpage";
 const Main = () => (
   <main>
     <Switch>
       <Route exact path="/" component={Layout} />
+      <Route exact path="/user" component={UserPage} />
       <Route path="/product" component={ProductBody} />
       <Route path="/step" component={TaskBody} />
       <Route path="/specification" component={SubtaskBody} />

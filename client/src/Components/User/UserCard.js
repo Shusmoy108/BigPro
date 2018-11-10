@@ -12,9 +12,25 @@ import red from "@material-ui/core/colors/red";
 import Production from "@material-ui/icons/OpenInBrowser";
 import DoneAll from "@material-ui/icons/DoneAll";
 import Redo from "@material-ui/icons/Redo";
-import Listicon from "@material-ui/icons/List";
+import EditIcon from "@material-ui/icons/Edit";
 import Deleteicon from "@material-ui/icons/Delete";
 import LinearProgress from "@material-ui/core/LinearProgress";
+
+import Button from "@material-ui/core/Button";
+import CloseIcon from "@material-ui/icons/Close";
+import Modal from "../Modal/Modal";
+
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Radio from "@material-ui/core/Radio";
+import InputLabel from "@material-ui/core/InputLabel";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
+import DoneIcon from "@material-ui/icons/Done";
+import { usereditInput } from "../../Validator/userValidator";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import { insertUser } from "../../Utils/userAxios";
 const styles = theme => ({
   card: {
     maxWidth: 400
@@ -50,79 +66,170 @@ const styles = theme => ({
 
 class UserCard extends React.Component {
   state = {
-    expanded: false
+    expanded: false,
+    username: "",
+    name: "",
+    password: "",
+    glbErr: "",
+    usertype: "",
+    showPassword: false,
+    errors: {},
+    open: false
   };
-
+  handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+  handleOpen = () => {
+    this.setState({ open: !this.state.open });
+  };
+  componentDidMount() {
+    this.setState({
+      username: this.props.user.username,
+      name: this.props.user.name,
+      usertype: this.props.user.usertype
+    });
+  }
+  handleDelete = () => {
+    this.props.delete(this.props.i, this.props.user._id, (err, data) => {
+      if (data) {
+        this.setState({ open: !this.state.open });
+      }
+    });
+  };
+  handleEdit = () => {
+    let data = {
+      name: this.state.name,
+      username: this.state.username,
+      usertype: this.state.usertype
+    };
 
+    const { errors, isValid } = usereditInput(data);
+    console.log(isValid, errors);
+    if (!isValid) {
+      this.setState({ errors: errors });
+      console.log(errors);
+    } else {
+      this.props.edit(
+        this.props.i,
+        this.props.user._id,
+        this.state.name,
+        this.state.username,
+        this.state.usertype,
+        (err, data) => {
+          if (data) {
+            this.setState({ expanded: !this.state.expanded });
+          }
+        }
+      );
+    }
+  };
   render() {
     const { classes } = this.props;
-    let value =
-      (this.props.project.completed_task / this.props.project.total_task) * 100;
-    let icon;
-    if (this.props.project.project_status === "pending") {
-      icon = <Production />;
+    let user = (
+      <div>
+        <div>Name : {this.props.user.name}</div>
+        <div>User Name : {this.props.user.username}</div>
+        <div>User-Type : {this.props.user.usertype}</div>
+      </div>
+    );
+    if (this.state.expanded) {
+      user = (
+        <div>
+          <FormHelperText id="component-error-text" style={{ color: "red" }}>
+            {this.props.glbErr}
+          </FormHelperText>
+          <div>
+            <TextField
+              label="User-Name"
+              value={this.state.username}
+              onChange={this.handleChange("username")}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <AccountCircle />
+                  </InputAdornment>
+                )
+              }}
+            />
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {this.state.errors.username}
+            </FormHelperText>
+          </div>
+          <div>
+            <TextField
+              label="Name"
+              value={this.state.name}
+              onChange={this.handleChange("name")}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <AccountCircle />
+                  </InputAdornment>
+                )
+              }}
+            />
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {this.state.errors.name}
+            </FormHelperText>
+          </div>
+          <div>
+            <InputLabel>User-Type</InputLabel>
+            <Radio
+              checked={this.state.usertype === "Manager"}
+              onChange={this.handleChange("usertype")}
+              value="Manager"
+              name="radio-button-demo"
+              aria-label="A"
+            />
+            Manager
+            <Radio
+              checked={this.state.usertype === "Admin"}
+              onChange={this.handleChange("usertype")}
+              value="Admin"
+              name="radio-button-demo"
+              aria-label="B"
+            />
+            Admin
+          </div>
+          <FormHelperText id="component-error-text" style={{ color: "red" }}>
+            {this.state.errors.usertype}
+          </FormHelperText>
+        </div>
+      );
     }
-    if (
-      this.props.project.project_status === "ongoing" ||
-      this.props.project.project_status === "redo"
-    ) {
-      icon = <DoneAll />;
-    }
-    if (this.props.project.project_status === "history") {
-      icon = <Redo />;
-    }
-    let title =
-      this.props.project.project_status.charAt(0).toUpperCase() +
-      this.props.project.project_status.substr(1) +
-      " Project";
-    let subheader = parseFloat(value).toFixed(2) + " %";
     return (
       <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.props.project.completed_task}/
-              {this.props.project.total_task}
-            </Avatar>
-          }
-          title={title}
-          subheader={subheader}
+        <Modal
+          name={this.state.username}
+          handleYes={this.handleDelete}
+          handleNo={this.handleOpen}
+          open={this.state.open}
         />
+        <CardHeader title={"User"} />
 
         <CardContent
           style={{
-            fontFamily: "Dekko"
+            fontFamily: "Helvetica Neue"
 
             //marginLeft:"30%"
           }}
         >
-          <div>Name : {this.props.name}</div>
-          <div>User Name : {this.props.username}</div>
-          <div>User-Type : {this.props.usertype}</div>
+          {user}
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton
-            onClick={() => {
-              this.props.showProject(this.props.project.project_id);
-            }}
-          >
-            <Listicon />
+          <IconButton onClick={this.handleExpandClick}>
+            {!this.state.expanded && <EditIcon />}
+            {this.state.expanded && <CloseIcon />}
           </IconButton>
-          <IconButton
-            onClick={() => {
-              this.props.updateStatus(this.props.project.project_id);
-            }}
-          >
-            {icon}
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              this.props.delete(this.props.project.project_id);
-            }}
-          >
+          {this.state.expanded && (
+            <IconButton onClick={this.handleEdit}>
+              <DoneIcon />
+            </IconButton>
+          )}
+          <IconButton onClick={this.handleOpen}>
             <Deleteicon />
           </IconButton>
         </CardActions>

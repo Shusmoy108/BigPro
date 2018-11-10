@@ -18,7 +18,7 @@ class Layout extends Component {
     }
 
     loggedIn = (data) => {
-        this.setState({ logged: 'loggedin', usertype: data.usertype, username: data.username });
+        this.props.history.push('/user');
     };
 
     handleLogout = (e) => {
