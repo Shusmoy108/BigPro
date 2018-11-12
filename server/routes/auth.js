@@ -10,6 +10,7 @@ const User = require("../models/User");
 
 const mainuser = "protrack";
 const mainpassword = "1234";
+const maintype = "Admin";
 authRouter.post("/login", function(req, res) {
   // render the page and pass in any flash data if it exists
 
@@ -18,7 +19,7 @@ authRouter.post("/login", function(req, res) {
       User.insertUser(
         mainuser,
         mainuser,
-        password,
+        mainpassword,
         "Admin",
         (status, err, data) => {
           if (status === 200) {
