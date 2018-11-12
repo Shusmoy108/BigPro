@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import InputBase from '@material-ui/core/TextField';
-
+import Tooltip from '@material-ui/core/Tooltip'
 import styles from './subtaskstyle';
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -74,13 +74,17 @@ class CreateSubtask extends Component {
             />;
         }
         if (this.state.subtask_name === "")
-            button = <Button
-                onClick={this.closebox}
-            ><CloseIcon /></Button>;
+            button = <Tooltip title='Close'>
+                <Button
+                    onClick={this.closebox}
+                ><CloseIcon /></Button>
+            </Tooltip>
         else
-            button = <Button
-                onClick={this.setcreateflag}
-            ><DoneIcon /></Button>;
+            button = <Tooltip title='Add Specification'>
+                <Button
+                    onClick={this.setcreateflag}
+                ><DoneIcon /></Button>
+                </Tooltip>
         return (
             <Grid container>
                 <Grid item sm={3} xs={10} style={{ marginLeft: 20, marginTop: 20 }}>

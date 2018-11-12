@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 import InputBase from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
 import styles from "./productstyle";
 import Button from "@material-ui/core/Button";
 import DoneIcon from "@material-ui/icons/Done";
@@ -28,19 +27,25 @@ class CreateProduct extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        //const { classes } = this.props;
         let button;
         if (this.state.product_name === "")
             button = (
-                <Button onClick={this.setcreateflag}>
-                    <CloseIcon />
-                </Button>
+                <Tooltip title='Close'>
+
+                    <Button onClick={this.setcreateflag}>
+                        <CloseIcon />
+                    </Button>
+                </Tooltip>
             );
         else
             button = (
-                <Button onClick={this.setcreateflag}>
-                    <DoneIcon />
-                </Button>
+                <Tooltip title='Create New Product'>
+
+                    <Button onClick={this.setcreateflag}>
+                        <DoneIcon />
+                    </Button>
+                </Tooltip>
             );
         return (
             <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }} >

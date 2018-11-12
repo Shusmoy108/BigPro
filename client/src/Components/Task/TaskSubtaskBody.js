@@ -12,6 +12,8 @@ import Hidden from "@material-ui/core/Hidden/Hidden";
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Showspec from "../Subtask/Showspec";
+import Tooltip from '@material-ui/core/Tooltip'
+
 
 class SubtaskBody extends Component {
     constructor(props) {
@@ -122,7 +124,7 @@ class SubtaskBody extends Component {
         let subtask;
         if (this.state.showsubtask === -1) {
             let create;
-            if (this.state.createflag === 1 && this.state.subtasknumber == -1) {
+            if (this.state.createflag === 1 && this.state.subtasknumber === -1) {
                 create = (
                     <CreateSubtask
                         createsubtask={this.createsubtask}
@@ -130,7 +132,7 @@ class SubtaskBody extends Component {
                     />
                 );
             }
-            if (this.state.createflag === -1 && this.state.subtasknumber == -1) {
+            if (this.state.createflag === -1 && this.state.subtasknumber === -1) {
                 create = (
                     <DropDown
                         createtask={this.createoldsubtask}
@@ -200,21 +202,28 @@ class SubtaskBody extends Component {
                             //marginLeft:"5%"
                         }}
                     >
-                        {" "}
-                        <Button variant="flat" onClick={this.showsubtask} color={"primary"}>
-                            <BackIcon />
-                        </Button>
+                        <Tooltip title='Back to Steps'>
+
+
+                            <Button onClick={this.showsubtask} color={"primary"}>
+                                <BackIcon />
+
+                            </Button>
+
+                        </Tooltip>
                         Specifications of {this.props.taskname}
                     </Grid>
                     <Hidden only={["xs"]}>
                         <Grid item sm={2} xs={6}>
-                            {" "}
-                            <Button
-                                onClick={() => this.openallsubtask(-1)}
-                            //style=
-                            >
-                                <AddIcon />
-                            </Button>{" "}
+
+                            <Tooltip title='Create Specification'>
+                                <Button
+                                    onClick={() => this.openallsubtask(-1)}
+                                //style=
+                                >
+                                    <AddIcon />
+                                </Button>
+                            </Tooltip>{" "}
                         </Grid>
                     </Hidden>
                     {subtasklist}
@@ -235,15 +244,17 @@ class SubtaskBody extends Component {
             <div>
                 {subtask}
                 <Hidden only={["sm", "md", "lg", "xl"]}>
-                    <Button
-                        variant="fab"
-                        color="primary"
-                        aria-label="Add"
-                        onClick={() => this.openallsubtask(-1)}
-                        className={classes.button}
-                    >
-                        <AddIcon />
-                    </Button>
+                    <Tooltip title='Create Specification'>
+                        <Button
+                            variant="fab"
+                            color="primary"
+                            aria-label="Add"
+                            onClick={() => this.openallsubtask(-1)}
+                            className={classes.button}
+                        >
+                            <AddIcon />
+                        </Button>
+                    </Tooltip>
                 </Hidden>
             </div>
         );

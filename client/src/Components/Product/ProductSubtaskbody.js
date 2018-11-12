@@ -6,7 +6,7 @@ import styles from "../Subtask/subtaskstyle";
 import Subtask from "../Subtask/Subtask";
 import BackIcon from "@material-ui/icons/FastRewind";
 import Axios from "Utils/Axios";
-import Grid from "@material-ui/core/Grid/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 import Hidden from "@material-ui/core/Hidden/Hidden";
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from "@material-ui/icons/Add";
@@ -55,7 +55,7 @@ class SubtaskBody extends Component {
     };
 
     opencreatebox = () => {
-        let e = 1;
+        
         this.setState(state => ({ createflag: 1 }));
         //this.setState(state => ({ subtasknumber: -1 }));
     };
@@ -124,7 +124,7 @@ class SubtaskBody extends Component {
         let create;
         if (this.state.showsubtask === -1) {
 
-            if (this.state.createflag === 1 && this.state.subtasknumber == -1) {
+            if (this.state.createflag === 1 && this.state.subtasknumber === -1) {
                 create = (
                     <CreateSubtask
                         createsubtask={this.createsubtask}
@@ -134,7 +134,7 @@ class SubtaskBody extends Component {
             }
             if (
                 this.state.createflag === -1 &&
-                this.state.subtasknumber == -1
+                this.state.subtasknumber === -1
             ) {
                 create = (
                     <DropDown
@@ -205,13 +205,16 @@ class SubtaskBody extends Component {
                     <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{ flex: 3, textAlign: "center" }} className={classes.productHeading}>
                             {" "}
-                            <Button
-                                variant="flat"
-                                onClick={this.showsubtask}
-                                color={"primary"}
-                            >
-                                <BackIcon />
-                            </Button>
+                            <Tooltip title='Back to Steps'>
+
+                                <Button
+                                    variant="flat"
+                                    onClick={this.showsubtask}
+                                    color={"primary"}
+                                >
+                                    <BackIcon />
+                                </Button>
+                            </Tooltip>
                             {this.props.product_name}
                             >>
                         {this.props.task_name}
@@ -219,9 +222,11 @@ class SubtaskBody extends Component {
                         <Hidden only={["xs"]}>
                             <div style={{ flex: 1 }}>
                                 {" "}
-                                <Button onClick={() => this.openallsubtask(-1)}>
-                                    <AddIcon />
-                                </Button>{" "}
+                                <Tooltip title='Add Specification'>
+
+                                    <Button onClick={() => this.openallsubtask(-1)}>
+                                        <AddIcon />
+                                    </Button></Tooltip>{" "}
                             </div>
                         </Hidden>
 
@@ -251,6 +256,8 @@ class SubtaskBody extends Component {
                 {create}
                 {subtask}
                 <Hidden only={["sm", "md", "lg", "xl"]}>
+                <Tooltip title='Add Specification'>
+
                     <Button
                         variant="fab"
                         color="primary"
@@ -260,6 +267,7 @@ class SubtaskBody extends Component {
                     >
                         <AddIcon />
                     </Button>
+                    </Tooltip>
                 </Hidden>
             </div>
         );

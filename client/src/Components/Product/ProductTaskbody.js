@@ -6,7 +6,7 @@ import styles from "../Task/taskstyle";
 import Task from "../Task/Task";
 import Axios from "Utils/Axios";
 import ProductSubtaskbody from "./ProductSubtaskbody";
-import Grid from "@material-ui/core/Grid/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 import Hidden from "@material-ui/core/Hidden/Hidden";
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from "@material-ui/icons/Add";
@@ -202,27 +202,29 @@ class TaskBody extends Component {
 
                     <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{ flex: 1, textAlign: "center" }} className={classes.productHeading}>
+                            <Tooltip title='Back to Product'>
 
-                            <Button
-                                variant="flat"
-                                onClick={this.showtask}
-                                color={"primary"}
-                            >
-                                <BackIcon />
-                            </Button>
-                            Steps of {this.props.product_name}
+                                <Button
+                                    variant="flat"
+                                    onClick={this.showtask}
+                                    color={"primary"}
+                                >
+                                    <BackIcon />
+                                    Steps of {this.props.product_name}
+                                </Button>
+
+
+                            </Tooltip>
                         </div>
                         <div style={{ flex: 3, justifyContent: 'center' }}>
 
                             <Hidden only={["xs"]}>
-                                <div
-
-                                >
-                                    <Button disabled />
-                                    {" "}
-                                    <Button onClick={() => this.openalltask(-1)}>
-                                        <AddIcon />
-                                    </Button>{" "}
+                                <div>
+                                    <Button disabled  >{" "}</Button>
+                                    <Tooltip title='Add Step'>
+                                        <Button onClick={() => this.openalltask(-1)}>
+                                            <AddIcon />
+                                        </Button></Tooltip>
                                 </div>
                             </Hidden>
                         </div>
@@ -255,17 +257,19 @@ class TaskBody extends Component {
             {create}
             {task}
             <Hidden only={["sm", "md", "lg", "xl"]}>
-                <Button
-                    variant="fab"
-                    color="primary"
-                    aria-label="Add"
-                    onClick={() => this.props.openalltask(-1)}
-                    className={classes.button}
-                >
-                    <AddIcon />
-                </Button>
+                <Tooltip title='Add Step'>
+                    <Button
+                        variant="fab"
+                        color="primary"
+                        aria-label="Add"
+                        onClick={() => this.props.openalltask(-1)}
+                        className={classes.button}
+                    >
+                        <AddIcon />
+                    </Button>
+                </Tooltip>
             </Hidden>
-        </div>;
+        </div>
     }
 }
 

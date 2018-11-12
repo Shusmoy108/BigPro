@@ -22,12 +22,12 @@ module.exports.projectInput = data => {
         err = true;
     }
 
-    data.task.map((taski, i) => {
+    data.task.forEach((taski, i) => {
         let t = {
             task_name: taski.task_name,
             subtask: []
         };
-        taski.subtask.map((subtaskj, j) => {
+        taski.subtask.forEach((subtaskj, j) => {
             let s = {
                 subtask_name: subtaskj.subtask_name,
                 subtask_err: ""

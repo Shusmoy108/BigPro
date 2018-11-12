@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import InputBase from '@material-ui/core/TextField';
-
+import Tooltip from '@material-ui/core/Tooltip'
 import styles from './taskstyle';
 import Button from "@material-ui/core/Button"
 import DoneIcon from "@material-ui/icons/Done"
@@ -30,14 +30,18 @@ class CreateTask extends Component {
         const { classes } = this.props;
         let button;
         if (this.state.task_name === "")
-            button = <Button
-                onClick={this.closebox}
-            ><CloseIcon /></Button>;
+            button = <Tooltip title='Close'>
+                <Button
+                    onClick={this.closebox}
+                ><CloseIcon /></Button>
+                </Tooltip>
         else
-            button = <Button
-                onClick={this.setcreateflag}
-                style={{ paddingLeft: 15, paddingTop: 5 }}
-            ><DoneIcon /></Button>;
+            button = <Tooltip title='Create Step'>
+                <Button
+                    onClick={this.setcreateflag}
+                    style={{ paddingLeft: 15, paddingTop: 5 }}
+                ><DoneIcon /></Button>
+            </Tooltip>
         return (
             <div style={{ display: 'flex', width: "100%", alignItems: 'center', justifyContent: 'center' }} >
                 <div style={{ flex: 1, textAlign: 'center' }}>
@@ -53,7 +57,7 @@ class CreateTask extends Component {
                     />
                 </div>
                 <div style={{ flex: 3 }}>
-                    <Button disabled />
+                    <Button disabled >{" "}</Button>
 
                     {button}
                 </div>

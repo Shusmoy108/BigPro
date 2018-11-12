@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input/Input'
-import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button"
 import DoneIcon from "@material-ui/icons/Done"
 import AddIcon from '@material-ui/icons/Add'
@@ -21,11 +21,10 @@ class SimpleSelect extends React.Component {
     };
     handleNew = () => {
         this.props.newcreate();
-        console.log('new')
     }
     render() {
         let values = [];
-        console.log(this.props.values);
+        
         for (let i = 0; i < this.props.values.length; i++) {
             values.push(<MenuItem key={i} value={this.props.values[i]}>{this.props.values[i]}</MenuItem>)
         }
@@ -46,16 +45,22 @@ class SimpleSelect extends React.Component {
                     </Select>
                 </div>
                 <div style={{ flex: 3 }}>
+                    <Tooltip title='Create'>
+                        <Button
+                            onClick={this.props.createtask}
+                        ><DoneIcon /></Button>
+                    </Tooltip>
+                    <Tooltip title='Add New'>
+                        <Button
+                            onClick={this.handleNew}
+                        ><AddIcon /></Button>
+                    </Tooltip>
+                    <Tooltip title='Close'>
 
-                    <Button
-                        onClick={this.props.createtask}
-                    ><DoneIcon /></Button>
-                    <Button
-                        onClick={this.handleNew}
-                    ><AddIcon /></Button>
-                    <Button
-                        onClick={this.props.close}
-                    ><CloseIcon /></Button>
+                        <Button
+                            onClick={this.props.close}
+                        ><CloseIcon /></Button>
+                    </Tooltip>
                 </div>
             </div>
         );

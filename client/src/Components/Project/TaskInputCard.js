@@ -6,7 +6,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 import red from "@material-ui/core/colors/red";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -16,8 +16,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
 import DoneIcon from "@material-ui/icons/Done";
-import Deleteicon from "@material-ui/icons/Delete";
-import LinearProgress from "@material-ui/core/LinearProgress";
+//import Deleteicon from "@material-ui/icons/Delete";
+//import LinearProgress from "@material-ui/core/LinearProgress";
 const styles = theme => ({
     card: {
         maxWidth: 400
@@ -51,7 +51,7 @@ class TaskInputCard extends React.Component {
     render() {
         const { classes } = this.props;
         let subtasks = [];
-        this.props.task.subtask.map((subtask, j) => {
+        this.props.task.subtask.forEach((subtask, j) => {
             //console.log(subtask);
             if (subtask.subtask_type === "Textfield") {
                 subtasks.push(
@@ -220,12 +220,15 @@ class TaskInputCard extends React.Component {
 
                 <CardContent>{subtasks}</CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton
-                        disabled={this.props.next}
-                        onClick={this.props.handleNext}
-                    >
-                        <DoneIcon />
-                    </IconButton>
+                    {!this.props.next && (<Tooltip title='Next Step'>
+
+                        <IconButton
+
+                            onClick={this.props.handleNext}
+                        >
+                            <DoneIcon />
+                        </IconButton>
+                    </Tooltip>)}
                 </CardActions>
             </Card>
         );

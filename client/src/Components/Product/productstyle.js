@@ -70,11 +70,11 @@ const styles = theme => ({
     bootstrapFormLabel: {
         fontSize: 18
     },
-    root: {
-        width: "100%",
-        marginTop: theme.spacing.unit * 3,
-        overflowX: "auto"
-    },
+    // root: {
+    //     width: "100%",
+    //     marginTop: theme.spacing.unit * 3,
+    //     overflowX: "auto"
+    // },
     table: {
         minWidth: 700
     },

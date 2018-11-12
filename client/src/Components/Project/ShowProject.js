@@ -9,14 +9,16 @@ import {
 } from "../../Utils/projectAxios";
 import Header from "../Header/Header";
 import Button from "@material-ui/core/Button";
-import Project from "./Project";
-import Grid from "@material-ui/core/Grid";
+import Tooltip from '@material-ui/core/Tooltip'
 import ProjectCard from "./ProjectCard";
 import StatusModal from "../Modal/StatusModal";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input/Input";
 import AddIcon from "@material-ui/icons/Add";
+import Checkbox from '@material-ui/core/Checkbox';
+
+
 class ShowProject extends Component {
     constructor(props) {
         super(props);
@@ -30,8 +32,12 @@ class ShowProject extends Component {
             nextstatus: "",
             statusOpen: false,
             sortValue: "Project ID",
-            sortType: "Ascending"
+            sortType: "Ascending",
+            refresh: false,
         };
+    }
+    handleRefresh = () => {
+        this.setState({ refresh: !this.state.refresh });
     }
     deleteProject = id => {
         let that = this;
@@ -415,11 +421,10 @@ class ShowProject extends Component {
     openStatus = e => {
         this.setState({ statusOpen: true, project_id: e });
     };
-    componentDidMount() {
+    getProjects = () => {
         let that = this;
 
         getProjects(this.props.match.params.project_status, (err, data) => {
-            console.log(data, err);
             if (err) {
                 that.props.history.push("/");
             } else {
@@ -450,6 +455,15 @@ class ShowProject extends Component {
             }
         });
     }
+    componentDidMount() {
+        this.getProjects()
+        let that = this;
+        setInterval(() => {
+            if (that.state.refresh) {
+                that.getProjects();
+            }
+        }, 30000)
+    }
     componentWillReceiveProps(nextProps) {
         if (
             nextProps.match.params.project_status !==
@@ -458,7 +472,6 @@ class ShowProject extends Component {
             let that = this;
 
             getProjects(nextProps.match.params.project_status, (err, data) => {
-                console.log(data, err);
                 that.setState(
                     {
                         usertype: data.user.usertype,
@@ -490,13 +503,16 @@ class ShowProject extends Component {
         let addbutton;
         if (this.state.page === "pending") {
             addbutton = (
-                <Button
-                    onClick={() => {
-                        this.props.history.push("/createproject");
-                    }}
-                >
-                    <AddIcon />
-                </Button>
+                <Tooltip title="Add Project">
+
+                    <Button
+                        onClick={() => {
+                            this.props.history.push("/createproject");
+                        }}
+                    >
+                        <AddIcon />
+                    </Button>
+                </Tooltip>
             );
         }
         return (
@@ -570,6 +586,13 @@ class ShowProject extends Component {
                             </MenuItem>
                         </Select>
                         {addbutton}
+                        <Checkbox
+                            checked={this.state.refresh}
+                            onChange={this.handleRefresh}
+                            color='primary'
+                        /> <div style={{ marginTop: 5 }}>
+                            Auto Refresh
+                            </div>
                     </div>
 
                     <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: "center" }}>

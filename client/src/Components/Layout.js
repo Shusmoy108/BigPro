@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LoginPage from './LoginPage';
-import LandingPage from './LandingPage';
+
 
 import Axios from 'Utils/Axios';
 import Loader from './Loader/Loader'

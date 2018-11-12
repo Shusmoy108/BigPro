@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Header from "../Header/Header";
-import { Grid, Checkbox, InputLabel, Button } from "@material-ui/core";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import { Checkbox, InputLabel, Button } from "@material-ui/core";
+//import html2canvas from "html2canvas";
+//import jsPDF from "jspdf";
+import Tooltip from '@material-ui/core/Tooltip'
 import { updateProjectProgress } from "../../Utils/projectAxios";
 import PrintIcon from "@material-ui/icons/Print";
 import { findProject } from "../../Utils/projectAxios";
@@ -35,7 +36,7 @@ class Project extends Component {
         };
     }
     printDocument = () => {
-        const input = document.getElementById("divToPrint");
+        //const input = document.getElementById("divToPrint");
         // html2canvas(input).then(canvas => {
         //   const imgData = canvas.toDataURL("image/png");
         //   const pdf = new jsPDF();
@@ -43,16 +44,13 @@ class Project extends Component {
         //   // pdf.output('dataurlnewwindow');
         //   pdf.save("download.pdf");
         // });
-        console.log(input, "hello");
     };
     editProject = () => {
         this.setState({ edit: !this.state.edit });
     };
     componentDidMount() {
         let that = this;
-        console.log("project");
         findProject(this.props.match.params.id, (err, data) => {
-            console.log(data, err);
             that.setState({
                 usertype: data.user.usertype,
                 username: data.user.username,
@@ -88,7 +86,6 @@ class Project extends Component {
             }
         }
         let that = this;
-        console.log(current_task, next_task);
         updateProjectProgress(
             this.state.project.project_id,
             current_task,
@@ -101,7 +98,6 @@ class Project extends Component {
                 }
             }
         );
-        // console.log(project.task[i].task_status);
         // this.setState({ project: project });
     };
     render() {
@@ -171,107 +167,148 @@ class Project extends Component {
                                             }}
                                         />
                                     </div>
-                                    <div style={{ margin: "0 5%" }}>
-                                        <Grid container>
-                                            {this.state.project &&
-                                                this.state.project.task.map(
-                                                    (task, i) => {
-                                                        return (
-                                                            <Grid
-                                                                item
-                                                                xs={6}
-                                                                sm={3}
-                                                                md={2}
+                                    <div style={{ margin: "0 5%", display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+
+                                        {this.state.project &&
+                                            this.state.project.task.map(
+                                                (task, i) => {
+                                                    return (
+                                                        <div style={{ margin: '10px' }}
+                                                        >
+                                                            <Typography
+                                                                variant="subheading"
+                                                                gutterBottom
                                                             >
-                                                                <Typography
-                                                                    variant="subheading"
-                                                                    gutterBottom
-                                                                >
-                                                                    Step Name :{" "}
-                                                                    {
-                                                                        task.task_name
-                                                                    }
-                                                                </Typography>
-                                                                {task.subtask.map(
-                                                                    (
-                                                                        subtask,
-                                                                        j
-                                                                    ) => {
-                                                                        return (
-                                                                            <div
+                                                                Step Name :{" "}
+                                                                {
+                                                                    task.task_name
+                                                                }
+                                                            </Typography>
+                                                            {task.subtask.map(
+                                                                (
+                                                                    subtask,
+                                                                    j
+                                                                ) => {
+                                                                    return (
+                                                                        <div
+                                                                        >
+                                                                            <Typography
+                                                                                variant="subheading"
+                                                                                gutterBottom
                                                                             >
-                                                                                <Typography
-                                                                                    variant="subheading"
-                                                                                    gutterBottom
-                                                                                >
-                                                                                    {
-                                                                                        subtask.subtask_name
-                                                                                    }{" "}
-                                                                                    :{" "}
-                                                                                    {
-                                                                                        subtask.subtask_value
+                                                                                {
+                                                                                    subtask.subtask_name
+                                                                                }{" "}
+                                                                                :{" "}
+                                                                                {
+                                                                                    subtask.subtask_value
+                                                                                }
+                                                                            </Typography>
+                                                                        </div>
+                                                                    );
+                                                                }
+                                                            )}
+                                                            {this.state.project.project_status === 'ongoing' && (
+                                                                <div>
+                                                                    {task.task_status ===
+                                                                        "undone" && (
+                                                                            <InputLabel>
+                                                                                Undone{" "}
+                                                                                <Checkbox
+                                                                                    color="primary"
+                                                                                    onChange={() => {
+                                                                                        this.handleCheckChange(
+                                                                                            i
+                                                                                        );
+                                                                                    }}
+                                                                                />
+                                                                            </InputLabel>
+                                                                        )}
+                                                                    {task.task_status ===
+                                                                        "done" && (
+                                                                            <InputLabel>
+                                                                                Done{" "}
+                                                                                <Checkbox
+                                                                                    checked={
+                                                                                        true
                                                                                     }
-                                                                                </Typography>
-                                                                            </div>
-                                                                        );
-                                                                    }
-                                                                )}
-                                                                {task.task_status ===
-                                                                    "undone" && (
-                                                                    <InputLabel>
-                                                                        Undone{" "}
-                                                                        <Checkbox
-                                                                            color="primary"
-                                                                            onChange={() => {
-                                                                                this.handleCheckChange(
-                                                                                    i
-                                                                                );
-                                                                            }}
-                                                                        />
-                                                                    </InputLabel>
-                                                                )}
-                                                                {task.task_status ===
-                                                                    "done" && (
-                                                                    <InputLabel>
-                                                                        Done{" "}
-                                                                        <Checkbox
-                                                                            checked={
-                                                                                true
-                                                                            }
-                                                                            color="primary"
-                                                                            onChange={() => {
-                                                                                this.handleCheckChange(
-                                                                                    i
-                                                                                );
-                                                                            }}
-                                                                        />
-                                                                    </InputLabel>
-                                                                )}
-                                                            </Grid>
-                                                        );
-                                                    }
-                                                )}
-                                        </Grid>
+                                                                                    color="primary"
+                                                                                    onChange={() => {
+                                                                                        this.handleCheckChange(
+                                                                                            i
+                                                                                        );
+                                                                                    }}
+                                                                                />
+                                                                            </InputLabel>
+                                                                        )}
+                                                                </div>
+                                                            )}
+                                                            {this.state.project.project_status === 'redo' && (
+                                                                <div>
+                                                                    {task.task_status ===
+                                                                        "undone" && (
+                                                                            <InputLabel>
+                                                                                Undone{" "}
+                                                                                <Checkbox
+                                                                                    color="primary"
+                                                                                    onChange={() => {
+                                                                                        this.handleCheckChange(
+                                                                                            i
+                                                                                        );
+                                                                                    }}
+                                                                                />
+                                                                            </InputLabel>
+                                                                        )}
+                                                                    {task.task_status ===
+                                                                        "done" && (
+                                                                            <InputLabel>
+                                                                                Done{" "}
+                                                                                <Checkbox
+                                                                                    checked={
+                                                                                        true
+                                                                                    }
+                                                                                    color="primary"
+                                                                                    onChange={() => {
+                                                                                        this.handleCheckChange(
+                                                                                            i
+                                                                                        );
+                                                                                    }}
+                                                                                />
+                                                                            </InputLabel>
+                                                                        )}
+                                                                </div>
+                                                            )}
+
+
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
+
                                     </div>
                                 </div>
+                                <Tooltip title='Print Project'>
 
-                                <Button
-                                    // onClick={() => {
-                                    //   window.print();
-                                    // }}
-                                    onClick={this.printDocument}
-                                    style={{ marginLeft: "5%" }}
-                                >
-                                    <PrintIcon />
-                                </Button>
-                                <Button
-                                    // onClick={() => {
-                                    //   window.print();
-                                    // }}
-                                    onClick={this.editProject}
-                                >
-                                    <EditIcon />
-                                </Button>
+                                    <Button
+                                        onClick={() => {
+                                            window.print();
+                                        }}
+                                        // onClick={this.printDocument}
+                                        style={{ marginLeft: "5%" }}
+                                    >
+                                        <PrintIcon />
+                                    </Button>
+                                </Tooltip>
+                                <Tooltip title='Edit Project'>
+                                    <Button
+                                        // onClick={() => {
+                                        //   window.print();
+                                        // }}
+                                        onClick={this.editProject}
+                                    >
+                                        <EditIcon />
+                                    </Button>
+                                </Tooltip>
                             </div>
                         )}
                         {this.state.edit && (

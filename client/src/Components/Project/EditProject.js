@@ -46,12 +46,10 @@ class CreatePage extends Component {
     }
     componentDidMount() {
         let that = this;
-        console.log(that.props.project);
         Axios.getProduct(this.props.project.product_name, function(err, data) {
             if (err) {
                 //that.props.history.push("/");
             } else {
-                console.log(data);
                 that.setState(
                     {
                         product: data.product,
@@ -65,7 +63,7 @@ class CreatePage extends Component {
                         let tasks = [];
                         let taskError = [];
                         let tasknames = [];
-                        data.product.task.map((taski, i) => {
+                        data.product.task.forEach((taski, i) => {
                             let task = {
                                 task_name: taski.task_name,
                                 task_status: "undone",
@@ -83,7 +81,7 @@ class CreatePage extends Component {
                                 subtask: []
                             };
                             tasknames.push(taski.task_name);
-                            taski.subtask.map((subtaskj, j) => {
+                            taski.subtask.forEach((subtaskj, j) => {
                                 let subtask_err = {
                                     subtask_name: subtaskj.subtask_name,
                                     subtask_error: ""
@@ -113,10 +111,10 @@ class CreatePage extends Component {
                                 } else if (
                                     subtaskj.subtask_type === "Checkbox"
                                 ) {
-                                    let x = that.props.project.task.findIndex(
-                                        task =>
-                                            task.task_name === taski.task_name
-                                    );
+                                    // let x = that.props.project.task.findIndex(
+                                    //     task =>
+                                    //         task.task_name === taski.task_name
+                                    // );
                                     let subtask = {
                                         subtask_name: subtaskj.subtask_name,
                                         subtask_type: "Checkbox",
@@ -137,7 +135,6 @@ class CreatePage extends Component {
                                     if (subtaskold) {
                                         subtask = subtaskold;
                                     }
-                                    console.log(subtask);
                                     task.subtask.push(subtask);
                                 }
                             });
@@ -146,7 +143,6 @@ class CreatePage extends Component {
                         });
                         that.setState({ taskError: taskError }, () => {
                             that.setState({ task: tasks }, () => {
-                                console.log(that.state.task);
                                 that.setState({
                                     task_name:
                                         that.state.product.task[0].task_name
@@ -182,14 +178,9 @@ class CreatePage extends Component {
         );
     };
     handleChange = prop => event => {
-        // console.log(event, "gegge");
-        console.log("heteghg", typeof event.target.value);
         this.setState({ [prop]: event.target.value });
     };
     handleDateChange = e => {
-        console.log("heteghg", typeof e.target.value);
-        // let date = moment(new Date(e.target.value)).format("LLL");
-        // console.log(date.toString(), "jkkljkj");
         this.setState({ deadline: e.target.value });
     };
     handdleSpecChange = (i, j) => e => {
@@ -208,7 +199,6 @@ class CreatePage extends Component {
             var index = task[i].subtask[j].subtask_value.indexOf(e);
             if (index !== -1) task[i].subtask[j].subtask_value.splice(index, 1);
         }
-        console.log(task[i].subtask[j].subtask_value);
         this.setState({ task: task });
     };
     createproject = () => {
@@ -222,14 +212,12 @@ class CreatePage extends Component {
         };
         let { errors, isValid } = projectInput(data);
         if (!isValid) {
-            console.log("err");
             this.setState({
                 taskError: errors.taskError,
                 errors: errors,
                 glbErr: "Some Error is happened. Check All Fields and Steps"
             });
         } else {
-            console.log("beforeax");
             let that = this;
             ediProject(data, (err, project) => {
                 if (project) {
@@ -260,7 +248,7 @@ class CreatePage extends Component {
         }
     };
     render() {
-        const { classes } = this.props;
+       // const { classes } = this.props;
         let button;
 
         button = (
@@ -284,7 +272,6 @@ class CreatePage extends Component {
                 </MenuItem>
             );
         }
-        console.log(this.state.deadline);
         return (
             <div>
                 {this.state.task_name && (

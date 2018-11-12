@@ -7,7 +7,7 @@ import Product from "./Product";
 import Axios from "Utils/Axios";
 import AddIcon from "@material-ui/icons/Add";
 import Hidden from "@material-ui/core/Hidden";
-import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import Header from "../Header/Header";
 import ProducTaskbody from "./ProductTaskbody";
@@ -202,11 +202,14 @@ class ProductBody extends Component {
                         <Hidden only={["xs"]}>
                             <div style={{ flex: 3 }}
                             >
-                                {" "}
+
                                 <Button disabled >  </Button>
-                                <Button onClick={this.opencreatebox}>
-                                    <AddIcon />
-                                </Button>{" "}
+                                <Tooltip title='Add New Product'>
+
+                                    <Button onClick={this.opencreatebox}>
+                                        <AddIcon />
+                                    </Button>
+                                </Tooltip>
                             </div>
                         </Hidden>
                     </div>
@@ -245,15 +248,18 @@ class ProductBody extends Component {
                 {create}
                 {product}
                 <Hidden only={["sm", "md", "lg", "xl"]}>
-                    <Button
-                        variant="fab"
-                        color="primary"
-                        aria-label="Add"
-                        onClick={this.opencreatebox}
-                        className={classes.button}
-                    >
-                        <AddIcon />
-                    </Button>
+                    <Tooltip title='Add New Product'>
+
+                        <Button
+                            variant="fab"
+                            color="primary"
+                            aria-label="Add"
+                            onClick={this.opencreatebox}
+                            className={classes.button}
+                        >
+                            <AddIcon />
+                        </Button>
+                    </Tooltip>
                 </Hidden>
             </div>
         );

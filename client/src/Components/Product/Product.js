@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
 import styles from "./productstyle";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 import InputBase from "@material-ui/core/Input/Input";
 import Listicon from "@material-ui/icons/List";
 import Editicon from "@material-ui/icons/Edit";
@@ -67,7 +67,7 @@ class Product extends Component {
             if (this.state.edit_name === this.props.product_name || this.state.edit_name === "")
                 button = (
                     <div style={{ flex: 3 }}>
-                        {" "}
+
                         <Button
                             onClick={this.editproduct}
                             style={{ paddingLeft: 20, paddingTop: 5 }}
@@ -79,7 +79,7 @@ class Product extends Component {
             else
                 button = (
                     <div style={{ flex: 3 }}>
-                        {" "}
+
                         <Button onClick={this.editproduct}>
                             <DoneIcon />
                         </Button>
@@ -93,15 +93,23 @@ class Product extends Component {
             );
             button = (
                 <div style={{ flex: 3 }}>
-                    <Button onClick={this.showtask}>
-                        <Listicon />
-                    </Button>{" "}
-                    <Button onClick={this.modalopen}>
-                        <Deleteicon />
-                    </Button>{" "}
-                    <Button onClick={this.seteditflag}>
-                        <Editicon />
-                    </Button>
+                    <Tooltip title='Show Steps'>
+
+                        <Button onClick={this.showtask}>
+                            <Listicon />
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Delete Product'>
+
+                        <Button onClick={this.modalopen}>
+                            <Deleteicon />
+                        </Button></Tooltip>
+                    <Tooltip title='Edit Product'>
+
+                        <Button onClick={this.seteditflag}>
+                            <Editicon />
+                        </Button>
+                    </Tooltip>
                 </div>
             );
         }

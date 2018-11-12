@@ -47,7 +47,7 @@ export function ediProject(data, callback) {
         axios.defaults.headers.common["Authorization"] = localStorage.getItem(
             "jwtToken"
         );
-        console.log(data);
+        //console.log(data);
         if (data) {
             axios
                 .post(url + "/project/edit", { data: data })
@@ -60,7 +60,7 @@ export function ediProject(data, callback) {
                     }
                 })
                 .catch(error => {
-                    console.log(error.response);
+                    //console.log(error.response);
                     if (error.response && error.response.data) {
                         if (!error.response.data.authorized) {
                             localStorage.removeItem("jwtToken");
@@ -92,14 +92,14 @@ export function getProjects(project_status, callback) {
                 .get(url + "/project/getprojects/" + project_status)
                 .then(res => {
                     if (res.data && res.data.success) {
-                        console.log(res);
+                        //console.log(res);
                         callback(null, res.data);
                     } else {
                         callback(res.data.err, null);
                     }
                 })
                 .catch(error => {
-                    console.log(error.response);
+                    //console.log(error.response);
                     if (error.response && error.response.data) {
                         if (!error.response.data.authorized) {
                             localStorage.removeItem("jwtToken");

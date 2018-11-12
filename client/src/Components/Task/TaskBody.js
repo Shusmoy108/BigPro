@@ -6,7 +6,7 @@ import styles from "./taskstyle";
 import Task from "./Task";
 import Axios from "Utils/Axios";
 import Header from "../Header/Header";
-import Grid from "@material-ui/core/Grid/Grid";
+import Tooltip from "@material-ui/core/Tooltip"
 import Hidden from "@material-ui/core/Hidden/Hidden";
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from "@material-ui/icons/Add";
@@ -177,11 +177,13 @@ class TaskBody extends Component {
                             </div>
                         <Hidden only={["xs"]}>
                             <div style={{ flex: 3 }}>
-                                {" "}
-                                <Button disabled />
-                                <Button onClick={this.opencreatebox}>
-                                    <AddIcon />
-                                </Button>
+
+                                <Button disabled >{" "}</Button>
+                                <Tooltip title='Create Step'>
+                                    <Button onClick={this.opencreatebox}>
+                                        <AddIcon />
+                                    </Button>
+                                </Tooltip>
                             </div>
                         </Hidden>
                     </div>
@@ -213,15 +215,17 @@ class TaskBody extends Component {
                 {create}
                 {task}
                 <Hidden only={["sm", "md", "lg", "xl"]}>
-                    <Button
-                        variant="fab"
-                        color="primary"
-                        aria-label="Add"
-                        onClick={this.opencreatebox}
-                        className={classes.button}
-                    >
-                        <AddIcon />
-                    </Button>
+                    <Tooltip title='Create Step'>
+                        <Button
+                            variant="fab"
+                            color="primary"
+                            aria-label="Add"
+                            onClick={this.opencreatebox}
+                            className={classes.button}
+                        >
+                            <AddIcon />
+                        </Button>
+                    </Tooltip>
                 </Hidden>
             </div>
         );

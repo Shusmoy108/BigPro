@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import styles from "./taskstyle";
 import PropTypes from "prop-types";
 import InputBase from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 import Listicon from "@material-ui/icons/List";
 import Editicon from "@material-ui/icons/Edit";
 import Deleteicon from "@material-ui/icons/Delete";
@@ -52,7 +52,7 @@ class Task extends Component {
         this.setState({ open: false });
     };
     render() {
-        const { classes } = this.props;
+       // const { classes } = this.props;
         let task;
         let button;
 
@@ -72,33 +72,38 @@ class Task extends Component {
             if (this.state.edit_name === this.props.task_name || this.state.edit_name === "")
                 button = (
                     <div style={{ flex: 3 }}>
-                        {" "}
-                        <Button onClick={this.edittask}>
-                            <CloseIcon />
-                        </Button>
+
+                        <Tooltip title='Close'>
+                            <Button onClick={this.edittask}>
+                                <CloseIcon />
+                            </Button>
+                        </Tooltip>
                     </div>
                 );
             else
                 button = (
                     <div style={{ flex: 3 }}>
-                        {" "}
-                        
-                        <Button onClick={this.edittask}>
-                            <DoneIcon />
-                        </Button>
+
+                        <Tooltip title='Edit Step'>
+                            <Button onClick={this.edittask}>
+                                <DoneIcon />
+                            </Button>
+                        </Tooltip>
                     </div>
                 );
         } else {
             let add;
             if (this.props.add === 1) {
                 add = (
-                    <Button
-                        onClick={() =>
-                            this.props.openalltask(this.props.task_number)
-                        }
-                    >
-                        <AddIcon />
-                    </Button>
+                    <Tooltip title='Add Step'>
+                        <Button
+                            onClick={() =>
+                                this.props.openalltask(this.props.task_number)
+                            }
+                        >
+                            <AddIcon />
+                        </Button>
+                    </Tooltip>
                 );
             }
             task = (
@@ -110,17 +115,22 @@ class Task extends Component {
                 <div
                     style={{ flex: 3 }}
                 >
-
-                    <Button onClick={this.showsubtask}>
-                        <Listicon />
-                    </Button>
+                    <Tooltip title='Show step details'>
+                        <Button onClick={this.showsubtask}>
+                            <Listicon />
+                        </Button>
+                    </Tooltip>
                     {add}
-                    <Button onClick={this.modalopen}>
-                        <Deleteicon />
-                    </Button>{" "}
-                    <Button onClick={this.seteditflag}>
-                        <Editicon />
-                    </Button>
+                    <Tooltip title='Delete Step'>
+                        <Button onClick={this.modalopen}>
+                            <Deleteicon />
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Edit Step'>
+                        <Button onClick={this.seteditflag}>
+                            <Editicon />
+                        </Button>
+                    </Tooltip>
                 </div>
             );
         }
